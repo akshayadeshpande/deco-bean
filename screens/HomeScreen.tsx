@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
