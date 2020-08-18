@@ -5,7 +5,9 @@ import { StyleSheet, Text, View } from 'react-native';
  * Allows us to plug this into a screen.
 */
 
-export default function WordDisplay(props) {
+/* RENDERING */
+// This function needs to be upper case to be used as a component tag otherwise it thinks it's an html tag.
+export function WordDisplay(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Word of the Day</Text>
@@ -14,6 +16,14 @@ export default function WordDisplay(props) {
   )
 }
 
+/* Functionality */
+export function getDailyWord() {
+  // Method to get the word of the day here from dictionary/db
+  const dummyWord:string = "Doggo";
+  return dummyWord;
+}
+
+/* STYLES */
 const styles = StyleSheet.create({
     container: {
       flex: 1,

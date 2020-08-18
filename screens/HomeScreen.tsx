@@ -3,12 +3,12 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-import WordDisplay from '../components/WOTD';
+import { getDailyWord, WordDisplay } from '../components/WOTD';
 
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <WordDisplay word="Doggo" />
+      <WordDisplay word={getDailyWord()} />
       <Text style={styles.title}>Home Screen</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Text style={styles.text}>Main Page Content and Navigation. 
