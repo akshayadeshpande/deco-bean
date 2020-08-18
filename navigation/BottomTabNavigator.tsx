@@ -42,13 +42,13 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <FontAwesome name="user" size={32} color={color} />,
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="WOTD"
         component={WOTDNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Dictionary"
         component={DictionaryNavigator}
