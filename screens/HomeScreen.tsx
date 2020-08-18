@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { getDailyWord, WordDisplay } from '../components/WOTD';
+import NavTouchButton from '../components/NavTouchButton';
 
 export default function HomeScreen() {
   return (
@@ -13,18 +14,18 @@ export default function HomeScreen() {
       </View>
       <View style={styles.containerRow}>
         <View style={styles.navBox}>
-          <Text style={styles.title}>My Profile</Text>
+          <NavTouchButton screenName="Profile" text="My Profile" iconName="user"/>
         </View>
         <View style={styles.navBox}>
-          <Text style={styles.title}>My Words</Text>
+          <NavTouchButton screenName="Dictionary" text="My Words" iconName="book"/>
         </View>
       </View>
       <View style={styles.containerRow}>
         <View style={styles.navBox}>
-          <Text style={styles.title}>Challenge</Text>
+          <NavTouchButton screenName="Challenge" text="Challenge Mode" iconName="gamepad"/>
         </View>
         <View style={styles.navBox}>
-          <Text style={styles.title}>MeMa</Text>
+          <NavTouchButton screenName="MeMa" text="Talk to MeMa" iconName="comments-o"/>
         </View>
       </View>
     </View>
