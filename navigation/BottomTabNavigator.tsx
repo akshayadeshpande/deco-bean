@@ -90,7 +90,7 @@ function HomeNavigator() {
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'Home' }}
+        options={{ headerTitle: 'MeMa Home', headerTitleStyle: { alignSelf: 'center' } }}
       />
     </HomeStack.Navigator>
   );
@@ -104,7 +104,7 @@ function ChallengeNavigator() {
       <ChallengeStack.Screen
         name="ChallengeScreen"
         component={ChallengeScreen}
-        options={{ headerTitle: 'Challenge Mode' }}
+        options={{ headerTitle: 'Challenge Mode', headerTitleStyle: { alignSelf: 'center' }}}
       />
     </ChallengeStack.Navigator>
   );
@@ -118,7 +118,7 @@ function DictionaryNavigator() {
       <DictionaryStack.Screen
         name="DictionaryScreen"
         component={DictionaryScreen}
-        options={{ headerTitle: 'My Words' }}
+        options={{ headerTitle: 'My Words', headerTitleStyle: { alignSelf: 'center' }}}
       />
     </DictionaryStack.Navigator>
   );
@@ -132,7 +132,7 @@ function MeMaNavigator() {
       <MeMaStack.Screen
         name="MeMaScreen"
         component={MeMaScreen}
-        options={{ headerTitle: 'Talk to MeMa' }}
+        options={{ headerTitle: 'Talk to MeMa', headerTitleStyle: { alignSelf: 'center' }}}
       />
     </MeMaStack.Navigator>
   );
@@ -146,7 +146,7 @@ function ProfileNavigator() {
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: 'Profile' }}
+        options={{ headerTitle: 'Profile', headerTitleStyle: { alignSelf: 'center' } }}
       />
     </ProfileStack.Navigator>
   );
@@ -160,7 +160,7 @@ function WOTDNavigator() {
       <WOTDStack.Screen
         name="WOTDScreen"
         component={WOTDScreen}
-        options={{ headerTitle: 'Word of the Day' }}
+        options={{ headerTitle: 'Word of the Day', headerTitleStyle: { alignSelf: 'center' } }}
       />
     </WOTDStack.Navigator>
   );
