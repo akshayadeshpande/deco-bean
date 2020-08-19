@@ -6,14 +6,34 @@ export default {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Home: {
             screens: {
-              TabOneScreen: 'one',
+              HomeScreen: 'home',
             },
           },
-          TabTwo: {
+          Challenge: {
             screens: {
-              TabTwoScreen: 'two',
+              ChallengeScreen: 'challenge',
+            },
+          },
+          Dictionary: {
+            screens: {
+              DictionaryScreen: 'myWords',
+            },
+          },
+          MeMa: {
+            screens: {
+              MeMaScreen: 'mema',
+            },
+          },
+          Profile: {
+            screens: {
+              ProfileScreen: 'profile',
+            },
+          },
+          WOTD: {
+            screens: {
+              WOTDScreen: 'wordOfTheDay',
             },
           },
         },

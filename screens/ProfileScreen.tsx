@@ -4,14 +4,12 @@ import { StyleSheet } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-export default function WOTDScreen() {
+export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Word of the Day</Text>
+      <Text style={styles.title}>Profile</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Text style={styles.text}>This view will either move to the home screen or be altered per design. 
-        Placeholder so we can easily test results of changes.
-      </Text>
+      <Text style={styles.text}>User Profile Screen</Text>
     </View>
   );
 }
