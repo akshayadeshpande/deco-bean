@@ -2,6 +2,7 @@
   "expo": {
     "name": "Bean",
     "slug": "Bean",
+    "sdkVersion": "38.0.8",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
