@@ -15,16 +15,12 @@ export default function DictionaryScreen() {
       <View style={styles.headingContain}>
       <Text style={styles.title}>My Words</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Text style={styles.text}>"My Words" Dictionary</Text>
-      </View>
+    </View>
 
-      <View style={styles.containter2}>
+    <View style={styles.containter2}>
       <SectionList
-          sections={[
-            {title: 'D', data: ['Devin', 'Dan', 'Dominic']},
-            {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
-          ]}
-          renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+          sections={DictionaryData}
+          renderItem={({item}) => <NavTouchButton screenName="Profile" text={item} />}
           renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
           keyExtractor={(item, index) => item} //Unique words only
         />
@@ -33,6 +29,11 @@ export default function DictionaryScreen() {
     </View>
   );
 }
+
+const DictionaryData = [
+  {title: 'D', data: ['Devin', 'Dan', 'Dominic']},
+  {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
+]
 
 const styles = StyleSheet.create({
   container: {
