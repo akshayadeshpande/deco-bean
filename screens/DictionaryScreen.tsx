@@ -20,7 +20,7 @@ export default function DictionaryScreen() {
     <View style={styles.containter2}>
       <SectionList
           sections={DictionaryData}
-          renderItem={({item}) => <NavTouchButton screenName="Profile" text={item} />}
+          renderItem={({item}) => <NavTouchButton screenName="Home" text={item} />}
           renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
           keyExtractor={(item, index) => item} //Unique words only
         />
@@ -31,8 +31,18 @@ export default function DictionaryScreen() {
 }
 
 const DictionaryData = [
-  {title: 'D', data: ['Devin', 'Dan', 'Dominic']},
-  {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
+  {title: 'A', data: ['Apple']},
+  {title: 'B', data: ['Ball', 'Big']},
+  {title: 'C', data: ['Car', 'Cat', 'Cold']},
+  {title: 'D', data: ['Dog']},
+  {title: 'E', data: ['Elephant']},
+  {title: 'F', data: ['Friend']},
+  {title: 'G', data: ['Goodbye']},
+  {title: 'H', data: ['Happy', 'Hello', 'Home']},
+  {title: 'L', data: ['Laptop']},
+  {title: 'S', data: ['School', 'Small']},
+  {title: 'T', data: ['Tall', 'To Eat', 'To Play', 'To Run', 'To Talk', 'To Walk']},
+  {title: 'W', data: ['Warm']},
 ]
 
 const styles = StyleSheet.create({
