@@ -35,3 +35,7 @@ export type ProfileParamList = {
 export type WOTDParamList = {
   WOTDScreen: undefined;
 };
+
+export type OWParamList = {
+  OldWordScreen: undefined;
+};
