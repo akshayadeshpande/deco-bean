@@ -4,9 +4,36 @@ import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
+import * as firebase from 'firebase';
+
+
+
+
+var count = 0;
+
+var imgs = [ 
+  'https://reactnativecode.com/wp-content/uploads/2018/02/motorcycle.jpg',
+  'https://reactnativecode.com/wp-content/uploads/2017/10/Guitar.jpg',
+  ];
+
+  var renderBefore = false;
+
+  var store : firebase.storage.Storage;
 
 
 export default function ChallengeScreen() {
+  /*There is something with react that makes it unable to call function in useState to initalize
+    so a default pic must be used or the first image url must be given and the inital state
+    and the first value of the images array below
+  */
+
+  if (!renderBefore) {
+    store = firebase.storage();
+    allImg(store, imgs);
+    renderBefore = true;
+  }
+ 
+  
   const [img, newImg] = useState('https://reactnativecode.com/wp-content/uploads/2018/02/motorcycle.jpg');
   return (
     <View style={styles.container}>
@@ -21,11 +48,34 @@ export default function ChallengeScreen() {
               style = {styles.imageStyle} />
 
         <Button title="Click Here To Load Image From Different Source" onPress={
-          () => newImg('https://reactnativecode.com/wp-content/uploads/2017/10/Guitar.jpg')
+          () => newImg(changeImg(store))
         } />
       </View>
     </View>
   );
+}
+
+  async function allImg (store : firebase.storage.Storage, imgs : String[]) {
+  var storeRef = store.ref('Images');
+  await storeRef.child('Ball.jpg').getDownloadURL().then((url) => imgs.push(url));
+  console.log(imgs);
+}
+
+ function changeImg(store : firebase.storage.Storage) {
+  var size = imgs.length
+  changeCount(size);
+  var pic = imgs[count];
+  return pic;
+}
+
+function changeCount(size: number) {
+  if (count == (size - 1)) {
+    count = 0;
+  } else {
+    count = count + 1;
+  }
+  console.log("New Press");
+  console.log(count);
 }
 
 const styles = StyleSheet.create({
@@ -62,30 +112,3 @@ const styles = StyleSheet.create({
     resizeMode: 'center'
    }
 });
-
-
-/*
-export default function ChallengeScreen() {
-  var i = 0;
-  const testChallenge = ["This", "is", "a", "Test"];
-  var word = testChallenge[i];
-  
-  return (
-    <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Challenge Mode</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      </View>
-      <View style={styles.CMContainer}>
-        <Text style={styles.text}>
-          {word}
-          </Text>
-          <Button
-            title="New Word"
-            onPress={() => i = i+ 1}
-            />
-      </View>
-    </View>
-  );
-}
-*/
