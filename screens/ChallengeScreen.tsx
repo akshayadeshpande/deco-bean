@@ -57,9 +57,20 @@ export default function ChallengeScreen() {
 
   async function allImg (store : firebase.storage.Storage, imgs : String[]) {
   var storeRef = store.ref('Images');
-  await storeRef.child('Ball.jpg').getDownloadURL().then((url) => imgs.push(url));
+  await storeRef.listAll().then(function(result) {
+    result.items.forEach(function(refToImg) {
+      getAllImg(refToImg);
+    })
+  }).catch(function(error) {
+    console.error(error);
+  });
+  //await storeRef.child('Ball.jpg').getDownloadURL().then((url) => imgs.push(url));
   console.log(imgs);
 }
+
+  async function getAllImg(refToImg : firebase.storage.Reference) {
+    await refToImg.getDownloadURL().then((url) => imgs.push(url));
+  }
 
  function changeImg(store : firebase.storage.Storage) {
   var size = imgs.length
