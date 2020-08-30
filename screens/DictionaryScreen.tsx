@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { StyleSheet, Button, SectionList, TouchableOpacity} from 'react-native';
+import { StyleSheet, SectionList, TouchableOpacity} from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { preventAutoHide } from 'expo-splash-screen';
+import DictionaryList from '../components/DictionaryList';
+
 
 /*
  * Dictionary screen retrieves word list from db for navigation.
@@ -27,38 +29,14 @@ export default function DictionaryScreen(props) {
       </View>
 
       <View style={styles.listContainer}>
-        <SectionList
-            sections={DictionaryData}
-            renderItem={({item}) => 
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => props.navigation.navigate('WordScreen', { word: {item} })}>
-                <Text style={styles.item}>{item}</Text>
-              </TouchableOpacity>
-            }
-            renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-            keyExtractor={(item, index) => item} //Unique words only
-          />
-        </View>
+        <DictionaryList {...props} />
+
+      </View>
 
     </View>
   );
 }
 
-const DictionaryData = [
-  {title: 'A', data: ['Apple']},
-  {title: 'B', data: ['Ball', 'Big']},
-  {title: 'C', data: ['Car', 'Cat', 'Cold']},
-  {title: 'D', data: ['Dog']},
-  {title: 'E', data: ['Elephant']},
-  {title: 'F', data: ['Friend']},
-  {title: 'G', data: ['Goodbye']},
-  {title: 'H', data: ['Happy', 'Hello', 'Home']},
-  {title: 'L', data: ['Laptop']},
-  {title: 'S', data: ['School', 'Small']},
-  {title: 'T', data: ['Tall', 'To Eat', 'To Play', 'To Run', 'To Talk', 'To Walk']},
-  {title: 'W', data: ['Warm']},
-]
 
 const styles = StyleSheet.create({
   container: {

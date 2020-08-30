@@ -4,9 +4,8 @@ import { StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 
 export default function WordScreen(props) {
-  console.log(props);
   const { word } = props.route.params;
-  console.log(word)
+  console.log("Word Screen got word: " + word.item);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{word.item}</Text>
