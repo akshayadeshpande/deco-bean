@@ -37,6 +37,7 @@ async function populateDictionary(setWordList) {
   const db = firebase.firestore()
   const wordsRef = db.collection('WordData');
   // Create word collection with title categories
+  // Right now this sorts the words into language, pending a better way to do the dictionary.
   let wordCollection = [
     {title: 'English', data: []},
     {title: 'Spanish', data: []},
@@ -55,6 +56,8 @@ async function populateDictionary(setWordList) {
           category.data.push(doc.data()['SP']);
         } else if (category.title === 'Chinese') {
           category.data.push(doc.data()['CH']);
+        } else {
+          console.log(`Failed to process ${category.title}...`)
         }
       })
     });
