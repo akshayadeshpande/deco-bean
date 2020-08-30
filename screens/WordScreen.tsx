@@ -1,20 +1,19 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-export default function OWScreen() {
+export default function WordScreen(props) {
+  console.log(props);
+  const { word } = props.route.params;
+  console.log(word)
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Word of the Day</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Text style={styles.text}>This view will either move to the home screen or be altered per design. 
-        Placeholder so we can easily test results of changes.
-      </Text>
+      <Text style={styles.title}>{word.item}</Text>
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {

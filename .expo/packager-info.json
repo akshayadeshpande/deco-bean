@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 19372,
-  "expoServerNgrokUrl": "https://jj-pjz.anonymous.deco-bean.exp.direct",
-  "packagerNgrokUrl": "https://packager.jj-pjz.anonymous.deco-bean.exp.direct",
-  "ngrokPid": 9756,
+  "packagerPid": 18200,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
