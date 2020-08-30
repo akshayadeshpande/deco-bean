@@ -3,14 +3,20 @@ import { useState } from 'react';
 import { StyleSheet, SectionList, TouchableOpacity} from 'react-native';
 // Purely for suppressing a known react native bug warning for android timers
 import { YellowBox } from 'react-native';
-
+import { Text } from './Themed';
 import * as firebase from 'firebase';
 
-import { Text } from './Themed';
 
-
-
-
+/*
+ * DictionaryList component for Dictionary screen.
+ *
+ * Collects data Firestore and populates dictionary based on language.
+ * 
+ * Currently does not filter, and does not have search functionality.
+ * 
+ * @param {react.Props} props Properties passed to this screen.
+ * @return DictioanryList render.
+ */
 export default function DictionaryList(props) {
   // Ignore that timer warning that is a known bug in react native.
   YellowBox.ignoreWarnings(['Setting a timer']);
