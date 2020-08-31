@@ -3,6 +3,15 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 
+
+/*
+ * Word Screen displays detailed word information and interaction.
+ *
+ * Accessed via dictionary.
+ * 
+ * @param {react.Props} props Properties passed to this screen.
+ * @return Word screen render
+ */
 export default function WordScreen(props) {
   const { word } = props.route.params;
   console.log("Word Screen got word: " + word.item);
