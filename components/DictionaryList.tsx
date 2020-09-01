@@ -21,7 +21,10 @@ export default function DictionaryList(props) {
   // Ignore that timer warning that is a known bug in react native.
   YellowBox.ignoreWarnings(['Setting a timer']);
   const [wordList, setWordList] = useState([{title: 'category', data: ['data']}]);
-  populateDictionary(setWordList);
+  console.log("Init")
+  // populateDictionary(setWordList);
+  setWordList([{title: 'category', data: ['data']}, {title: 'category2', data: ['data']}]);
+  console.log("Set Words Fake");
 
   return (
     <SectionList
