@@ -74,7 +74,6 @@ async function populateDictionary(setWordList) {
     // TODO: Figure out in doc.data push: Argument of type 'any' is not assignable to parameter of type 'never'
     // It doesn't stop anythin from working...
     data.forEach(doc => {
-      console.log(doc.id, '=>', doc.data());
       wordCollection.forEach(category => {
         if (category.title === 'English') {
           category.data.push(doc.data()['EN']);
