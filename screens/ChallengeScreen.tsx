@@ -16,9 +16,6 @@ export default function ChallengeScreen(props) {
     and the first value of the images array below
   */
 
- 
-  
-  const [img, newImg] = useState('https://reactnativecode.com/wp-content/uploads/2018/02/motorcycle.jpg');
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
