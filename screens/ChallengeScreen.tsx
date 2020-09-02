@@ -18,13 +18,7 @@ export default function ChallengeScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Challenge Mode</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      </View>
-      <View style={styles.CMContainer}>
       <ChallengeComponent {...props}/>
-      </View>
     </View>
   );
 }
@@ -38,7 +32,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleContainer: {
-    flex: 1,
+    flex: 0,
     alignItems: 'center',
     justifyContent: 'center',
   },
