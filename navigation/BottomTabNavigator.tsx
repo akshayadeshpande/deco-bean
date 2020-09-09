@@ -11,6 +11,7 @@ import DictionaryScreen from '../screens/DictionaryScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import MeMaScreen from '../screens/MeMaScreen';
 import WOTDScreen from '../screens/WOTDScreen';
+import RegisterScreen from '../screens/Register';
 import { BottomTabParamList, 
           HomeParamList, 
           ChallengeParamList,
@@ -65,7 +66,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="MeMa"
-        component={MeMaNavigator}
+        component={RegisterScreen}
         options={{
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={24} color={color} />,
         }}
