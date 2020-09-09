@@ -4,29 +4,26 @@ import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
+import * as firebase from 'firebase';
+import 'firebase/firestore';
+import ChallengeComponent from '../components/ChallengeComponent';
 
 
-export default function ChallengeScreen() {
-  const [img, newImg] = useState('https://reactnativecode.com/wp-content/uploads/2018/02/motorcycle.jpg');
+
+export default function ChallengeScreen(props) {
+  /*There is something with react that makes it unable to call function in useState to initalize
+    so a default pic must be used or the first image url must be given and the inital state
+    and the first value of the images array below
+  */
+
   return (
     <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Challenge Mode</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      </View>
-      <View style={styles.CMContainer}>
-      <Image 
-              source = {{ uri: img}}
- 
-              style = {styles.imageStyle} />
-
-        <Button title="Click Here To Load Image From Different Source" onPress={
-          () => newImg('https://reactnativecode.com/wp-content/uploads/2017/10/Guitar.jpg')
-        } />
-      </View>
+      <ChallengeComponent {...props}/>
     </View>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +32,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleContainer: {
-    flex: 1,
+    flex: 0,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -62,30 +59,3 @@ const styles = StyleSheet.create({
     resizeMode: 'center'
    }
 });
-
-
-/*
-export default function ChallengeScreen() {
-  var i = 0;
-  const testChallenge = ["This", "is", "a", "Test"];
-  var word = testChallenge[i];
-  
-  return (
-    <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Challenge Mode</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      </View>
-      <View style={styles.CMContainer}>
-        <Text style={styles.text}>
-          {word}
-          </Text>
-          <Button
-            title="New Word"
-            onPress={() => i = i+ 1}
-            />
-      </View>
-    </View>
-  );
-}
-*/
