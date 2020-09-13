@@ -19,6 +19,7 @@ export default {
           Dictionary: {
             screens: {
               DictionaryScreen: 'myWords',
+              WordScreen: 'wordDetails',
             },
           },
           MeMa: {
@@ -31,9 +32,9 @@ export default {
               ProfileScreen: 'profile',
             },
           },
-          WOTD: {
+          Word: {
             screens: {
-              WOTDScreen: 'wordOfTheDay',
+              WordScren: 'wordDetails',
             },
           },
         },

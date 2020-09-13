@@ -3,15 +3,15 @@ import { FontAwesome } from '@expo/vector-icons';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-export default function NavTouchButton({ screenName, text, iconName }) {
+export default function NavTouchButton(props) {
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
       style={styles.button}
-      onPress={() => navigation.navigate(screenName)}>
-      <Text style={styles.text}>{text}</Text>
-      <FontAwesome name={iconName} size={32} color="black" />
+      onPress={() => navigation.navigate(props.screenName)}>
+      <Text style={styles.text}>{props.text}</Text>
+      {props.iconName ? <FontAwesome name={props.iconName} size={32} color="black" /> : null}
     </TouchableOpacity>
   );
 }

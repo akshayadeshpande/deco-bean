@@ -10,14 +10,13 @@ import ChallengeScreen from '../screens/ChallengeScreen';
 import DictionaryScreen from '../screens/DictionaryScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import MeMaScreen from '../screens/MeMaScreen';
-import WOTDScreen from '../screens/WOTDScreen';
+import WordScreen from '../screens/WordScreen';
 import { BottomTabParamList, 
           HomeParamList, 
           ChallengeParamList,
           DictionaryParamList, 
           MeMaParamList,
-          ProfileParamList, 
-          WOTDParamList } from '../types';
+          ProfileParamList} from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -42,13 +41,6 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <FontAwesome name="user" size={32} color={color} />,
         }}
       />
-      {/* <BottomTab.Screen
-        name="WOTD"
-        component={WOTDNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-        }}
-      /> */}
       <BottomTab.Screen
         name="Dictionary"
         component={DictionaryNavigator}
@@ -120,6 +112,11 @@ function DictionaryNavigator() {
         component={DictionaryScreen}
         options={{ headerTitle: 'My Words', headerTitleStyle: { alignSelf: 'center' }}}
       />
+      <DictionaryStack.Screen
+        name="WordScreen"
+        component={WordScreen}
+        options={{ headerTitle: 'Word Details', headerTitleStyle: { alignSelf: 'center' }}}
+      />
     </DictionaryStack.Navigator>
   );
 }
@@ -149,19 +146,5 @@ function ProfileNavigator() {
         options={{ headerTitle: 'Profile', headerTitleStyle: { alignSelf: 'center' } }}
       />
     </ProfileStack.Navigator>
-  );
-}
-
-const WOTDStack = createStackNavigator<WOTDParamList>();
-
-function WOTDNavigator() {
-  return (
-    <WOTDStack.Navigator>
-      <WOTDStack.Screen
-        name="WOTDScreen"
-        component={WOTDScreen}
-        options={{ headerTitle: 'Word of the Day', headerTitleStyle: { alignSelf: 'center' } }}
-      />
-    </WOTDStack.Navigator>
   );
 }
