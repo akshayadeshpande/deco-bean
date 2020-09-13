@@ -38,15 +38,17 @@ export default function DictionaryScreen(props) {
           }}>
           <Picker.Item label="English" value="English" />
           <Picker.Item label="Chinese" value="Chinese" />
-          <Picker.Item label="Español" value="Español" />
+          <Picker.Item label="Spanish" value="Spanish" />
         </Picker>
         <Text style={{marginHorizontal: 25}}>* By default language picker will show selected language
         based on profile. This is not implemented yet.
         </Text>
+        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       </View>
 
+
       <View style={styles.listContainer}>
-        <DictionaryList {...props} />
+        <DictionaryList language={activeLanguage} />
 
       </View>
 
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   headingContainer: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
