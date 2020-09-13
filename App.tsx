@@ -1,13 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
+import * as firebase from 'firebase';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-
-import * as firebase from 'firebase';
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyC-K9bYAv1RIsbE29iE9xRHiT_3XyWzwZ0",
@@ -25,6 +23,7 @@ firebase.initializeApp(firebaseConfig);
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
+  
 
   if (!isLoadingComplete) {
     return null;
