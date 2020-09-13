@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { StyleSheet, SectionList, TouchableOpacity} from 'react-native';
+import {Picker} from '@react-native-community/picker';
 
 import { Text, View } from '../components/Themed';
 import { preventAutoHide } from 'expo-splash-screen';
@@ -20,12 +22,27 @@ import DictionaryList from '../components/DictionaryList';
  */
 export default function DictionaryScreen(props) {
 
+  const [activeLanguage, setActiveLanguage] = useState("English");
+  console.log(`Active language set to: ${activeLanguage}`)
+
   return (
     <View style={styles.container}>
 
       <View style={styles.headingContainer}>
-        <Text style={styles.title}>My Words</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+        <Text style={styles.title}>Pick a Language</Text>
+        <Picker
+          selectedValue={activeLanguage}
+          style={{height: 50, width: '50%'}}
+          onValueChange={(itemValue, itemIndex) => {
+            setActiveLanguage(itemValue);
+          }}>
+          <Picker.Item label="English" value="English" />
+          <Picker.Item label="Chinese" value="Chinese" />
+          <Picker.Item label="Español" value="Español" />
+        </Picker>
+        <Text style={{marginHorizontal: 25}}>* By default language picker will show selected language
+        based on profile. This is not implemented yet.
+        </Text>
       </View>
 
       <View style={styles.listContainer}>
