@@ -9,7 +9,6 @@ export type BottomTabParamList = {
   Dictionary: undefined;
   MeMa: undefined;
   Profile: undefined;
-  WOTD: undefined;
 };
 
 export type HomeParamList = {
@@ -22,6 +21,7 @@ export type ChallengeParamList = {
 
 export type DictionaryParamList = {
   DictionaryScreen: undefined;
+  WordScreen: undefined;
 };
 
 export type MeMaParamList = {
@@ -30,12 +30,4 @@ export type MeMaParamList = {
 
 export type ProfileParamList = {
   ProfileScreen: undefined;
-};
-
-export type WOTDParamList = {
-  WOTDScreen: undefined;
-};
-
-export type OWParamList = {
-  OldWordScreen: undefined;
 };
