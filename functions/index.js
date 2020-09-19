@@ -48,7 +48,7 @@ exports.startChallenge = functions.https.onRequest(async (req, res) => {
 exports.getUsers = functions.https.onRequest(async (req, res) => {
     try{
 
-        let result = await admin.firestore().collection('User').get(); //TODO: add query if needed
+        let result = await admin.firestore().collection('users').get(); //TODO: add query if needed
         let response = [];
       
         result.forEach(doc => {
@@ -61,6 +61,15 @@ exports.getUsers = functions.https.onRequest(async (req, res) => {
         res.status(500).send(err);
     }
   });
+
+exports.getMe = functions.https.onCall(async (data, context) => {
+  try{
+    console.log(context)
+    console.log(data)
+  } catch (err) {
+    return {status: 'error', code: 401, message: 'Not signed in'}
+  }
+})
 
 
 
