@@ -55,8 +55,9 @@ export default function DictionaryList(props) {
       renderItem={({item}) => 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation })}>
-          <Text style={styles.item}>Word: {item.word} | English: {item.translation}</Text>
+          onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation, imgURL: item.imgURL })}>
+          <Text style={styles.item}>{item.word}</Text>
+          <Text style={styles.item}>Translation: {item.translation}</Text>
         </TouchableOpacity>
       }
       renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title} Dictionary</Text>}
@@ -72,17 +73,21 @@ function constructWordList(language, wordData, setWordList) {
   wordData.forEach(wordDoc => {
     switch(language) {
       case 'Chinese':
-        wordList[0].data.push({'word': wordDoc['CH'], 'translation': wordDoc['EN']});
+        wordList[0].data.push({'word': wordDoc['CH'], 'translation': wordDoc['EN'], 'imgURL': wordDoc['URL']});
         break;
       case 'English':
-        wordList[0].data.push({'word': wordDoc['EN'], 'translation': wordDoc['EN']});
+        wordList[0].data.push({'word': wordDoc['EN'], 'translation': wordDoc['EN'], 'imgURL': wordDoc['URL']});
         break;
       case 'Spanish':
-        wordList[0].data.push({'word': wordDoc['SP'], 'translation': wordDoc['EN']});
+        wordList[0].data.push({'word': wordDoc['SP'], 'translation': wordDoc['EN'], 'imgURL': wordDoc['URL']});
         break;
       default:
         break;
     }
+  });
+  // Sort by language
+  wordList[0].data.sort((data1, data2) => {
+    return data1.word.localeCompare(data2.word)
   });
   setWordList(wordList);
 

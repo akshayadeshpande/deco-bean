@@ -22,7 +22,7 @@ import DictionaryList from '../components/DictionaryList';
  */
 export default function DictionaryScreen(props) {
   // States
-  const [activeLanguage, setActiveLanguage] = useState("English");
+  const [activeLanguage, setActiveLanguage] = useState("Spanish");
   console.log(`Active language set to: ${activeLanguage}`)
   const [dictionaryData, setDictionaryData] = useState([])
   const [userWords, setUserWords] = useState([{'language': 'Spanish', 'words': ['Manzana, Pelota, Grande']}])
@@ -42,7 +42,7 @@ export default function DictionaryScreen(props) {
    * that is a bool that when true will run the update (say with a refresh button).
    */
   useEffect(() => {
-    getWords(setDictionaryData);
+    getWords(activeLanguage, setDictionaryData);
   }, []);
 
   return (
@@ -56,8 +56,8 @@ export default function DictionaryScreen(props) {
           onValueChange={(itemValue, itemIndex) => {
             setActiveLanguage(itemValue);
           }}>
-          <Picker.Item label="English" value="English" />
           <Picker.Item label="Chinese" value="Chinese" />
+          <Picker.Item label="English" value="English" />
           <Picker.Item label="Spanish" value="Spanish" />
         </Picker>
         <Text style={{marginHorizontal: 25}}>* By default language picker will show selected language
@@ -88,7 +88,7 @@ export default function DictionaryScreen(props) {
  * Retrieve words from firestore.
  * @param setWordData {function} Sets the wordData state.
  */
-async function getWords(setDictionaryData) {
+async function getWords(language, setDictionaryData) {
   const db = firebase.firestore()
   const wordsRef = db.collection('WordData');
   // Create word collection with title categories
@@ -106,10 +106,6 @@ async function getWords(setDictionaryData) {
   }).catch(error => {
     console.log("Error in getWords(), DictionaryScreen.");
     console.log(error);
-  });
-  // Sort dictionary by English Alphabetical Order
-  dictionary.sort((word1, word2) => {
-    return word1.EN.localeCompare(word2.EN)
   });
   console.log("Dictionary data retrieved.");
   console.log(dictionary);
