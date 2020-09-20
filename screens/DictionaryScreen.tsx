@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { StyleSheet, SectionList, TouchableOpacity} from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
+import {Picker} from '@react-native-community/picker';
+import * as firebase from 'firebase';
 
 import { Text, View } from '../components/Themed';
-import { preventAutoHide } from 'expo-splash-screen';
 import DictionaryList from '../components/DictionaryList';
 
 
@@ -19,22 +21,95 @@ import DictionaryList from '../components/DictionaryList';
  * @return Dictioanry Screen render.
  */
 export default function DictionaryScreen(props) {
+  // States
+  const [activeLanguage, setActiveLanguage] = useState("Spanish");
+  console.log(`Active language set to: ${activeLanguage}`)
+  const [dictionaryData, setDictionaryData] = useState([])
+  const [userWords, setUserWords] = useState([{'language': 'Spanish', 'words': ['Manzana, Pelota, Grande']}])
+
+  /* useEffect is a hook that runs when the component is mounted.
+   * Docs: https://reactjs.org/docs/hooks-effect.html
+   * 
+   * Note that there is a second argument which is an array after the arrow function:
+   *  useEffect( () => {..}, []);
+   * 
+   * This array tells react when to use the effect. When the array is empty it will 
+   * only run once on first render. So this is a good hook to use for one time db reads.
+   * 
+   * If the state is updated again later it should re-render based on how React Native works.
+   * 
+   * For instance if you want a trigger to make the effect happen again, you could set a state
+   * that is a bool that when true will run the update (say with a refresh button).
+   */
+  useEffect(() => {
+    getWords(setDictionaryData);
+  }, []);
 
   return (
     <View style={styles.container}>
 
       <View style={styles.headingContainer}>
-        <Text style={styles.title}>My Words</Text>
+        <Text style={styles.title}>Pick a Language</Text>
+        <Picker
+          selectedValue={activeLanguage}
+          style={{height: 50, width: '50%'}}
+          onValueChange={(itemValue, itemIndex) => {
+            setActiveLanguage(itemValue);
+          }}>
+          <Picker.Item label="Chinese" value="Chinese" />
+          <Picker.Item label="English" value="English" />
+          <Picker.Item label="Spanish" value="Spanish" />
+        </Picker>
+        <Text style={{marginHorizontal: 25}}>* By default language picker will show selected language
+        based on profile. This is not implemented yet.
+        </Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       </View>
 
+
       <View style={styles.listContainer}>
-        <DictionaryList {...props} />
+        <DictionaryList 
+          language={activeLanguage} 
+          wordData={dictionaryData} 
+          userWords={userWords}
+        />
 
       </View>
 
     </View>
   );
+}
+
+/*
+ * DICTIONARY PARENT FUNCTIONS
+ */
+
+/*
+ * Retrieve words from firestore.
+ * @param setWordData {function} Sets the wordData state.
+ */
+async function getWords(setDictionaryData) {
+  const db = firebase.firestore()
+  const wordsRef = db.collection('WordData');
+  // Create word collection with title categories
+  // Right now this sorts the words into language, pending a better way to do the dictionary.
+  console.log("Dictionary data is loading...");
+  // myWords is a dummy collection for user words.
+  let dictionary = [];
+
+  await wordsRef.get().then(data => {
+    // TODO: Figure out in doc.data push: Argument of type 'any' is not assignable to parameter of type 'never'
+    // It doesn't stop anythin from working...
+    data.forEach(doc => {
+        dictionary.push(doc.data());
+    })
+  }).catch(error => {
+    console.log("Error in getWords(), DictionaryScreen.");
+    console.log(error);
+  });
+  console.log("Dictionary data retrieved.");
+  console.log(dictionary);
+  setDictionaryData(dictionary);
 }
 
 
@@ -45,12 +120,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   headingContainer: {
-    flex: 1,
+    flex: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
   listContainer: {
-    flex: 3,
+    flex: 4,
     alignItems: 'stretch',
     justifyContent: 'flex-start',
   },
