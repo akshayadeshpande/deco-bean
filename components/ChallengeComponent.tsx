@@ -6,8 +6,8 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-
-
+import 'firebase/functions';
+import 'firebase/auth';
 
 var count = 0;
 
@@ -32,9 +32,13 @@ export default function ChallengeComponent(props) {
     useEffect(() => {
         dbh = firebase.firestore();
         makeWordURLDict(dbh);
-
-        // allWords(dbh, dictWords);
-        // allImg(store);
+        var test = firebase.functions().httpsCallable('getRandomWords')
+        test({}).then(function(result){
+          console.log(result);
+          console.log("HERE");
+        }).catch(function(err){
+          console.log(err);
+        })
         
     },[]);
     //TODO: Need a new default pic to begin OR somehow have a better original state

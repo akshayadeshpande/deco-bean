@@ -28,7 +28,7 @@ exports.getWords = functions.https.onRequest(async (req, res) => {
   });
 
 
-exports.startChallenge = functions.https.onRequest(async (req, res) => {
+exports.startChallenge = functions.https.onCall(async (data, context) => {
     try{
 
         let result = await admin.firestore().collection('WordData').get(); //TODO: add query if needed
@@ -37,7 +37,7 @@ exports.startChallenge = functions.https.onRequest(async (req, res) => {
         result.forEach(doc => {
           response.push(doc.data());
         });
-      
+        
         return res.send( { "collection" : response} );
       
     }catch(err){
@@ -68,6 +68,39 @@ exports.getMe = functions.https.onCall(async (data, context) => {
     console.log(data)
   } catch (err) {
     return {status: 'error', code: 401, message: 'Not signed in'}
+  }
+})
+
+
+//Generates a random number that includes the given numbers
+var getRandomIntInclusive = ( (min, max) => {
+min = Math.ceil(min);
+max = Math.floor(max);
+return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive 
+})
+
+exports.getRandomWords = functions.https.onCall(async(data, context) => {
+  try{
+    var max = 21;
+    var min = 0;
+
+    var randomNums = new Set();
+    while(randomNums.size < 10){
+      randomNums.add('Word' + Math.floor(Math.random() * (max - min + 1) + min));
+    }
+
+    var words = (await admin.firestore().collection('WordData').where(admin.firestore.FieldPath.documentId(), 
+      'in', Array.from(randomNums)).get());
+    var wordsp2 = [];
+    words.forEach((wordData) => wordsp2.push(wordData.data()))
+
+    
+    console.log(wordsp2);
+   
+    return {output: wordsp2, code: 200}
+  } catch (err) {
+    console.log(err);
+    return {status:'error', code: 401, message: err}
   }
 })
 
