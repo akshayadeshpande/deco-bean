@@ -13,11 +13,12 @@ import { Text, View } from '../components/Themed';
  * @return Word screen render
  */
 export default function WordScreen(props) {
-  const { word } = props.route.params;
-  console.log("Word Screen got word: " + word.item);
+  const params = props.route.params;
+  console.log("Word Screen got word: " + params.word);
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{word.item}</Text>
+      <Text style={styles.title}>{params.word}</Text>
+      <Text style={styles.title}>Translation: {params.translation}</Text>
     </View>
   );
 }

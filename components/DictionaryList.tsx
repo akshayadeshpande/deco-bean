@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 // Purely for suppressing a known react native bug warning for android timers
 import { YellowBox } from 'react-native';
 import { Text } from './Themed';
-import * as firebase from 'firebase';
+
 
 
 /*
@@ -23,9 +23,12 @@ export default function DictionaryList(props) {
   YellowBox.ignoreWarnings(['Setting a timer']);
   const navigation = useNavigation();
   // State
-  const [wordList, setWordList] = useState([{title: 'category', data: ['data']}]);
+  const [wordList, setWordList] = useState(
+    [{title: 'category', data: [{word: 'word', translation: 'translation'}]}]
+  );
   console.log("Init Dictionary List")
   console.log(`Language: ${props.language}`)
+  console.log(wordList)
 
   /* useEffect is a hook that runs when the component is mounted.
    * Docs: https://reactjs.org/docs/hooks-effect.html
@@ -42,67 +45,51 @@ export default function DictionaryList(props) {
    * that is a bool that when true will run the update (say with a refresh button).
    */
   useEffect(() => {
-    populateDictionary(setWordList);
-  }, []);
+    // Construct a word list if wordData, userWords, or selected language has changed.
+    constructWordList(props.language, props.wordData, setWordList)
+  }, [props.wordData, props.language]);
   
   return (
     <SectionList
-      sections={wordList.filter(element => element.title === props.language)}
+      sections={wordList}
       renderItem={({item}) => 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('WordScreen', { word: {item} })}>
-          <Text style={styles.item}>{item}</Text>
+          onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation })}>
+          <Text style={styles.item}>Word: {item.word} | English: {item.translation}</Text>
         </TouchableOpacity>
       }
       renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title} Dictionary</Text>}
-      keyExtractor={(item, index) => item} //Unique words only
+      keyExtractor={(item, index) => item.word} //Unique words only
     />
   );
 }
 
-async function populateDictionary(setWordList) {
-  const db = firebase.firestore()
-  const wordsRef = db.collection('WordData');
-  // // Create word collection with title categories
-  // // Right now this sorts the words into language, pending a better way to do the dictionary.
-  console.log("Dictionary List is populating...");
-  let wordCollection = [
-    {title: 'English', data: []},
-    {title: 'Spanish', data: []},
-    {title: 'Chinese', data: []}
-  ];
-
-
-  await wordsRef.get().then(data => {
-    // TODO: Figure out in doc.data push: Argument of type 'any' is not assignable to parameter of type 'never'
-    // It doesn't stop anythin from working...
-    data.forEach(doc => {
-      wordCollection.forEach(category => {
-        if (category.title === 'English') {
-          category.data.push(doc.data()['EN']);
-        } else if (category.title === 'Spanish') {
-          category.data.push(doc.data()['SP']);
-        } else if (category.title === 'Chinese') {
-          category.data.push(doc.data()['CH']);
-        } else {
-          console.log(`Failed to process ${category.title}...`)
-        }
-      })
-    });
-    // Sort
-    wordCollection.forEach(category => {
-      category.data.sort();
-    })
-    // Update
-    setWordList(wordCollection);
-    console.log("Dictionary List populated...");
-    console.log(wordCollection);
-  }).catch(error => {
-    console.log(`ERROR: ${error}`)
+function constructWordList(language, wordData, setWordList) {
+  // My Words is just dummy data for now
+  let wordList = [{title: language, data: []}]
+  // Construct active word list, default translation is English
+  wordData.forEach(wordDoc => {
+    switch(language) {
+      case 'Chinese':
+        wordList[0].data.push({'word': wordDoc['CH'], 'translation': wordDoc['EN']});
+        break;
+      case 'English':
+        wordList[0].data.push({'word': wordDoc['EN'], 'translation': wordDoc['EN']});
+        break;
+      case 'Spanish':
+        wordList[0].data.push({'word': wordDoc['SP'], 'translation': wordDoc['EN']});
+        break;
+      default:
+        break;
+    }
   });
-  
+  setWordList(wordList);
+
 }
+
+
+
 
 const styles = StyleSheet.create({
     item: {
