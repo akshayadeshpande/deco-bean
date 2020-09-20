@@ -42,7 +42,7 @@ export default function DictionaryScreen(props) {
    * that is a bool that when true will run the update (say with a refresh button).
    */
   useEffect(() => {
-    getWords(activeLanguage, setDictionaryData);
+    getWords(setDictionaryData);
   }, []);
 
   return (
@@ -88,7 +88,7 @@ export default function DictionaryScreen(props) {
  * Retrieve words from firestore.
  * @param setWordData {function} Sets the wordData state.
  */
-async function getWords(language, setDictionaryData) {
+async function getWords(setDictionaryData) {
   const db = firebase.firestore()
   const wordsRef = db.collection('WordData');
   // Create word collection with title categories
@@ -110,7 +110,6 @@ async function getWords(language, setDictionaryData) {
   console.log("Dictionary data retrieved.");
   console.log(dictionary);
   setDictionaryData(dictionary);
-  
 }
 
 
