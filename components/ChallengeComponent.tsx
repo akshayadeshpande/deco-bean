@@ -33,9 +33,7 @@ export default function ChallengeComponent(props) {
         dbh = firebase.firestore();
         var incomingWords = firebase.functions().httpsCallable('getRandomWords')
         incomingWords({}).then(function(result){
-          console.log(result);
-          console.log(result.data);
-        //makeWordURLDict(typeof(result.data['output']));
+        makeWordURLDict(result.data['output']);
         }).catch(function(err){
           console.log(err);
         })
@@ -143,7 +141,7 @@ Makes a dictionary out of all the words in the DB.
 
 @param: dbh - Reference the the firestor DB.
 */
-async function makeWordURLDict(randomWords: object) {
+async function makeWordURLDict(randomWords: any[]) {
   
   randomWords.forEach((word) => {
       var key = word["EN"] + "";
