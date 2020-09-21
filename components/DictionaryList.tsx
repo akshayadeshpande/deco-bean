@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, SectionList, TouchableOpacity} from 'react-native';
+import { StyleSheet, SectionList, TouchableOpacity} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 // Purely for suppressing a known react native bug warning for android timers
 import { YellowBox } from 'react-native';
-import { Text } from './Themed';
+import { Text, View } from './Themed';
 
 
 
@@ -52,14 +53,22 @@ export default function DictionaryList(props) {
   return (
     <SectionList
       sections={wordList}
-      renderItem={({item}) => 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation, imgURL: item.imgURL })}>
-          <Text style={styles.item}>{item.word}</Text>
-          <Text style={styles.item}>Translation: {item.translation}</Text>
-        </TouchableOpacity>
-      }
+      renderItem={({item}) => (
+        <View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation, imgURL: item.imgURL })}>
+            <View style={styles.listItemContainer}>
+              <View style={styles.listItem}>
+                <Text>{item.word}</Text>
+                <Text>Translation: {item.translation}</Text>
+              </View>
+              <View style={styles.listArrow}>
+                <FontAwesome name="chevron-right" size={16} color="black" />
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
       renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title} Dictionary</Text>}
       keyExtractor={(item, index) => item.word} //Unique words only
     />
@@ -94,20 +103,26 @@ function constructWordList(language, wordData, setWordList) {
 }
 
 
-
-
 const styles = StyleSheet.create({
-    item: {
-      fontSize: 16,
-    },
     sectionHeader: {
-      margin: 10,
+      padding: 10,
       fontSize: 20,
       fontWeight: 'bold',
-      backgroundColor: 'rgba(247,247,247,0)',
+      backgroundColor: 'rgba(44, 130, 201, 0.8)',
     },
-    button: {
-      alignItems: 'center',
+    listItemContainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      borderBottomColor: 'rgba(241, 130, 141,1)',
+      borderBottomWidth: 1,
+    },
+    listItem: {
+      fontSize: 16,
       padding: 10,
     },
+    listArrow: {
+      padding: 10,
+      justifyContent: "center",
+    }
   });
