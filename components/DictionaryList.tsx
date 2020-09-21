@@ -27,9 +27,6 @@ export default function DictionaryList(props) {
   const [wordList, setWordList] = useState(
     [{title: 'category', data: [{word: 'word', translation: 'translation'}]}]
   );
-  console.log("Init Dictionary List")
-  console.log(`Language: ${props.language}`)
-  console.log(wordList)
 
   /* useEffect is a hook that runs when the component is mounted.
    * Docs: https://reactjs.org/docs/hooks-effect.html
@@ -119,7 +116,7 @@ const styles = StyleSheet.create({
       },
       shadowOpacity: 0.55,
       shadowRadius: 3.84,
-      elevation: 5,
+      elevation: 10,
     },
     headerText: {
       fontWeight: 'bold',
