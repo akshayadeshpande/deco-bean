@@ -77,22 +77,27 @@ exports.getMe = functions.https.onCall(async (data, context) => {
 exports.getRandomWords = functions.https.onCall(async(data, context) => {
   try{
     var max = 21;
-    var min = 0;
+    var min = 1;
+    var words = [];
 
     var randomNums = new Set();
-    while(randomNums.size < 10){
+    while(randomNums.size <= 10){
       randomNums.add('Word' + Math.floor(Math.random() * (max - min + 1) + min));
     }
-
-    var words = (await admin.firestore().collection('WordData').where(admin.firestore.FieldPath.documentId(), 
-      'in', Array.from(randomNums)).get());
-    var wordsp2 = [];
-    words.forEach((wordData) => wordsp2.push(wordData.data()))
-
+    var randomNumsArray = Array.from(randomNums);
     
-    console.log(wordsp2);
-   
-    return {output: wordsp2, code: 200}
+    words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[0]).get()).data());
+    words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[1]).get()).data());
+    words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[2]).get()).data());
+    words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[3]).get()).data());
+    words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[4]).get()).data());
+    words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[5]).get()).data());
+    words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[6]).get()).data());
+    words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[7]).get()).data());
+    words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[8]).get()).data());
+    words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[9]).get()).data());
+    
+    return {output: words, code: 200}
   } catch (err) {
     console.log(err);
     return {status:'error', code: 401, message: err}

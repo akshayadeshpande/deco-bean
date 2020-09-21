@@ -31,11 +31,11 @@ export default function ChallengeComponent(props) {
   //Runs on the first launch to get all the needed information for the game
     useEffect(() => {
         dbh = firebase.firestore();
-        makeWordURLDict(dbh);
-        var test = firebase.functions().httpsCallable('getRandomWords')
-        test({}).then(function(result){
+        var incomingWords = firebase.functions().httpsCallable('getRandomWords')
+        incomingWords({}).then(function(result){
           console.log(result);
-          console.log("HERE");
+          console.log(result.data);
+        //makeWordURLDict(typeof(result.data['output']));
         }).catch(function(err){
           console.log(err);
         })
@@ -143,18 +143,16 @@ Makes a dictionary out of all the words in the DB.
 
 @param: dbh - Reference the the firestor DB.
 */
-async function makeWordURLDict(dbh : firebase.firestore.Firestore) {
-  var collRef = dbh.collection('WordData');
-  await collRef.get().then(function(querySnapshot){
-    querySnapshot.forEach(function(doc){
-      var data = doc.data();
-      var key = data["EN"] + "";
+async function makeWordURLDict(randomWords: object) {
+  
+  randomWords.forEach((word) => {
+      var key = word["EN"] + "";
       //[0] = URL, [1] = CN, [2] = SP
-
-      wordInfo[key] = [data["URL"]+"", data["CH"]+"", data["SP"]+""];
+      wordInfo[key] = [word["URL"]+"", word["CH"]+"", word["SP"]+""];
       keys.push(key);
-    })
+      console.log(key);
   })
+
 }
   
     //changes what pic is being diplayed in array
