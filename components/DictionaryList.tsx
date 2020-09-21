@@ -53,23 +53,26 @@ export default function DictionaryList(props) {
   return (
     <SectionList
       sections={wordList}
+      renderSectionHeader={({section}) => (
+        <View style={styles.sectionHeader}>
+          <Text style={styles.headerText}>{section.title} Dictionary</Text>
+        </View>
+      )}
       renderItem={({item}) => (
-        <View>
           <TouchableOpacity
             onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation, imgURL: item.imgURL })}>
             <View style={styles.listItemContainer}>
               <View style={styles.listItem}>
-                <Text>{item.word}</Text>
-                <Text>Translation: {item.translation}</Text>
+                <Text style={styles.listText}>{item.word}</Text>
+                <Text style={styles.listText}>Translation: {item.translation}</Text>
               </View>
               <View style={styles.listArrow}>
                 <FontAwesome name="chevron-right" size={16} color="black" />
               </View>
             </View>
           </TouchableOpacity>
-        </View>
       )}
-      renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title} Dictionary</Text>}
+      
       keyExtractor={(item, index) => item.word} //Unique words only
     />
   );
@@ -106,20 +109,42 @@ function constructWordList(language, wordData, setWordList) {
 const styles = StyleSheet.create({
     sectionHeader: {
       padding: 10,
-      fontSize: 20,
+      marginBottom: 2,
+      backgroundColor: 'rgba(68, 108, 179, 0.8)',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.55,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
+    headerText: {
       fontWeight: 'bold',
-      backgroundColor: 'rgba(44, 130, 201, 0.8)',
+      fontSize: 20,
     },
     listItemContainer: {
       flex: 1,
       flexDirection: "row",
       justifyContent: "space-between",
       borderBottomColor: 'rgba(241, 130, 141,1)',
-      borderBottomWidth: 1,
+      borderBottomWidth: 2,
+      marginBottom: 2,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.55,
+      shadowRadius: 3.84,
+      elevation: 2,
     },
     listItem: {
-      fontSize: 16,
       padding: 10,
+    },
+    listText: {
+      fontSize: 16,
     },
     listArrow: {
       padding: 10,

@@ -66,14 +66,12 @@ export default function DictionaryScreen(props) {
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       </View>
 
-
       <View style={styles.listContainer}>
         <DictionaryList 
           language={activeLanguage} 
           wordData={dictionaryData} 
           userWords={userWords}
         />
-
       </View>
 
     </View>
@@ -116,18 +114,12 @@ async function getWords(setDictionaryData) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'stretch',
-    justifyContent: 'space-evenly',
   },
   headingContainer: {
-    flex: 2,
     alignItems: 'center',
-    justifyContent: 'center',
   },
   listContainer: {
-    flex: 4,
-    alignItems: 'stretch',
-    justifyContent: 'flex-start',
+    flex: 1,
   },
   item: {
     fontSize: 16,
