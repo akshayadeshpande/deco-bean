@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, SectionList, TouchableOpacity} from 'react-native';
+import { StyleSheet, SectionList, TouchableOpacity} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 // Purely for suppressing a known react native bug warning for android timers
 import { YellowBox } from 'react-native';
-import { Text } from './Themed';
+import { Text, View } from './Themed';
 
 
 
@@ -26,9 +27,6 @@ export default function DictionaryList(props) {
   const [wordList, setWordList] = useState(
     [{title: 'category', data: [{word: 'word', translation: 'translation'}]}]
   );
-  console.log("Init Dictionary List")
-  console.log(`Language: ${props.language}`)
-  console.log(wordList)
 
   /* useEffect is a hook that runs when the component is mounted.
    * Docs: https://reactjs.org/docs/hooks-effect.html
@@ -52,15 +50,27 @@ export default function DictionaryList(props) {
   return (
     <SectionList
       sections={wordList}
-      renderItem={({item}) => 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation, imgURL: item.imgURL })}>
-          <Text style={styles.item}>{item.word}</Text>
-          <Text style={styles.item}>Translation: {item.translation}</Text>
-        </TouchableOpacity>
-      }
-      renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title} Dictionary</Text>}
+      renderSectionHeader={({section}) => (
+        <View style={styles.sectionHeader}>
+          <Text style={styles.headerText}>{section.title} Dictionary</Text>
+        </View>
+      )}
+      stickySectionHeadersEnabled={true}
+      renderItem={({item}) => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation, imgURL: item.imgURL })}>
+            <View style={styles.listItemContainer}>
+              <View style={styles.listItem}>
+                <Text style={styles.listText}>{item.word}</Text>
+                <Text style={styles.listText}>Translation: {item.translation}</Text>
+              </View>
+              <View style={styles.listArrow}>
+                <FontAwesome name="chevron-right" size={16} color="black" />
+              </View>
+            </View>
+          </TouchableOpacity>
+      )}
+      
       keyExtractor={(item, index) => item.word} //Unique words only
     />
   );
@@ -94,20 +104,48 @@ function constructWordList(language, wordData, setWordList) {
 }
 
 
-
-
 const styles = StyleSheet.create({
-    item: {
-      fontSize: 16,
-    },
     sectionHeader: {
-      margin: 10,
-      fontSize: 20,
-      fontWeight: 'bold',
-      backgroundColor: 'rgba(247,247,247,0)',
+      padding: 10,
+      marginBottom: 2,
+      backgroundColor: 'rgba(44, 130, 201, 1)',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.55,
+      shadowRadius: 3.84,
+      elevation: 10,
     },
-    button: {
-      alignItems: 'center',
+    headerText: {
+      fontWeight: 'bold',
+      fontSize: 20,
+    },
+    listItemContainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      borderBottomColor: 'rgba(241, 130, 141,1)',
+      borderBottomWidth: 2,
+      marginBottom: 2,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.55,
+      shadowRadius: 3.84,
+      elevation: 2,
+    },
+    listItem: {
       padding: 10,
     },
+    listText: {
+      fontSize: 16,
+    },
+    listArrow: {
+      padding: 10,
+      justifyContent: "center",
+    }
   });
