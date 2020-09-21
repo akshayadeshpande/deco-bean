@@ -58,6 +58,7 @@ export default function DictionaryList(props) {
           <Text style={styles.headerText}>{section.title} Dictionary</Text>
         </View>
       )}
+      stickySectionHeadersEnabled={true}
       renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation, imgURL: item.imgURL })}>
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
     sectionHeader: {
       padding: 10,
       marginBottom: 2,
-      backgroundColor: 'rgba(68, 108, 179, 0.8)',
+      backgroundColor: 'rgba(44, 130, 201, 1)',
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
