@@ -34,9 +34,10 @@ export default function ChallengeComponent(props) {
   //Runs on the first launch to get all the needed information for the game
     useEffect(() => {
         dbh = firebase.firestore();
-        var incomingWords = firebase.functions().httpsCallable('getRandomWords')
+        var incomingWords = firebase.functions().httpsCallable('startChallenge')
         incomingWords({}).then(function(result){
-        makeWordURLDict(result.data['output']);
+          console.log(result);
+          makeWordURLDict(result.data['words']);
         }).catch(function(err){
           console.log(err);
         })
