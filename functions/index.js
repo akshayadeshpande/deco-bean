@@ -85,7 +85,8 @@ exports.getRandomWords = functions.https.onCall(async(data, context) => {
       randomNums.add('Word' + Math.floor(Math.random() * (max - min + 1) + min));
     }
     var randomNumsArray = Array.from(randomNums);
-    
+
+
     words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[0]).get()).data());
     words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[1]).get()).data());
     words.push((await admin.firestore().collection('WordData').doc(randomNumsArray[2]).get()).data());

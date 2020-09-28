@@ -11,12 +11,15 @@ import DictionaryScreen from '../screens/DictionaryScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import MeMaScreen from '../screens/MeMaScreen';
 import WordScreen from '../screens/WordScreen';
+
+
 import { BottomTabParamList, 
           HomeParamList, 
           ChallengeParamList,
           DictionaryParamList, 
           MeMaParamList,
-          ProfileParamList} from '../types';
+          ProfileParamList,
+          } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -61,7 +64,7 @@ export default function BottomTabNavigator() {
         options={{
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={24} color={color} />,
         }}
-      />
+      /> 
     </BottomTab.Navigator>
   );
 }
@@ -87,6 +90,7 @@ function HomeNavigator() {
     </HomeStack.Navigator>
   );
 }
+
 
 const ChallengeStack = createStackNavigator<ChallengeParamList>();
 
