@@ -29,15 +29,21 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1>Uppline Students</h1>
+        <h1>Profile</h1>
         {this.state.users &&
           this.state.users.map((users) => {
             return (
-              <div>
-                <p>
-                  {users.name}-{users.country}
-                </p>
-              </div>
+              <View style={styles.container}>
+                <Text style={styles.title}>{users.name}</Text>
+                <View
+                  style={styles.separator}
+                  lightColor="#eee"
+                  darkColor="rgba(255,255,255,0.1)"
+                />
+                <Text style={styles.text}>Country : {users.country}</Text>
+                <Text style={styles.text}>Email : {users.email}</Text>
+                <Text style={styles.text}>Want to Learn : {users.forLang}</Text>
+              </View>
             );
           })}
       </div>
@@ -45,3 +51,23 @@ class App extends React.Component {
   }
 }
 export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  separator: {
+    marginVertical: 30,
+    height: 1,
+    width: "80%",
+  },
+  text: {
+    padding: 20,
+  },
+});
