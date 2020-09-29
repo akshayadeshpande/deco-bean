@@ -6,6 +6,7 @@ import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
 import * as firebase from 'firebase';
 import { TextInput } from 'react-native-gesture-handler';
+import * as SigninFunctions from './Signin';
 
 
 export default function Register() {
@@ -81,7 +82,10 @@ async function registerUser(event, name, email, password, forLang, homeLang){
       const rest = db.collection(usersCollection).doc(user.uid).set(userData);
     } else {
       // TODO: send an alert if there is an error 
-    }      
+    }
+    SigninFunctions.loginUser(event, email, password).then(() => {
+      alert("Account created successfully, enjoy MeMa");
+    });
   }).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;

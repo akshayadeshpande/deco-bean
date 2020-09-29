@@ -33,7 +33,7 @@ export default function Register() {
     )
 }
 
-async function loginUser(event, email, password){
+export async function loginUser(event, email, password){
   const auth = firebase.auth();
   const db = firebase.firestore();
   const usersCollection = "users";

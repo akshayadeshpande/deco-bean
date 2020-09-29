@@ -4,8 +4,16 @@ import { StyleSheet } from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import Register from '../components/Register';
+import * as firebase from 'firebase';
 
-export default function RegisterScreen() {
+export default function RegisterScreen({navigation}) {
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      navigation.navigate("SignIn")
+    } 
+  });
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>

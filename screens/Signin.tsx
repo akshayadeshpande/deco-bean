@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Button, StyleSheet } from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import { Text, View } from '../components/Themed';
@@ -23,7 +23,9 @@ export default function SigninScreen({navigation}) {
       <Text style={styles.title}>Sign Into MeMa</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Signin/>
-      <Text>New user? Sign-in here</Text>
+      <Text>New user?</Text>
+      <Button title="Sign-Up Here!" onPress={() => 
+      navigation.navigate("SignUp")}/>
     </View>
   );
   

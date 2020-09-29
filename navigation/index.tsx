@@ -21,6 +21,7 @@ import MainApp from './BottomTabNavigator'
 
 const Stack = createStackNavigator();
 
+//Root stack object that allows Sign in and sign up.
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer>
@@ -34,19 +35,3 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
     </NavigationContainer>
   );
 }
-
-// A root stack navigator is often used for displaying modals on top of all other content
-// Read more here: https://reactnavigation.org/docs/modal
-// const RootStack = createStackNavigator({navigation}) => (
-//   <RootStack.Navigator screenOptions={{ headerShown: false }}>
-//       <RootStack.Screen name="SignInScreen" component={SignIn}/>
-//       {/* <RootStack.Screen name="Root" component={BottomTabNavigator} />
-//       <RootStack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} /> */}
-//     </RootStack.Navigator>
-// );
-// linking={LinkingConfiguration}
-      // theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-{/* <Stack.Screen name="Challenge" component={Challenge}/>
-        <Stack.Screen name="Dictionary" component={Dictionary}/>
-        <Stack.Screen name="Profile" component={Profile}/>
-        <Stack.Screen name="MeMa" component={MeMa}/> */}
