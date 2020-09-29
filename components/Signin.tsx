@@ -8,6 +8,7 @@ import * as firebase from 'firebase';
 import { TextInput } from 'react-native-gesture-handler';
 
 
+
 export default function Register() {
 
     const [email, setEmail] = useState('');
@@ -17,7 +18,6 @@ export default function Register() {
       <ScrollView>
         <Text > MeMa Login </Text>
         <View>
-         
           <TextInput 
             placeholder="Email" 
             onChangeText={(t) => setEmail(t)}
@@ -38,7 +38,13 @@ async function loginUser(event, email, password){
   const db = firebase.firestore();
   const usersCollection = "users";
   event.preventDefault();
-  auth.signInWithEmailAndPassword(email, password);    
+  auth.signInWithEmailAndPassword(email, password).then((output) => {
+    console.log(output)
+  }).catch((err) => {
+    var issue = err['code']
+    console.log(issue);
+    alert("Email/Password is wrong")
+  })
 } 
 
 const styles = StyleSheet.create({
