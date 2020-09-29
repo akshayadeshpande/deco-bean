@@ -7,6 +7,7 @@ admin.initializeApp();
 const challenge = require('./challenge')
 
 exports.startChallenge = challenge.startChallenge;
+exports.endChallenge = challenge.endChallenge;
 
 
 // // Create and Deploy Your First Cloud Functions
