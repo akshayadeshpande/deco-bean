@@ -11,6 +11,7 @@ import DictionaryScreen from '../screens/DictionaryScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import MeMaScreen from '../screens/MeMaScreen';
 import WordScreen from '../screens/WordScreen';
+import * as firebase from 'firebase';
 
 
 import { BottomTabParamList, 
@@ -23,7 +24,7 @@ import { BottomTabParamList,
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+export default function BottomTabNavigator({navigation}) {
   const colorScheme = useColorScheme();
 
   return (

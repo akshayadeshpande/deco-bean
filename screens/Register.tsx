@@ -10,7 +10,7 @@ export default function RegisterScreen({navigation}) {
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      navigation.navigate("SignIn")
+      navigation.navigate("MainApp")
     } 
   });
   

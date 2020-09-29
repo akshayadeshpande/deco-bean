@@ -4,8 +4,10 @@ import { StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { getDailyWord, WordDisplay } from '../components/WOTD';
 import NavTouchButton from '../components/NavTouchButton';
+import * as firebase from 'firebase';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
+ 
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>

@@ -10,12 +10,12 @@ import * as firebase from 'firebase';
 var started = false;
 export default function SigninScreen({navigation}) {
 
-  firebase.auth().signOut();
-
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       navigation.navigate('MainApp')
-    } 
+    } else {
+      console.log("No")
+    }
   });
   
   return (

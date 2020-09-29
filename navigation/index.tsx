@@ -2,6 +2,8 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
+import { HeaderBackButton } from '@react-navigation/stack';
+import * as firebase from 'firebase';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
@@ -28,9 +30,18 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
       <Stack.Navigator>
         <Stack.Screen name="SignIn" component={SignIn}/>
         <Stack.Screen name="SignUp" component={SignUp}/>
-        <Stack.Screen name="MainApp" options={{
+        <Stack.Screen name="MainApp" options={({ navigation, route }) => ({
           headerTitle: "Sign Out",
-        }} component={MainApp} />
+          headerLeft: (props) => (
+          <HeaderBackButton
+          {...props}
+          onPress={() => {
+            firebase.auth().signOut();
+            navigation.navigate('SignIn');
+          }}
+          />
+          )})}
+      component={MainApp} />
       </Stack.Navigator>
     </NavigationContainer>
   );
