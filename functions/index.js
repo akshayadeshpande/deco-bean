@@ -1,13 +1,14 @@
 const functions = require('firebase-functions');
-
-// The Firebase Admin SDK to access Cloud Firestore.
 const admin = require('firebase-admin');
 admin.initializeApp();
 
 const challenge = require('./challenge')
+const user = require('./user');
 
 exports.startChallenge = challenge.startChallenge;
 exports.endChallenge = challenge.endChallenge;
+exports.getChallenges = challenge.getChallenges;
+exports.getUser = user.getUser;
 
 
 // // Create and Deploy Your First Cloud Functions
@@ -47,13 +48,6 @@ exports.getUsers = functions.https.onRequest(async (req, res) => {
     }catch(err){
         res.status(500).send(err);
     }
-  });
+});
 
-exports.getMe = functions.https.onCall(async (data, context) => {
-  try{
-    console.log(context)
-    console.log(data)
-  } catch (err) {
-    return {status: 'error', code: 401, message: 'Not signed in'}
-  }
-})
+

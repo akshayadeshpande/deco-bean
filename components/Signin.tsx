@@ -35,8 +35,6 @@ export default function Register() {
 
 export async function loginUser(event, email, password){
   const auth = firebase.auth();
-  const db = firebase.firestore();
-  const usersCollection = "users";
   event.preventDefault();
   auth.signInWithEmailAndPassword(email, password).then((output) => {
     console.log(output)

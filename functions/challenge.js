@@ -13,7 +13,7 @@ exports.startChallenge = functions.https.onCall(async (data, context) => {
         const user_id = context.auth.uid; // remove the user id when deploying and set properly
     
         // Defines all the parameters required for the randomisation of the quiz
-        const max = 21;
+        const max = 21; // TODO: remove hardcoding to dynamically retrieve the number of words
         const count = data.count;
         var words = []; 
         var randomNums = new Set();
@@ -83,4 +83,26 @@ exports.endChallenge = functions.https.onCall(async (data, context) => {
         console.log(err);
         throw new functions.https.HttpsError('internal', 'An internal error occured.');
     }
-})
+});
+
+
+exports.getChallenges = functions.https.onCall(async (data, context) => {
+    if (!context.auth){
+        throw new functions.https.HttpsError('failed-precondition', 'A challenge can only be started when logged in.');
+    }
+    try {
+        const user_id = context.auth.uid;
+        
+        let response = [];
+        let result = await admin.firestore().collection('users').doc(user_id).collection('mcq').get(); 
+      
+        result.forEach(doc => {
+          response.push(doc.data());
+        });
+      
+        return {status: 'success', code: 200, message: 'Successfully retrieved challenge scores', challenges: result};
+    } catch (err) {
+        console.log(err);
+        throw new functions.https.HttpsError('internal', 'An internal error occured.');
+    }
+});

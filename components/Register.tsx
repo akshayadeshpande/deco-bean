@@ -72,12 +72,15 @@ async function registerUser(event, name, email, password, forLang, homeLang){
           // console.log(user);
       });  
       const userData = {
+        country: 'Australia', //TODO: integrate with a dropdown in the registration.
         email: user.email,
         forLang: forLang,
         homeLang: homeLang, 
         name: name,
         userName: name,
-        signedUp: firebase.firestore.Timestamp.now()
+        signedUp: firebase.firestore.Timestamp.now(),
+        friends: [],
+        seen: {}
       }
       const rest = db.collection(usersCollection).doc(user.uid).set(userData);
     } else {
