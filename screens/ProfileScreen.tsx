@@ -12,14 +12,18 @@ class App extends React.Component {
     users: null,
   };
   componentDidMount() {
-    console.log("mounted");
-    db.collection("users")
+    var docRef = db.collection("users");
+    docRef
       .get()
       .then((snapshot) => {
         const users = [];
         snapshot.forEach((doc) => {
-          const data = doc.data();
-          users.push(data);
+          {
+            const data = doc.data();
+            if (data.name == "regi00") {
+              users.push(data);
+            }
+          }
         });
         this.setState({ users: users });
         //console.log(snapshot);
