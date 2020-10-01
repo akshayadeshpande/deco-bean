@@ -36,10 +36,10 @@ export default function ChallengeComponent(props) {
         dbh = firebase.firestore();
         var incomingWords = firebase.functions().httpsCallable('startChallenge')
         incomingWords({count: 20}).then(function(result){
-          console.log(result);
           makeWordURLDict(result.data['words']);
         }).catch(function(err){
           console.log(err);
+          alert('An internal error occured. Please try again later.')
         })
          
     },[]);

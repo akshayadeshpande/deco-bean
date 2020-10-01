@@ -94,6 +94,7 @@ async function registerUser(event, name, email, password, forLang, homeLang){
     var errorCode = error.code;
     var errorMessage = error.message;
     console.log(errorMessage, errorCode);
+    alert(errorMessage);
     // TODO: send an alert if there is an error
   });
 } 
