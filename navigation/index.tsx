@@ -31,16 +31,9 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
         <Stack.Screen name="SignIn" component={SignIn}/>
         <Stack.Screen name="SignUp" component={SignUp}/>
         <Stack.Screen name="MainApp" options={({ navigation, route }) => ({
-          headerTitle: "Sign Out",
-          headerLeft: (props) => (
-          <HeaderBackButton
-          {...props}
-          onPress={() => {
-            firebase.auth().signOut();
-            navigation.navigate('SignIn');
-          }}
-          />
-          )})}
+          headerLeft: false,
+          headerShown:false,
+        })}
       component={MainApp} />
       </Stack.Navigator>
     </NavigationContainer>

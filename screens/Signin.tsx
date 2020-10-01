@@ -13,8 +13,6 @@ export default function SigninScreen({navigation}) {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       navigation.navigate('MainApp')
-    } else {
-      console.log("No")
     }
   });
   
