@@ -15,29 +15,38 @@ exports.startChallenge = functions.https.onCall(async (data, context) => {
         // Defines all the parameters required for the randomisation of the quiz
         const max = 21; // TODO: remove hardcoding to dynamically retrieve the number of words
         const count = data.count;
-        var words = []; 
-        var randomNums = new Set();
+        //words send to the client for the user's challenge randomly chosen
+        var challengeWords = []; 
 
         // Creates a collection of random words and their data which are sent to the user for the challenge
+        var randomNums = new Set();
         while(randomNums.size <= count){
             randomNums.add('Word' + Math.floor(Math.random() * max + 1));
         }
-        randomNums = Array.from(randomNums);
+        randomNums = Array.from(randomNums); // loads the random documents from the list of all words
 
         const userData = (await admin.firestore().collection('users').doc(user_id).get()).data();
         const forLang = userData.forLang; 
-        var wordRefs = new Set(userData.seen[forLang] || []);  
 
+        var wordRefs = userData.seen[forLang] || [];  // Document references of seen words
+        var wordIds = new Set(); // Document id of seen words
+        wordRefs.forEach((doc) => {
+            wordIds.add(doc.id)
+        })
+
+        // Builds a list of words for the user challenge
         for (let i = 0; i < count; i++){
             let word = admin.firestore().collection('WordData').doc(randomNums[i]).get();
-            words.push(word);
+            challengeWords.push(word);
         }
+        challengeWords = await Promise.all(challengeWords);
 
-        // Ensures all the requests to fetch the data from Firestore are resolved before sending the data to client
-        words = await Promise.all(words);
+        // Adds the appropriate words to the user's seen words
         for (let i = 0; i < count; i++){
-            wordRefs.add(words[i].ref);
-            words[i] = words[i].data();
+            if (!wordIds.has(challengeWords[i].id)){
+                wordRefs.push(challengeWords[i].ref);
+            }
+            challengeWords[i] = challengeWords[i].data();
         }
 
         // Creates a new challenge instance to save data against
@@ -48,7 +57,7 @@ exports.startChallenge = functions.https.onCall(async (data, context) => {
         // Updates the user's seen words to include those that are part of the challenge
         await admin.firestore().collection('users').doc(user_id).update({['seen.' + forLang]: Array.from(wordRefs)})
 
-        return {status: 'success', code: 201, id: newChallenge.id, words: words, message: 
+        return {status: 'success', code: 201, id: newChallenge.id, words: challengeWords, message: 
         'Successfully started a new challenge instance!'};
       
     } catch (err) {
