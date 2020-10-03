@@ -9,6 +9,7 @@ exports.startChallenge = challenge.startChallenge;
 exports.endChallenge = challenge.endChallenge;
 exports.getChallenges = challenge.getChallenges;
 exports.getUser = user.getUser;
+exports.getUserFriends = user.getUserFriends;
 
 
 // // Create and Deploy Your First Cloud Functions
