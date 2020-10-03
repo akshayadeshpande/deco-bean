@@ -15,7 +15,7 @@ export default function HomeScreen() {
           <NavTouchButton screenName="Profile" text="My Profile" iconName="user"/>
         </View>
         <View style={styles.navBox}>
-          <NavTouchButton screenName="Dictionary" text="My Words" iconName="book"/>
+          <NavTouchButton screenName="Words" text="My Words" iconName="book"/>
         </View>
       </View>
       <View style={styles.containerRow}>
