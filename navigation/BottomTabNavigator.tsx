@@ -22,6 +22,7 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const iconSize = 40;
 
   return (
     <BottomTab.Navigator
@@ -29,40 +30,48 @@ export default function BottomTabNavigator() {
       tabBarOptions={{ activeTintColor: Colors[colorScheme].activeTint, 
                        inactiveTintColor: Colors[colorScheme].inactiveTint,
                        activeBackgroundColor: Colors[colorScheme].bottomTabBackground,
-                       inactiveBackgroundColor: Colors[colorScheme].bottomTabBackground }}>
+                       inactiveBackgroundColor: Colors[colorScheme].bottomTabBackground,
+                       style: {
+                         height: 75,
+                       },
+                       labelStyle: {
+                         fontSize: 16
+                       }
+                    }}
+      >
       <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" size={iconSize} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="user" size={30} color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="user" size={iconSize} color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="Dictionary"
+        name="Words"
         component={DictionaryNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="book" size={30} color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="book" size={iconSize} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Challenge"
         component={ChallengeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <MaterialIcons name="gamepad" size={30} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="gamepad" size={iconSize} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="MeMa"
         component={MeMaNavigator}
         options={{
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={30} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={iconSize} color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -71,8 +80,8 @@ export default function BottomTabNavigator() {
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: { name: string; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+function TabBarIcon(props: { name: string; color: string; iconSize: number }) {
+  return <Ionicons size={props.iconSize} style={{ marginBottom: -3 }} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
