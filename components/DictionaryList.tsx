@@ -96,9 +96,9 @@ function constructWordList(language, wordData, setWordList) {
     }
   });
   // Sort by language
-  wordList[0].data.sort((data1, data2) => {
-    return data1.word.localeCompare(data2.word)
-  });
+  // wordList[0].data.sort((data1, data2) => {
+  //   return data1.word.localeCompare(data2.word)
+  // });
   setWordList(wordList);
 
 }
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
       fontWeight: 'bold',
-      fontSize: 20,
+      fontSize: 30,
     },
     listItemContainer: {
       flex: 1,
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
       padding: 10,
     },
     listText: {
-      fontSize: 16,
+      fontSize: 20,
     },
     listArrow: {
       padding: 10,
