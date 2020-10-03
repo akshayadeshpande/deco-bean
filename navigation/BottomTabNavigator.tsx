@@ -26,7 +26,10 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].activeTint, 
+                       inactiveTintColor: Colors[colorScheme].inactiveTint,
+                       activeBackgroundColor: Colors[colorScheme].bottomTabBackground,
+                       inactiveBackgroundColor: Colors[colorScheme].bottomTabBackground }}>
       <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
@@ -38,28 +41,28 @@ export default function BottomTabNavigator() {
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="user" size={32} color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="user" size={30} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Dictionary"
         component={DictionaryNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="book" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="book" size={30} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Challenge"
         component={ChallengeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <MaterialIcons name="gamepad" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="gamepad" size={30} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="MeMa"
         component={MeMaNavigator}
         options={{
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={30} color={color} />,
         }}
       />
     </BottomTab.Navigator>
