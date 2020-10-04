@@ -74,13 +74,14 @@ exports.endChallenge = functions.https.onCall(async (data, context) => {
     if (!context.auth){
         throw new functions.https.HttpsError('failed-precondition', 'A challenge can only be started when logged in.');
     }
+    if (!(data.correct && data.incorrect && data.id)) {
+        throw new functions.https.HttpsError('invalid-argument', 'Invalid arguments for function call. \
+        Ensure the correct, incorrect, id and words are included are arguments');
+    }
     try {
         const user_id = context.auth.uid;
         // Ensure the requests adhere to the correct API specification 
-        if (!(data.correct && data.incorrect && data.id)) {
-            throw new functions.https.HttpsError('invalid-argument', 'Invalid arguments for function call. \
-            Ensure the correct, incorrect, id and words are included are arguments');
-        }
+       
         // Updates the relevant MCQ challenge with its detaisl
         const res = await admin.firestore().collection('users').doc(user_id).collection('mcq').doc(data.id).update({
             correct: data.correct, 
