@@ -77,6 +77,9 @@ export default function DictionaryList(props) {
 }
 
 function constructWordList(language, wordData, setWordList) {
+  if (wordData.length === 0) {
+    return;
+  }
   // My Words is just dummy data for now
   let wordList = [{title: language, data: []}]
   // Construct active word list, default translation is English
@@ -95,14 +98,16 @@ function constructWordList(language, wordData, setWordList) {
         break;
     }
   });
-  // Sort by language
-  // wordList[0].data.sort((data1, data2) => {
-  //   return data1.word.localeCompare(data2.word)
-  // });
+  // Delete undefined objects - not sure why they are appearing.
+  wordList[0].data = wordList[0].data.filter(data => data.word != null);
+
+  // Sort by translation
+  wordList[0].data.sort((data1, data2) => {
+    return data1.translation.localeCompare(data2.translation)
+  });
   setWordList(wordList);
 
 }
-
 
 const styles = StyleSheet.create({
     sectionHeader: {
