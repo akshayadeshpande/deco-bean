@@ -5,8 +5,10 @@ import { Text, View } from '../components/Themed';
 import { getDailyWord } from '../components/WOTD';
 import WordOfTheDay from '../components/WOTD';
 import NavTouchButton from '../components/NavTouchButton';
+import * as firebase from 'firebase';
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
+ 
   return (
     <View style={styles.wrapper}>
 
