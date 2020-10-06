@@ -1,5 +1,5 @@
 import { FontAwesome, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
@@ -18,26 +18,33 @@ import { BottomTabParamList,
           MeMaParamList,
           ProfileParamList} from '../types';
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
+/*
+Handles the Tabbar at the bottom of the app screen and what screens can be rended to the app from the Nav.
+*/
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-  const iconSize = 40;
+  const iconSize = 25;
+
 
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].activeTint, 
-                       inactiveTintColor: Colors[colorScheme].inactiveTint,
-                       activeBackgroundColor: Colors[colorScheme].bottomTabBackground,
-                       inactiveBackgroundColor: Colors[colorScheme].bottomTabBackground,
-                       style: {
-                         height: 75,
-                       },
-                       labelStyle: {
-                         fontSize: 16
-                       }
-                    }}
+      activeColor={Colors[colorScheme].activeTint}
+      inactiveColor={Colors[colorScheme].inactiveTint}
+      barStyle={{backgroundColor:Colors[colorScheme].bottomTabBackground}}
+      // tabBarOptions={{ activeTintColor: Colors[colorScheme].activeTint, 
+      //                  inactiveTintColor: Colors[colorScheme].inactiveTint,
+      //                  activeBackgroundColor: Colors[colorScheme].bottomTabBackground,
+      //                  inactiveBackgroundColor: Colors[colorScheme].bottomTabBackground,
+      //                  style: {
+      //                    height: 75,
+      //                  },
+      //                  labelStyle: {
+      //                    fontSize: 16
+      //                  }
+      //               }}
       >
       <BottomTab.Screen
         name="Home"
@@ -89,8 +96,12 @@ function TabBarIcon(props: { name: string; color: string; iconSize: number }) {
 const HomeStack = createStackNavigator<HomeParamList>();
 
 function HomeNavigator() {
+  const colorScheme = useColorScheme();
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors[colorScheme].bottomTabBackground,
+      }}}>
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -103,8 +114,12 @@ function HomeNavigator() {
 const ChallengeStack = createStackNavigator<ChallengeParamList>();
 
 function ChallengeNavigator() {
+  const colorScheme = useColorScheme();
   return (
-    <ChallengeStack.Navigator>
+    <ChallengeStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors[colorScheme].bottomTabBackground,
+      }}}>
       <ChallengeStack.Screen
         name="ChallengeScreen"
         component={ChallengeScreen}
@@ -117,8 +132,12 @@ function ChallengeNavigator() {
 const DictionaryStack = createStackNavigator<DictionaryParamList>();
 
 function DictionaryNavigator() {
+  const colorScheme = useColorScheme();
   return (
-    <DictionaryStack.Navigator>
+    <DictionaryStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors[colorScheme].bottomTabBackground,
+      }}}>
       <DictionaryStack.Screen
         name="DictionaryScreen"
         component={DictionaryScreen}
@@ -136,8 +155,12 @@ function DictionaryNavigator() {
 const MeMaStack = createStackNavigator<MeMaParamList>();
 
 function MeMaNavigator() {
+  const colorScheme = useColorScheme();
   return (
-    <MeMaStack.Navigator>
+    <MeMaStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors[colorScheme].bottomTabBackground,
+      }}}>
       <MeMaStack.Screen
         name="MeMaScreen"
         component={MeMaScreen}
@@ -150,8 +173,12 @@ function MeMaNavigator() {
 const ProfileStack = createStackNavigator<ProfileParamList>();
 
 function ProfileNavigator() {
+  const colorScheme = useColorScheme();
   return (
-    <ProfileStack.Navigator>
+    <ProfileStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors[colorScheme].bottomTabBackground,
+      }}}>
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
