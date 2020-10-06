@@ -10,6 +10,8 @@ import 'firebase/functions';
 import 'firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import useColorScheme from '../hooks/useColorScheme';
+import Colors from '../constants/Colors';
 
 var count = 0;
 
@@ -30,6 +32,7 @@ var correctAnswers = 0;
 
 
 export default function ChallengeComponent(props) {
+  const colorScheme = useColorScheme();
 
   //Runs on the first launch to get all the needed information for the game
     useEffect(() => {
@@ -54,13 +57,13 @@ export default function ChallengeComponent(props) {
       return (
 
         <View style={styles.CMContainer}>   
-        <Button title="Begin CH challenge" onPress={ () =>
+        <Button title="Begin CH challenge" color={Colors[colorScheme].activeTint} onPress={ () =>
             IntroStateChange(newImg, startingGame, "CH")
            } />
-        <Button title="Begin SP challenge" onPress={ () =>
+        <Button title="Begin SP challenge" color={Colors[colorScheme].activeTint} onPress={ () =>
           IntroStateChange(newImg, startingGame, "SP")
         } />
-        <Button title='Tutorial' onPress={() =>
+        <Button title='Tutorial' color={Colors[colorScheme].activeTint} onPress={() =>
           inTut(setTut, true)
         }/>
         </View>
@@ -75,13 +78,13 @@ export default function ChallengeComponent(props) {
       
                   style = {styles.imageStyle} />
         
-          <Button title={"Tutorial Button 1"} onPress={
+          <Button title={"Tutorial Button 1"}  color={Colors[colorScheme].activeTint} onPress={
               () => inTut(setTut, false)} />
-          <Button title={"Tutorial Button 2"} onPress={
+          <Button title={"Tutorial Button 2"} color={Colors[colorScheme].activeTint} onPress={
           () => inTut(setTut, false)} />
-          <Button title={"Tutorial Button 3"} onPress={
+          <Button title={"Tutorial Button 3"} color={Colors[colorScheme].activeTint} onPress={
           () => inTut(setTut, false)} />
-          <Button title={"Tutorial Button 4"} onPress={
+          <Button title={"Tutorial Button 4"} color={Colors[colorScheme].activeTint} onPress={
           () => inTut(setTut, false)} />
           <Text>
             Challenge mode works by displaying and image at the top of the screen, depicting
@@ -100,7 +103,7 @@ export default function ChallengeComponent(props) {
         return (
           <View style={styles.CMContainer}>
           <Text>You got {correctAnswers}/10</Text>
-          <Button title="Play Again?" onPress={
+          <Button title="Play Again?" color={Colors[colorScheme].activeTint} onPress={
               () => playAgain(setCount, startingGame)} />
           </View>
         );
@@ -113,13 +116,13 @@ export default function ChallengeComponent(props) {
       
                   style = {styles.imageStyle} />
         
-          <Button title={currentButtons[0]} onPress={
+          <Button title={currentButtons[0]} color={Colors[colorScheme].activeTint} onPress={
               () => finalStateChange(answ, setCount, newImg, currentButtons[0])} />
-          <Button title={currentButtons[1]} onPress={
+          <Button title={currentButtons[1]} color={Colors[colorScheme].activeTint} onPress={
           () => finalStateChange(answ, setCount, newImg, currentButtons[1])} />
-          <Button title={currentButtons[2]} onPress={
+          <Button title={currentButtons[2]} color={Colors[colorScheme].activeTint} onPress={
           () => finalStateChange(answ, setCount, newImg, currentButtons[2])} />
-          <Button title={currentButtons[3]} onPress={
+          <Button title={currentButtons[3]} color={Colors[colorScheme].activeTint} onPress={
           () => finalStateChange(answ, setCount, newImg, currentButtons[3])} />
            </View>
         );
