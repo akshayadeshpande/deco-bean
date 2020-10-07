@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, Button, ScrollView, Platform, Picker } from 'react-native';
+import {Picker} from '@react-native-community/picker';
+import { StyleSheet, Button, ScrollView, Platform } from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from './EditScreenInfo';
@@ -84,7 +85,7 @@ async function registerUser(event, name, email, password, forLang, homeLang){
       }
       const rest = db.collection(usersCollection).doc(user.uid).set(userData);
     } else {
-      // TODO: send an alert if there is an error 
+      alert("Internal error please try again later");
     }
     SigninFunctions.loginUser(event, email, password).then(() => {
       alert("Account created successfully, enjoy MeMa");
