@@ -83,10 +83,12 @@ export default function ChallengeComponent(props) {
 
       return (
         <View style={styles.CMContainer}>
-          <Image 
+          <View style={styles.imgHolder}>
+            <Image 
                   source = {{ uri: img}}
       
                   style = {styles.imageStyle} />
+          </View>
           <View style={styles.ButtonView}>
             <Button title={"Tutorial Button 1"}  color={Colors[colorScheme].activeTint} onPress={
               () => setTut(false)} />
@@ -134,10 +136,12 @@ export default function ChallengeComponent(props) {
         //View while playing giving the images and the button choices
         return (
           <View style={styles.CMContainer}>
-          <Image 
+            <View style={styles.imgHolder}>
+              <Image 
                   source = {{ uri: img}}
       
                   style = {styles.imageStyle} />
+            </View>
           <View style={styles.ButtonView}>
             <Button title={currentButtons[0]} color={Colors[colorScheme].activeTint} onPress={
               () => finalStateChange(answ, setCount, newImg, currentButtons[0])} />
@@ -344,6 +348,9 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       padding:'10'
     },
+    imgHolder: {
+      padding: 20,
+    },
     title: {
       fontSize: 20,
       fontWeight: 'bold',
@@ -358,7 +365,7 @@ const styles = StyleSheet.create({
     },
     imageStyle:{
       width: 200, 
-      height: 300, 
-      resizeMode: 'center'
+      height: 300,
+      resizeMode: 'stretch'
      }
   });
