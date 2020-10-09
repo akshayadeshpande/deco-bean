@@ -47,7 +47,6 @@ export default function ChallengeComponent(props) {
         incomingWords({count: gameLength}).then(function(result){
           makeWordURLDict(result.data['words']);
           challengeLanguage = result.data["Lang"];
-          console.log("Challenge Lang: " + challengeLanguage);
           id = result.data["id"]
         }).catch(function(err){
           console.log(err);
@@ -346,7 +345,7 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      padding:'10'
+      padding: 10
     },
     imgHolder: {
       padding: 20,
