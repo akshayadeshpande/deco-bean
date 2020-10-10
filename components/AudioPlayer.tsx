@@ -4,7 +4,7 @@ import { Audio } from 'expo-av';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Text, View } from './Themed';
+import { Text } from './Themed';
 
 
 export default function AudioPlayer(props) {
@@ -24,8 +24,7 @@ export default function AudioPlayer(props) {
         console.log("Sound played.");
       } 
       catch (error) {
-        console.log("Audio could not be played!")
-        console.log(error);
+        console.log(`${error.name}:${error.message}: Failed to play audio from URI: ${soundURI}`)
       }
   }
 
@@ -37,7 +36,13 @@ export default function AudioPlayer(props) {
   * All defaults should suffice for us!
   */
   const loadAudio = async () => {
-    await soundObject.loadAsync({uri: soundURI});
+    try {
+      await soundObject.loadAsync({uri: soundURI});
+    }
+    catch (error) {
+      console.log(`${error.name}:${error.message}: Failed to load audio from URI: ${soundURI}`);
+    }
+    
   }
 
   useEffect(() => {
