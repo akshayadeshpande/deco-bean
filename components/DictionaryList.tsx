@@ -89,7 +89,7 @@ function constructWordList(language, wordData, setWordList) {
         'word': wordDoc[language], 
         'translation': wordDoc['EN'], 
         'imgURL': wordDoc['URL'], 
-        'soundURI': wordDoc[`Sound${language}URI`]
+        'soundURI': wordDoc['Audio'] ? wordDoc['Audio'][language] : ""
       }
     );
   });
