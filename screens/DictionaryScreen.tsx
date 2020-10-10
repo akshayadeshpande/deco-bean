@@ -24,7 +24,7 @@ import DictionaryList from '../components/DictionaryList';
 export default function DictionaryScreen(props) {
   let searchBar;
   // States
-  const [activeLanguage, setActiveLanguage] = useState("Spanish");
+  const [activeLanguage, setActiveLanguage] = useState("SP");
   console.log(`Active language set to: ${activeLanguage}`);
   // Dictionary data contains full db word lists
   const [dictionaryData, setDictionaryData] = useState([]);
