@@ -57,7 +57,7 @@ exports.startChallenge = functions.https.onCall(async (data, context) => {
         // Updates the user's seen words to include those that are part of the challenge
         await admin.firestore().collection('users').doc(user_id).update({['seen.' + forLang]: Array.from(wordRefs)})
 
-        return {status: 'success', code: 201, id: newChallenge.id, words: challengeWords, message: 
+        return {status: 'success', code: 201, id: newChallenge.id, words: challengeWords, Lang: forLang, message: 
         'Successfully started a new challenge instance!'};
       
     } catch (err) {
@@ -86,6 +86,7 @@ exports.endChallenge = functions.https.onCall(async (data, context) => {
         const res = await admin.firestore().collection('users').doc(user_id).collection('mcq').doc(data.id).update({
             correct: data.correct, 
             incorrect: data.incorrect, 
+            score: data.score,
             end: admin.firestore.FieldValue.serverTimestamp()
         })
         return {status: 'success', code: 200, message: 'Successfully saved a challenge instance.'};

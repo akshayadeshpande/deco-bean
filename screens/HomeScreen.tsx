@@ -7,6 +7,7 @@ import WordOfTheDay from '../components/WOTD';
 import NavTouchButton from '../components/NavTouchButton';
 import * as firebase from 'firebase';
 
+
 export default function HomeScreen({navigation}) {
  
   return (
