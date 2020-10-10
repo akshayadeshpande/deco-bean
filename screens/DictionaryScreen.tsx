@@ -76,9 +76,9 @@ export default function DictionaryScreen(props) {
           onValueChange={(itemValue, itemIndex) => {
             setActiveLanguage(itemValue);
           }}>
-          <Picker.Item label="Chinese" value="Chinese" />
-          <Picker.Item label="English" value="English" />
-          <Picker.Item label="Spanish" value="Spanish" />
+          <Picker.Item label="Chinese" value="CH" />
+          <Picker.Item label="English" value="EN" />
+          <Picker.Item label="Spanish" value="SP" />
         </Picker>
       </View>
 

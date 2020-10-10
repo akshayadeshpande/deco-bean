@@ -3,6 +3,7 @@ import { StyleSheet, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { Text, View } from '../components/Themed';
+import AudioPlayer from '../components/AudioPlayer';
 
 
 /*
@@ -25,8 +26,10 @@ export default function WordScreen(props) {
       <View style={styles.containerImage}>
         <Image source={{ uri: params.imgURL}} style={styles.imageStyle} />
       </View>
+      <View style={styles.containerAudio}>
+        <AudioPlayer soundURI={params.soundURI}/>
+      </View>
       <View style={styles.containerInteract}>
-        <FontAwesome name="file-audio-o" size={24} color="black" />
         <FontAwesome name="bookmark" size={24} color="black" />
         <FontAwesome name="share-alt" size={24} color="black" />
       </View>
@@ -48,7 +51,11 @@ const styles = StyleSheet.create({
   },
   containerWords: {
     flex: 1,
-    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  containerAudio: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

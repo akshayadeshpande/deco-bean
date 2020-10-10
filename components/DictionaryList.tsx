@@ -52,13 +52,13 @@ export default function DictionaryList(props) {
       sections={wordList}
       renderSectionHeader={({section}) => (
         <View style={styles.sectionHeader}>
-          <Text style={styles.headerText}>{section.title} Dictionary</Text>
+          <Text style={styles.headerText}>{section.title}</Text>
         </View>
       )}
       stickySectionHeadersEnabled={true}
       renderItem={({item}) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation, imgURL: item.imgURL })}>
+            onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation, imgURL: item.imgURL, soundURI: item.soundURI })}>
             <View style={styles.listItemContainer}>
               <View style={styles.listItem}>
                 <Text style={styles.listText}>{item.word}</Text>
@@ -81,22 +81,17 @@ function constructWordList(language, wordData, setWordList) {
     return;
   }
   // My Words is just dummy data for now
-  let wordList = [{title: language, data: []}]
+  let wordList = [{title: "Dictionary", data: []}]
   // Construct active word list, default translation is English
   wordData.forEach(wordDoc => {
-    switch(language) {
-      case 'Chinese':
-        wordList[0].data.push({'word': wordDoc['CH'], 'translation': wordDoc['EN'], 'imgURL': wordDoc['URL']});
-        break;
-      case 'English':
-        wordList[0].data.push({'word': wordDoc['EN'], 'translation': wordDoc['EN'], 'imgURL': wordDoc['URL']});
-        break;
-      case 'Spanish':
-        wordList[0].data.push({'word': wordDoc['SP'], 'translation': wordDoc['EN'], 'imgURL': wordDoc['URL']});
-        break;
-      default:
-        break;
-    }
+    wordList[0].data.push(
+      {
+        'word': wordDoc[language], 
+        'translation': wordDoc['EN'], 
+        'imgURL': wordDoc['URL'], 
+        'soundURI': wordDoc[`Sound${language}URI`]
+      }
+    );
   });
   // Delete undefined objects - not sure why they are appearing.
   wordList[0].data = wordList[0].data.filter(data => data.word != null);
