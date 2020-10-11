@@ -1,13 +1,15 @@
 import * as React from 'react';
-import { StyleSheet, Button, Image, Platform } from 'react-native';
+import { StyleSheet, Button, Image, Platform, ProgressBarAndroid } from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-
-
+import 'firebase/functions';
+import 'firebase/auth';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 var count = 0;
 
@@ -26,25 +28,31 @@ var challengeLanguage = "";
 
 var correctAnswers = 0;
 
+
 export default function ChallengeComponent(props) {
 
   //Runs on the first launch to get all the needed information for the game
     useEffect(() => {
         dbh = firebase.firestore();
-        makeWordURLDict(dbh);
-
-        // allWords(dbh, dictWords);
-        // allImg(store);
-        
+        var incomingWords = firebase.functions().httpsCallable('startChallenge')
+        incomingWords({count: 20}).then(function(result){
+          makeWordURLDict(result.data['words']);
+        }).catch(function(err){
+          console.log(err);
+          alert('An internal error occured. Please try again later.')
+        })
+         
     },[]);
     //TODO: Need a new default pic to begin OR somehow have a better original state
     const [img, newImg] = useState('https://firebasestorage.googleapis.com/v0/b/bean-f1602.appspot.com/o/Images%2FApple.jpg?alt=media&token=9405ab95-7b0a-496a-9aa3-e20bff7d7bc4&fbclid=IwAR3Nv9bvimEEo4_nyN_IZpNO05bcMtC0Mhim50DEmqsg5JWkkJy7eYHCFX0');
     const [start, startingGame] = useState(false)
     const [answ, setCount] = useState(0)
+    const [tutorial, setTut] = useState(false)
 
     // Original Language Pick
-    if (start == false) {
+    if (start == false && tutorial == false) {
       return (
+
         <View style={styles.CMContainer}>   
         <Button title="Begin CH challenge" onPress={ () =>
             IntroStateChange(newImg, startingGame, "CH")
@@ -52,7 +60,39 @@ export default function ChallengeComponent(props) {
         <Button title="Begin SP challenge" onPress={ () =>
           IntroStateChange(newImg, startingGame, "SP")
         } />
-         </View>
+        <Button title='Tutorial' onPress={() =>
+          inTut(setTut, true)
+        }/>
+        </View>
+
+      );
+    } else if (tutorial == true) {
+
+      return (
+        <View style={styles.CMContainer}>
+          <Image 
+                  source = {{ uri: img}}
+      
+                  style = {styles.imageStyle} />
+        
+          <Button title={"Tutorial Button 1"} onPress={
+              () => inTut(setTut, false)} />
+          <Button title={"Tutorial Button 2"} onPress={
+          () => inTut(setTut, false)} />
+          <Button title={"Tutorial Button 3"} onPress={
+          () => inTut(setTut, false)} />
+          <Button title={"Tutorial Button 4"} onPress={
+          () => inTut(setTut, false)} />
+          <Text>
+            Challenge mode works by displaying and image at the top of the screen, depicting
+            a word you have seen before through some other form of learning on MeMa. Underneath 
+            gives you 4 clickable buttons with words on them from the language(s) you
+            are learning. Your task will be to select the correct word that represents the picture,
+            10 times, then your score will be recorded on your profile so it can be viewed later. 
+            
+            Press any button to be taken back to the game menu.
+          </Text>
+          </View>
       );
     } else {
       // Final view for how many correct answes
@@ -83,7 +123,6 @@ export default function ChallengeComponent(props) {
           () => finalStateChange(answ, setCount, newImg, currentButtons[3])} />
            </View>
         );
-
       }
     }
 }
@@ -115,6 +154,10 @@ function IntroStateChange(
     newImg(changeImg());
   }
 
+function inTut(setTut: React.Dispatch<React.SetStateAction<boolean>>, tut : boolean) {
+  setTut(tut);
+}
+
 function startGame(lang : string) {
   var begin = true;
   challengeLanguage = lang;
@@ -139,18 +182,16 @@ Makes a dictionary out of all the words in the DB.
 
 @param: dbh - Reference the the firestor DB.
 */
-async function makeWordURLDict(dbh : firebase.firestore.Firestore) {
-  var collRef = dbh.collection('WordData');
-  await collRef.get().then(function(querySnapshot){
-    querySnapshot.forEach(function(doc){
-      var data = doc.data();
-      var key = data["EN"] + "";
+async function makeWordURLDict(randomWords: any[]) {
+  
+  randomWords.forEach((word) => {
+      var key = word["EN"] + "";
       //[0] = URL, [1] = CN, [2] = SP
-
-      wordInfo[key] = [data["URL"]+"", data["CH"]+"", data["SP"]+""];
+      wordInfo[key] = [word["URL"]+"", word["CH"]+"", word["SP"]+""];
       keys.push(key);
-    })
+      console.log(key);
   })
+
 }
   
     //changes what pic is being diplayed in array
