@@ -1,65 +1,88 @@
-import { FontAwesome, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
+import {
+  FontAwesome,
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import HomeScreen from '../screens/HomeScreen';
-import ChallengeScreen from '../screens/ChallengeScreen';
-import DictionaryScreen from '../screens/DictionaryScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import MeMaScreen from '../screens/MeMaScreen';
-import WordScreen from '../screens/WordScreen';
-import { BottomTabParamList, 
-          HomeParamList, 
-          ChallengeParamList,
-          DictionaryParamList, 
-          MeMaParamList,
-          ProfileParamList} from '../types';
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
+import HomeScreen from "../screens/HomeScreen";
+import ChallengeScreen from "../screens/ChallengeScreen";
+import DictionaryScreen from "../screens/DictionaryScreen";
+import ChangeEmail from "../screens/ChangeEmail";
+import ProfileScreen from "../screens/ProfileScreen";
+import MeMaScreen from "../screens/MeMaScreen";
+import WordScreen from "../screens/WordScreen";
+import * as firebase from "firebase";
+
+import {
+  BottomTabParamList,
+  HomeParamList,
+  ChallengeParamList,
+  DictionaryParamList,
+  MeMaParamList,
+  ProfileParamList,
+  EmailParamList,
+} from "../types";
+import Navigation from ".";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+export default function BottomTabNavigator({ navigation }) {
   const colorScheme = useColorScheme();
 
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+    >
       <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-home" color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="user" size={32} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="user" size={32} color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
         name="Dictionary"
         component={DictionaryNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="book" size={24} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="book" size={24} color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
         name="Challenge"
         component={ChallengeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <MaterialIcons name="gamepad" size={24} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="gamepad" size={24} color={color} />
+          ),
         }}
       />
       <BottomTab.Screen
         name="MeMa"
-        component={MeMaNavigator}
+        component={MeMaScreen}
         options={{
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={24} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="robot" size={24} color={color} />
+          ),
         }}
       />
     </BottomTab.Navigator>
@@ -76,13 +99,30 @@ function TabBarIcon(props: { name: string; color: string }) {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const HomeStack = createStackNavigator<HomeParamList>();
 
-function HomeNavigator() {
+function HomeNavigator({ navigation }) {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'MeMa Home', headerTitleStyle: { alignSelf: 'center' } }}
+        options={{
+          headerTitle: "MeMa Home",
+          headerTitleStyle: { alignSelf: "center" },
+          headerLeft: null,
+          headerRight: (props) => (
+            <MaterialCommunityIcons
+              name="exit-run"
+              size={24}
+              color="black"
+              title="Sign out"
+              {...props}
+              onPress={() => {
+                firebase.auth().signOut();
+                navigation.navigate("SignIn");
+              }}
+            />
+          ),
+        }}
       />
     </HomeStack.Navigator>
   );
@@ -90,13 +130,30 @@ function HomeNavigator() {
 
 const ChallengeStack = createStackNavigator<ChallengeParamList>();
 
-function ChallengeNavigator() {
+function ChallengeNavigator({ navigation }) {
   return (
     <ChallengeStack.Navigator>
       <ChallengeStack.Screen
         name="ChallengeScreen"
         component={ChallengeScreen}
-        options={{ headerTitle: 'Challenge Mode', headerTitleStyle: { alignSelf: 'center' }}}
+        options={{
+          headerTitle: "Challenge Mode",
+          headerTitleStyle: { alignSelf: "center" },
+          headerLeft: null,
+          headerRight: (props) => (
+            <MaterialCommunityIcons
+              name="exit-run"
+              size={24}
+              color="black"
+              title="Sign out"
+              {...props}
+              onPress={() => {
+                firebase.auth().signOut();
+                navigation.navigate("SignIn");
+              }}
+            />
+          ),
+        }}
       />
     </ChallengeStack.Navigator>
   );
@@ -104,18 +161,38 @@ function ChallengeNavigator() {
 
 const DictionaryStack = createStackNavigator<DictionaryParamList>();
 
-function DictionaryNavigator() {
+function DictionaryNavigator({ navigation }) {
   return (
     <DictionaryStack.Navigator>
       <DictionaryStack.Screen
         name="DictionaryScreen"
         component={DictionaryScreen}
-        options={{ headerTitle: 'My Words', headerTitleStyle: { alignSelf: 'center' }}}
+        options={{
+          headerTitle: "My Words",
+          headerTitleStyle: { alignSelf: "center" },
+          headerLeft: null,
+          headerRight: (props) => (
+            <MaterialCommunityIcons
+              name="exit-run"
+              size={24}
+              color="black"
+              title="Sign out"
+              {...props}
+              onPress={() => {
+                firebase.auth().signOut();
+                navigation.navigate("SignIn");
+              }}
+            />
+          ),
+        }}
       />
       <DictionaryStack.Screen
         name="WordScreen"
         component={WordScreen}
-        options={{ headerTitle: 'Word Details', headerTitleStyle: { alignSelf: 'center' }}}
+        options={{
+          headerTitle: "Word Details",
+          headerTitleStyle: { alignSelf: "center" },
+        }}
       />
     </DictionaryStack.Navigator>
   );
@@ -123,13 +200,30 @@ function DictionaryNavigator() {
 
 const MeMaStack = createStackNavigator<MeMaParamList>();
 
-function MeMaNavigator() {
+function MeMaNavigator({ navigation }) {
   return (
     <MeMaStack.Navigator>
       <MeMaStack.Screen
         name="MeMaScreen"
         component={MeMaScreen}
-        options={{ headerTitle: 'Talk to MeMa', headerTitleStyle: { alignSelf: 'center' }}}
+        options={{
+          headerTitle: "Talk to MeMa",
+          headerTitleStyle: { alignSelf: "center" },
+          headerLeft: null,
+          headerRight: (props) => (
+            <MaterialCommunityIcons
+              name="exit-run"
+              size={24}
+              color="black"
+              title="Sign out"
+              {...props}
+              onPress={() => {
+                firebase.auth().signOut();
+                navigation.navigate("SignIn");
+              }}
+            />
+          ),
+        }}
       />
     </MeMaStack.Navigator>
   );
@@ -137,14 +231,62 @@ function MeMaNavigator() {
 
 const ProfileStack = createStackNavigator<ProfileParamList>();
 
-function ProfileNavigator() {
+function ProfileNavigator({ navigation }) {
   return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: 'Profile', headerTitleStyle: { alignSelf: 'center' } }}
+        options={{
+          headerTitle: "Profile",
+          headerTitleStyle: { alignSelf: "center" },
+          headerLeft: null,
+          headerRight: (props) => (
+            <MaterialCommunityIcons
+              name="exit-run"
+              size={24}
+              color="black"
+              title="Sign out"
+              {...props}
+              onPress={() => {
+                firebase.auth().signOut();
+                navigation.navigate("SignIn");
+              }}
+            />
+          ),
+        }}
       />
     </ProfileStack.Navigator>
+  );
+}
+
+const EmailStack = createStackNavigator<EmailParamList>();
+
+function ChangeEmailNavigator({ navigation }) {
+  return (
+    <EmailStack.Navigator>
+      <EmailStack.Screen
+        name="ChangeEmail"
+        component={ChangeEmail}
+        options={{
+          headerTitle: "ChangeEmail",
+          headerTitleStyle: { alignSelf: "center" },
+          headerLeft: null,
+          headerRight: (props) => (
+            <MaterialCommunityIcons
+              name="exit-run"
+              size={24}
+              color="black"
+              title="Sign out"
+              {...props}
+              onPress={() => {
+                firebase.auth().signOut();
+                navigation.navigate("SignIn");
+              }}
+            />
+          ),
+        }}
+      />
+    </EmailStack.Navigator>
   );
 }
