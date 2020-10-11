@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
       fontWeight: 'bold',
-      fontSize: 30,
+      fontSize: 20,
     },
     listItemContainer: {
       flex: 1,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
       padding: 10,
     },
     listText: {
-      fontSize: 20,
+      fontSize: 16,
     },
     listArrow: {
       padding: 10,

@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Text, View } from '../components/Themed';
+import { StyleSheet, Text, View } from 'react-native';
 
 /* Word of the Day Component. 
  * Allows us to plug this into a screen.
@@ -8,7 +7,7 @@ import { Text, View } from '../components/Themed';
 
 /* RENDERING */
 // This function needs to be upper case to be used as a component tag otherwise it thinks it's an html tag.
-function WordOfTheday(props) {
+export function WordDisplay(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Word of the Day</Text>
@@ -18,7 +17,7 @@ function WordOfTheday(props) {
 }
 
 /* Functionality */
-function getDailyWord() {
+export function getDailyWord() {
   // Method to get the word of the day here from dictionary/db
   const dummyWord:string = "Doggo";
   return dummyWord;
@@ -36,8 +35,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     text: {
-      fontSize: 30,
+      fontSize: 20,
     }
   });
 
-export { WordOfTheday as default, getDailyWord }

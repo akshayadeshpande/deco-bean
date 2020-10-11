@@ -60,6 +60,3 @@ buck-out/
 
 # Expo
 .expo/*
-
-# Log Files
-*.log

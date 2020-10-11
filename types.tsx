@@ -6,10 +6,9 @@ export type RootStackParamList = {
 export type BottomTabParamList = {
   Home: undefined;
   Challenge: undefined;
-  Words: undefined;
+  Dictionary: undefined;
   MeMa: undefined;
   Profile: undefined;
-  ChallengeTut: undefined;
 };
 
 export type HomeParamList = {
@@ -32,5 +31,3 @@ export type MeMaParamList = {
 export type ProfileParamList = {
   ProfileScreen: undefined;
 };
-
-

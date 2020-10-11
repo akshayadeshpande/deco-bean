@@ -1,5 +1,5 @@
 import { FontAwesome, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
@@ -11,132 +11,92 @@ import DictionaryScreen from '../screens/DictionaryScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import MeMaScreen from '../screens/MeMaScreen';
 import WordScreen from '../screens/WordScreen';
-import * as firebase from 'firebase';
-
-
 import { BottomTabParamList, 
           HomeParamList, 
           ChallengeParamList,
           DictionaryParamList, 
           MeMaParamList,
-          ProfileParamList,
-          } from '../types';
-import Navigation from '.';
+          ProfileParamList} from '../types';
 
-const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-/*
-Handles the Tabbar at the bottom of the app screen and what screens can be rended to the app from the Nav.
-*/
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-  const iconSize = 25;
-
 
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      activeColor={Colors[colorScheme].activeTint}
-      inactiveColor={Colors[colorScheme].inactiveTint}
-      barStyle={{backgroundColor:Colors[colorScheme].bottomTabBackground}}
-      >
+      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" size={iconSize} color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="user" size={iconSize} color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="user" size={32} color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="Words"
+        name="Dictionary"
         component={DictionaryNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="book" size={iconSize} color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="book" size={24} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Challenge"
         component={ChallengeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <MaterialIcons name="gamepad" size={iconSize} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="gamepad" size={24} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="MeMa"
-        component={MeMaScreen}
+        component={MeMaNavigator}
         options={{
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={iconSize} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={24} color={color} />,
         }}
-      /> 
+      />
     </BottomTab.Navigator>
   );
 }
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: { name: string; color: string; iconSize: number }) {
-  return <Ionicons size={props.iconSize} style={{ marginBottom: -3 }} {...props} />;
+function TabBarIcon(props: { name: string; color: string }) {
+  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const HomeStack = createStackNavigator<HomeParamList>();
 
-function HomeNavigator({navigation}) {
-  const colorScheme = useColorScheme();
+function HomeNavigator() {
   return (
-    <HomeStack.Navigator screenOptions={{
-      headerStyle: {
-        backgroundColor: Colors[colorScheme].bottomTabBackground,
-      }}}>
+    <HomeStack.Navigator>
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'MeMa Home', headerTitleStyle: { alignSelf: 'center' }, 
-        headerLeft: null,
-        headerRight: (props) => (
-          <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
-          {...props}
-          onPress={() => {
-            firebase.auth().signOut();
-            navigation.navigate("SignIn");
-          }}
-          />)}}
+        options={{ headerTitle: 'MeMa Home', headerTitleStyle: { alignSelf: 'center' } }}
       />
     </HomeStack.Navigator>
   );
 }
 
-
 const ChallengeStack = createStackNavigator<ChallengeParamList>();
 
-function ChallengeNavigator({navigation}) {
-  const colorScheme = useColorScheme();
+function ChallengeNavigator() {
   return (
-    <ChallengeStack.Navigator screenOptions={{
-      headerStyle: {
-        backgroundColor: Colors[colorScheme].bottomTabBackground,
-      }}}>
+    <ChallengeStack.Navigator>
       <ChallengeStack.Screen
         name="ChallengeScreen"
         component={ChallengeScreen}
-        options={{ headerTitle: 'Challenge Mode', headerTitleStyle: { alignSelf: 'center' },
-        headerLeft: null,
-        headerRight: (props) => (
-          <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
-          {...props}
-          onPress={() => {
-            firebase.auth().signOut();
-            navigation.navigate("SignIn");
-        }}
-        />)}}
+        options={{ headerTitle: 'Challenge Mode', headerTitleStyle: { alignSelf: 'center' }}}
       />
     </ChallengeStack.Navigator>
   );
@@ -144,31 +104,18 @@ function ChallengeNavigator({navigation}) {
 
 const DictionaryStack = createStackNavigator<DictionaryParamList>();
 
-function DictionaryNavigator({navigation}) {
-  const colorScheme = useColorScheme();
+function DictionaryNavigator() {
   return (
-    <DictionaryStack.Navigator screenOptions={{
-      headerStyle: {
-        backgroundColor: Colors[colorScheme].bottomTabBackground,
-      }}}>
+    <DictionaryStack.Navigator>
       <DictionaryStack.Screen
         name="DictionaryScreen"
         component={DictionaryScreen}
-        options={{ headerTitle: 'My Words', headerTitleStyle: { alignSelf: 'center' },
-        headerLeft: null,
-        headerRight: (props) => (
-          <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
-          {...props}
-          onPress={() => {
-            firebase.auth().signOut();
-            navigation.navigate("SignIn");
-          }}
-        />)}}
+        options={{ headerTitle: 'My Words', headerTitleStyle: { alignSelf: 'center' }}}
       />
       <DictionaryStack.Screen
         name="WordScreen"
         component={WordScreen}
-        options={{ headerTitle: 'Word Details', headerTitleStyle: { alignSelf: 'center' }, }}
+        options={{ headerTitle: 'Word Details', headerTitleStyle: { alignSelf: 'center' }}}
       />
     </DictionaryStack.Navigator>
   );
@@ -176,25 +123,13 @@ function DictionaryNavigator({navigation}) {
 
 const MeMaStack = createStackNavigator<MeMaParamList>();
 
-function MeMaNavigator({navigation}) {
-  const colorScheme = useColorScheme();
+function MeMaNavigator() {
   return (
-    <MeMaStack.Navigator screenOptions={{
-      headerStyle: {
-        backgroundColor: Colors[colorScheme].bottomTabBackground,
-      }}}>
+    <MeMaStack.Navigator>
       <MeMaStack.Screen
         name="MeMaScreen"
         component={MeMaScreen}
-        options={{ headerTitle: 'Talk to MeMa', headerTitleStyle: { alignSelf: 'center' }, headerLeft: null,
-        headerRight: (props) => (
-          <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
-          {...props}
-          onPress={() => {
-            firebase.auth().signOut();
-            navigation.navigate("SignIn");
-          }}
-        />)}}
+        options={{ headerTitle: 'Talk to MeMa', headerTitleStyle: { alignSelf: 'center' }}}
       />
     </MeMaStack.Navigator>
   );
@@ -202,25 +137,13 @@ function MeMaNavigator({navigation}) {
 
 const ProfileStack = createStackNavigator<ProfileParamList>();
 
-function ProfileNavigator({navigation}) {
-  const colorScheme = useColorScheme();
+function ProfileNavigator() {
   return (
-    <ProfileStack.Navigator screenOptions={{
-      headerStyle: {
-        backgroundColor: Colors[colorScheme].bottomTabBackground,
-      }}}>
+    <ProfileStack.Navigator>
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: 'Profile', headerTitleStyle: { alignSelf: 'center' }, headerLeft: null,
-        headerRight: (props) => (
-          <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
-          {...props}
-          onPress={() => {
-            firebase.auth().signOut();
-            navigation.navigate("SignIn");
-          }}
-        />)}}
+        options={{ headerTitle: 'Profile', headerTitleStyle: { alignSelf: 'center' } }}
       />
     </ProfileStack.Navigator>
   );

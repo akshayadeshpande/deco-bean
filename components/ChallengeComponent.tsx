@@ -1,17 +1,13 @@
 import * as React from 'react';
-import { StyleSheet, Button, Image, Platform, ProgressBarAndroid } from 'react-native';
+import { StyleSheet, Button, Image, Platform } from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import 'firebase/functions';
-import 'firebase/auth';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import useColorScheme from '../hooks/useColorScheme';
-import Colors from '../constants/Colors';
+
+
 
 var count = 0;
 
@@ -28,148 +24,70 @@ var keys : string[] = [];
 
 var challengeLanguage = "";
 
-var correctAnswers : String[] = [];
-var incorrectAnswers : String[] = [];
-
-const gameLength = 20
-
-var id : String;
-
-
+var correctAnswers = 0;
 
 export default function ChallengeComponent(props) {
-  const colorScheme = useColorScheme();
 
   //Runs on the first launch to get all the needed information for the game
     useEffect(() => {
         dbh = firebase.firestore();
-        var incomingWords = firebase.functions().httpsCallable('startChallenge')
-        incomingWords({count: gameLength}).then(function(result){
-          makeWordURLDict(result.data['words']);
-          challengeLanguage = result.data["Lang"];
-          id = result.data["id"]
-        }).catch(function(err){
-          console.log(err);
-          alert('An internal error occured. Please try again later.')
-        })
-         
+        makeWordURLDict(dbh);
+
+        // allWords(dbh, dictWords);
+        // allImg(store);
+        
     },[]);
+    //TODO: Need a new default pic to begin OR somehow have a better original state
     const [img, newImg] = useState('https://firebasestorage.googleapis.com/v0/b/bean-f1602.appspot.com/o/Images%2FApple.jpg?alt=media&token=9405ab95-7b0a-496a-9aa3-e20bff7d7bc4&fbclid=IwAR3Nv9bvimEEo4_nyN_IZpNO05bcMtC0Mhim50DEmqsg5JWkkJy7eYHCFX0');
     const [start, startingGame] = useState(false)
     const [answ, setCount] = useState(0)
-    const [tutorial, setTut] = useState(false)
 
     // Original Language Pick
-    if (start == false && tutorial == false) {
+    if (start == false) {
       return (
-
-        <View style={styles.CMContainer}> 
-        <View style={styles.ButtonView}>
-          <Button title="Start Game" color={Colors[colorScheme].activeTint} onPress={ () =>
-            IntroStateChange(newImg, startingGame)
+        <View style={styles.CMContainer}>   
+        <Button title="Begin CH challenge" onPress={ () =>
+            IntroStateChange(newImg, startingGame, "CH")
            } />
-        </View>
-        <View style={styles.ButtonView}>
-          <Button title='Tutorial' color={Colors[colorScheme].activeTint} onPress={() =>
-          setTut(true)
-          }/>
-        </View>
-        
-        </View>
-
-      );
-    } else if (tutorial == true) {
-
-      return (
-        <View style={styles.CMContainer}>
-          <View style={styles.imgHolder}>
-            <Image 
-                  source = {{ uri: img}}
-      
-                  style = {styles.imageStyle} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 1"}  color={Colors[colorScheme].activeTint} onPress={
-              () => setTut(false)} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 2"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 3"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 4"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
-          </View>
-          
-          <Text>
-            Challenge mode works by displaying and image at the top of the screen, depicting
-            a word you have seen before through some other form of learning on MeMa. Underneath 
-            gives you 4 clickable buttons with words on them from the language(s) you
-            are learning. Your task will be to select the correct word that represents the picture,
-            10 times, then your score will be recorded on your profile so it can be viewed later. 
-            
-            Press any button to be taken back to the game menu.
-          </Text>
-          </View>
+        <Button title="Begin SP challenge" onPress={ () =>
+          IntroStateChange(newImg, startingGame, "SP")
+        } />
+         </View>
       );
     } else {
       // Final view for how many correct answes
-      if (answ == gameLength) {
-        var endGameCall = firebase.functions().httpsCallable('endChallenge')
-        endGameCall({correct: correctAnswers, incorrect: incorrectAnswers, id: id, 
-          score: correctAnswers.length+ "/" + gameLength})
+      if (answ == 10) {
         return (
           <View style={styles.CMContainer}>
-          <Text>You got {correctAnswers.length}/{gameLength}</Text>
-          <View style={styles.ButtonView}>
-            <Button title="Play Again?" color={Colors[colorScheme].activeTint} onPress={
+          <Text>You got {correctAnswers}/10</Text>
+          <Button title="Play Again?" onPress={
               () => playAgain(setCount, startingGame)} />
-          </View>
           </View>
         );
       } else {
         //View while playing giving the images and the button choices
         return (
           <View style={styles.CMContainer}>
-            <View style={styles.imgHolder}>
-              <Image 
+          <Image 
                   source = {{ uri: img}}
       
                   style = {styles.imageStyle} />
-            </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[0]} color={Colors[colorScheme].activeTint} onPress={
+        
+          <Button title={currentButtons[0]} onPress={
               () => finalStateChange(answ, setCount, newImg, currentButtons[0])} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[1]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[1])} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[2]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[2])} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[3]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[3])} />
+          <Button title={currentButtons[1]} onPress={
+          () => finalStateChange(answ, setCount, newImg, currentButtons[1])} />
+          <Button title={currentButtons[2]} onPress={
+          () => finalStateChange(answ, setCount, newImg, currentButtons[2])} />
+          <Button title={currentButtons[3]} onPress={
+          () => finalStateChange(answ, setCount, newImg, currentButtons[3])} />
            </View>
-          </View>
-          
         );
+
       }
     }
 }
 
-/*
-Restarts the the game allowing the user to try again.
-
-@setCount: Function to change the state of the screen.
-@startingGame: State function that will set it the game is at the start or not.
-*/
 function playAgain(
   setCount: React.Dispatch<React.SetStateAction<number>>,
   startingGame: React.Dispatch<React.SetStateAction<boolean>>
@@ -178,15 +96,6 @@ function playAgain(
   startingGame(false)
 }
 
-/*
-Used to play through the game causing state changes and therefor the scree to
-rerender with new images for the game.
-
-@answ: How many turns has the user had.
-@setCount: Changes the state so the amount of turns played is updated.
-@newImg: Function that will change the image that is being rendered.
-@potentialWord: The users guess for the current round of the game.
-*/
 function finalStateChange(
   answ: number,
   setCount: React.Dispatch<React.SetStateAction<number>>,
@@ -197,21 +106,20 @@ function finalStateChange(
     setCount(answ + 1);
 }
 
-/*
-Wrapper function allowing 2 state changes to occure on one button click.
-
-@newImg: Function that changes the img state.
-@startingGame: State function that changes if the game is being played or not.
-*/
+//Allows 2 state changes at once to get the first pic
 function IntroStateChange(
   newImg: React.Dispatch<React.SetStateAction<string>>,
   startingGame: React.Dispatch<React.SetStateAction<boolean>>,
-  ) {
-    startingGame(true);
+  pickedLang : string) {
+    startingGame(startGame(pickedLang));
     newImg(changeImg());
   }
 
-
+function startGame(lang : string) {
+  var begin = true;
+  challengeLanguage = lang;
+  return begin
+}
 
 /*
 Checks to see if the correct word has been picked and if so
@@ -222,9 +130,7 @@ increases the counter
 function checkWord(potentialWord : string) {
   console.log("Potential Word: " + potentialWord + " Current Word: " + currentWord);
   if (potentialWord == wordInfo[currentWord][LangIndex()]) {
-    correctAnswers.push(potentialWord);
-  } else {
-    incorrectAnswers.push(potentialWord);
+    correctAnswers++;
   }
 }
 
@@ -233,19 +139,21 @@ Makes a dictionary out of all the words in the DB.
 
 @param: dbh - Reference the the firestor DB.
 */
-async function makeWordURLDict(randomWords: any[]) {
-  
-  randomWords.forEach((word) => {
-      var key = word["EN"] + "";
+async function makeWordURLDict(dbh : firebase.firestore.Firestore) {
+  var collRef = dbh.collection('WordData');
+  await collRef.get().then(function(querySnapshot){
+    querySnapshot.forEach(function(doc){
+      var data = doc.data();
+      var key = data["EN"] + "";
       //[0] = URL, [1] = CN, [2] = SP
-      wordInfo[key] = [word["URL"]+"", word["CH"]+"", word["SP"]+""];
-      keys.push(key);
-      console.log(key);
-  })
 
+      wordInfo[key] = [data["URL"]+"", data["CH"]+"", data["SP"]+""];
+      keys.push(key);
+    })
+  })
 }
   
-  //Changes what image will be rendered for the game.
+    //changes what pic is being diplayed in array
    function changeImg() {
       currentButtons = ["", "", "", ""];
       currentWord = getRandomWord();
@@ -291,11 +199,10 @@ async function makeWordURLDict(randomWords: any[]) {
     
   }
 
-  //Function that will handle word language is being rendered to screen
   function LangIndex() {
     var index = 0;
     switch(challengeLanguage){
-      case "Spanish":
+      case "SP":
         index = 2;
         break;
       default:
@@ -338,17 +245,10 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-    ButtonView: {
-      padding: 5,
-    },
     CMContainer: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      padding: 10
-    },
-    imgHolder: {
-      padding: 20,
     },
     title: {
       fontSize: 20,
@@ -364,7 +264,7 @@ const styles = StyleSheet.create({
     },
     imageStyle:{
       width: 200, 
-      height: 300,
-      resizeMode: 'stretch'
+      height: 300, 
+      resizeMode: 'center'
      }
   });
