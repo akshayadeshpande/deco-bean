@@ -1,7 +1,9 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
-
+import { Button, StyleSheet } from "react-native";
+import ChangeEmail from "./ChangeEmail";
 import EditScreenInfo from "../components/EditScreenInfo";
+import NavTouchButton from "../components/NavTouchButton";
+import Navigation from "../navigation";
 import { Text, View } from "../components/Themed";
 import { db, auth } from "../App";
 import * as firebase from "firebase";
@@ -47,6 +49,7 @@ class App extends React.Component {
                 <Text style={styles.text}>Country : {users.country}</Text>
                 <Text style={styles.text}>Email : {users.email}</Text>
                 <Text style={styles.text}>Want to Learn : {users.forLang}</Text>
+                <NavTouchButton screenName="ChangeEmail" text="Change Email" />
               </View>
             );
           })}

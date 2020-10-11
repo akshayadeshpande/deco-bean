@@ -1,11 +1,12 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import * as React from "react";
+import { StyleSheet } from "react-native";
 
-import { Text, View } from '../components/Themed';
-import { getDailyWord, WordDisplay } from '../components/WOTD';
-import NavTouchButton from '../components/NavTouchButton';
+import { Text, View } from "../components/Themed";
+import { getDailyWord, WordDisplay } from "../components/WOTD";
+import NavTouchButton from "../components/NavTouchButton";
+import * as firebase from "firebase";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
@@ -13,18 +14,34 @@ export default function HomeScreen() {
       </View>
       <View style={styles.containerRow}>
         <View style={styles.navBox}>
-          <NavTouchButton screenName="Profile" text="My Profile" iconName="user"/>
+          <NavTouchButton
+            screenName="Profile"
+            text="My Profile"
+            iconName="user"
+          />
         </View>
         <View style={styles.navBox}>
-          <NavTouchButton screenName="Dictionary" text="My Words" iconName="book"/>
+          <NavTouchButton
+            screenName="Dictionary"
+            text="My Words"
+            iconName="book"
+          />
         </View>
       </View>
       <View style={styles.containerRow}>
         <View style={styles.navBox}>
-          <NavTouchButton screenName="Challenge" text="Challenge Mode" iconName="gamepad"/>
+          <NavTouchButton
+            screenName="Challenge"
+            text="Challenge Mode"
+            iconName="gamepad"
+          />
         </View>
         <View style={styles.navBox}>
-          <NavTouchButton screenName="MeMa" text="Talk to MeMa" iconName="comments-o"/>
+          <NavTouchButton
+            screenName="MeMa"
+            text="Talk to MeMa"
+            iconName="comments-o"
+          />
         </View>
       </View>
     </View>
@@ -37,31 +54,31 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   containerRow: {
     flex: 1,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    flexWrap: "wrap",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
   },
   navBox: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
   text: {
     padding: 20,
-  }
+  },
 });
