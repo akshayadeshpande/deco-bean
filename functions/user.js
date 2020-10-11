@@ -5,16 +5,19 @@ const admin = require('firebase-admin')
 var handleUserData = function(data) {
 
     // Manipulates the user's data to remove vebosity add summary stats
-    data['friend_count'] = data['friends'].length;
-    data['word_count'] = {};
-    for (var key in data.seen){
-        data['word_count'][key] = data.seen[key].length;
+    if (data.friends){
+        data['friend_count'] = data['friends'].length;
+        delete data['friends']; 
     }
-
+    if (data.seen){
+        data['word_count'] = {};
+        for (var key in data.seen){
+            data['word_count'][key] = data.seen[key].length;
+        }
+        delete data['seen'];
+    }
     // Output handling to remove verbose data e.g. friends/seen words. Firebase does not support 
     // currently support getting multiple specific fields in one request, hence removing some is more efficient.
-    delete data['friends'];
-    delete data['seen'];
 
     return data;
 }
@@ -102,3 +105,33 @@ exports.addUserFriends = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('internal', 'An internal error occured.');
     }
 });
+
+exports.searchUsers = functions.https.onCall(async (data, context) => {
+    if (!context.auth){
+        throw new functions.https.HttpsError('failed-precondition', 'A challenge can only be started when logged in.');
+    }
+    if (!data.name) {
+        throw new functions.https.HttpsError('invalid-argument', 'Invalid arguments for function call. \
+        Ensure a name of a user is included as part of the request payload.');
+    }
+    try {       
+        let users = [];
+        var snapshot = await admin.firestore().collection('users').get();
+       
+        snapshot.forEach((user) => {
+            if (user.data().name.includes(data.name)) {
+                let userData = handleUserData(user.data());
+                delete userData['email'];
+                users.push(userData);
+            }
+        });
+              
+        return {status: 'success', code: 200, message: 'Successfully retrieved users.', users: users};
+    } catch (err) {
+        console.log(err);
+        throw new functions.https.HttpsError('internal', 'An internal error occured.');
+    }
+
+});
+
+
