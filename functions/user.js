@@ -32,7 +32,7 @@ var handleUserData = function(data) {
 exports.getUser = functions.https.onCall(async (data, context) => {
     // Check if the user is logged in or not. 
     if (!context.auth){
-        throw new functions.https.HttpsError('failed-precondition', 'A challenge can only be started when logged in.');
+        throw new functions.https.HttpsError('failed-precondition', 'A user can only be retrieved when logged in.');
     }
     try {
         const user_id = context.auth.uid;
@@ -52,7 +52,7 @@ exports.getUser = functions.https.onCall(async (data, context) => {
  */
 exports.getUserFriends = functions.https.onCall(async (data, context) => {
     if (!context.auth){
-        throw new functions.https.HttpsError('failed-precondition', 'A challenge can only be started when logged in.');
+        throw new functions.https.HttpsError('failed-precondition', 'A users friend can only be retrieved when logged in.');
     }
     try {
         const user_id = context.auth.uid;
@@ -77,7 +77,7 @@ exports.getUserFriends = functions.https.onCall(async (data, context) => {
 
 exports.addUserFriends = functions.https.onCall(async (data, context) => {
     if (!context.auth){
-        throw new functions.https.HttpsError('failed-precondition', 'A challenge can only be started when logged in.');
+        throw new functions.https.HttpsError('failed-precondition', 'A friend can only be added when logged in.');
     }
     if (!data.friends) {
         throw new functions.https.HttpsError('invalid-argument', 'Invalid arguments for function call. \
@@ -108,7 +108,7 @@ exports.addUserFriends = functions.https.onCall(async (data, context) => {
 
 exports.searchUsers = functions.https.onCall(async (data, context) => {
     if (!context.auth){
-        throw new functions.https.HttpsError('failed-precondition', 'A challenge can only be started when logged in.');
+        throw new functions.https.HttpsError('failed-precondition', 'Users can only be searched when logged in.');
     }
     if (!data.name) {
         throw new functions.https.HttpsError('invalid-argument', 'Invalid arguments for function call. \
