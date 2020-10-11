@@ -1,7 +1,8 @@
-import { StatusBar } from "expo-status-bar";
-import * as firebase from "firebase";
-import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
+import * as firebase from 'firebase';
+import React, { useEffect } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
@@ -17,6 +18,7 @@ const firebaseConfig = {
   appId: "1:546478099763:web:cb43ebe7de34c6a82b0246",
   measurementId: "G-HC338643HJ",
 };
+
 
 firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();

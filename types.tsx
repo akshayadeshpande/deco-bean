@@ -9,6 +9,7 @@ export type BottomTabParamList = {
   Dictionary: undefined;
   MeMa: undefined;
   Profile: undefined;
+  ChallengeTut: undefined;
 };
 
 export type HomeParamList = {
@@ -30,4 +31,8 @@ export type MeMaParamList = {
 
 export type ProfileParamList = {
   ProfileScreen: undefined;
+};
+
+export type EmailParamList = {
+  ChangeEmail: undefined;
 };
