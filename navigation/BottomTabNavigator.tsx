@@ -1,5 +1,5 @@
 import { FontAwesome, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 
@@ -23,49 +23,56 @@ import { BottomTabParamList,
           } from '../types';
 import Navigation from '.';
 
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator({navigation}) {
+/*
+Handles the Tabbar at the bottom of the app screen and what screens can be rended to the app from the Nav.
+*/
+export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const iconSize = 25;
+
 
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      activeColor={Colors[colorScheme].activeTint}
+      inactiveColor={Colors[colorScheme].inactiveTint}
+      barStyle={{backgroundColor:Colors[colorScheme].bottomTabBackground}}
       >
       <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" size={iconSize} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="user" size={32} color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="user" size={iconSize} color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="Dictionary"
+        name="Words"
         component={DictionaryNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="book" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome name="book" size={iconSize} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Challenge"
         component={ChallengeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <MaterialIcons name="gamepad" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="gamepad" size={iconSize} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="MeMa"
         component={MeMaScreen}
         options={{
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={24} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={iconSize} color={color} />,
         }}
       /> 
     </BottomTab.Navigator>
@@ -74,8 +81,8 @@ export default function BottomTabNavigator({navigation}) {
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: { name: string; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+function TabBarIcon(props: { name: string; color: string; iconSize: number }) {
+  return <Ionicons size={props.iconSize} style={{ marginBottom: -3 }} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
@@ -83,8 +90,12 @@ function TabBarIcon(props: { name: string; color: string }) {
 const HomeStack = createStackNavigator<HomeParamList>();
 
 function HomeNavigator({navigation}) {
+  const colorScheme = useColorScheme();
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors[colorScheme].bottomTabBackground,
+      }}}>
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -107,8 +118,12 @@ function HomeNavigator({navigation}) {
 const ChallengeStack = createStackNavigator<ChallengeParamList>();
 
 function ChallengeNavigator({navigation}) {
+  const colorScheme = useColorScheme();
   return (
-    <ChallengeStack.Navigator>
+    <ChallengeStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors[colorScheme].bottomTabBackground,
+      }}}>
       <ChallengeStack.Screen
         name="ChallengeScreen"
         component={ChallengeScreen}
@@ -130,8 +145,12 @@ function ChallengeNavigator({navigation}) {
 const DictionaryStack = createStackNavigator<DictionaryParamList>();
 
 function DictionaryNavigator({navigation}) {
+  const colorScheme = useColorScheme();
   return (
-    <DictionaryStack.Navigator>
+    <DictionaryStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors[colorScheme].bottomTabBackground,
+      }}}>
       <DictionaryStack.Screen
         name="DictionaryScreen"
         component={DictionaryScreen}
@@ -158,8 +177,12 @@ function DictionaryNavigator({navigation}) {
 const MeMaStack = createStackNavigator<MeMaParamList>();
 
 function MeMaNavigator({navigation}) {
+  const colorScheme = useColorScheme();
   return (
-    <MeMaStack.Navigator>
+    <MeMaStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors[colorScheme].bottomTabBackground,
+      }}}>
       <MeMaStack.Screen
         name="MeMaScreen"
         component={MeMaScreen}
@@ -180,8 +203,12 @@ function MeMaNavigator({navigation}) {
 const ProfileStack = createStackNavigator<ProfileParamList>();
 
 function ProfileNavigator({navigation}) {
+  const colorScheme = useColorScheme();
   return (
-    <ProfileStack.Navigator>
+    <ProfileStack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors[colorScheme].bottomTabBackground,
+      }}}>
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
