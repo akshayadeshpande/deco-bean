@@ -35,7 +35,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1>Profile</h1>
+        <Text>Profile</Text>
         {this.state.users &&
           this.state.users.map((users) => {
             return (
