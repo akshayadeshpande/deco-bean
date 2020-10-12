@@ -5,10 +5,12 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text } from './Themed';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 
 
 export default function AudioPlayer(props) {
-  // Test Sound (CASA), otherwise we'll use props to get path.
+  const colorScheme = useColorScheme();
   const soundURI = props.soundURI;
   let soundObject = new Audio.Sound();
 
@@ -61,7 +63,7 @@ export default function AudioPlayer(props) {
       style={styles.button}
       onPress={() => playAudio()}
     >
-      <FontAwesome name="play-circle" size={50} color="green" />
+      <FontAwesome name="play-circle" size={50} color={Colors[colorScheme].activeTint} />
       <Text style={styles.text}>Play Audio</Text>
     </TouchableOpacity>
   );
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   text: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
   }
 });
