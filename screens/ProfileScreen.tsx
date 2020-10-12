@@ -34,8 +34,8 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div className="App">
-        <Text>Profile</Text>
+      <View>
+        <Text style={styles.title}>Profile</Text>
         {this.state.users &&
           this.state.users.map((users) => {
             return (
@@ -53,7 +53,7 @@ class App extends React.Component {
               </View>
             );
           })}
-      </div>
+      </View>
     );
   }
 }
