@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Text, View, StyleSheet, SectionList, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import 'firebase/firestore';
@@ -5,16 +6,22 @@ import 'firebase/functions';
 import 'firebase/auth';
 import * as firebase from 'firebase';
 
+
 import { useEffect, useState } from 'react';
 
 
 export default function FriendsScreen({navigation, props}) {
-    const [friendsList, setFriendsList] = useState(
-        [{title: 'category', data: [{friend: 'friend'}]}]
-      );
+    const [friendsList, setFriendsList] = useState([{title: "Letter", data : []}]);
 
     useEffect(() => {
-        getFriends();
+        const incomingFriends = firebase.functions().httpsCallable('getUserFriends')
+        incomingFriends({}).then((result) => {
+            console.log(result);
+            //setFriendsList(result.data['friends']);
+        }).catch(function(err){
+            console.log(err);
+            alert('An internal error occured. Please try again later.')
+        });
       }, []);
 
     return (
@@ -40,21 +47,10 @@ export default function FriendsScreen({navigation, props}) {
           </TouchableOpacity>
       )}
       
-      keyExtractor={(item, index) => item.friend} //Unique words only
     />
     );
 }
 
-async function getFriends() {
-    var friends = [];
-
-    var incomingFriends = firebase.functions().httpsCallable('getUserFriends')
-    incomingFriends({}).then((result) => {
-        var friendsList = result.data['friends'];
-        console.log(friendsList);
-    })
-
-}
 
 
 const styles = StyleSheet.create({

@@ -6,11 +6,13 @@ import { Text, View } from "../components/Themed";
 import { db, auth } from "../App";
 import * as firebase from "firebase";
 import { useScreens } from "react-native-screens";
+import { Button } from "react-native";
 
-export default function ProfileScreen(props) {
+export default function ProfileScreen({navigation, props}) {
 
     return (
         <View style={styles.container}>
+          <Button title="Test Friends" onPress={() => {navigation.navigate("FriendsScreen")}}/>
           <Profile/>
         </View>
       );
