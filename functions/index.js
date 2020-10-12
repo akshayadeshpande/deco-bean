@@ -54,3 +54,22 @@ exports.getUsers = functions.https.onRequest(async (req, res) => {
 });
 
 
+exports.getWotd = functions.https.onCall(async (data, context) => {
+    // Check if the user is logged in or not. 
+    if (!context.auth){
+        throw new functions.https.HttpsError('failed-precondition', 'A word of the day can only be retrieved when logged in.');
+    }
+    try {
+        const wordCount = (await admin.firestore().collection('WordData').doc('count').get()).data().count;
+        const randInt = Math.floor(Math.random() * wordCount + 1);
+
+        let word = (await admin.firestore().collection('WordData').doc('Word' + randInt.toString()).get()).data();
+
+        return {status: 'success', code: 200, word: word};
+    } catch (err) {
+        console.log(err);
+        throw new functions.https.HttpsError('internal', 'An internal error occured.');
+    }
+})
+
+
