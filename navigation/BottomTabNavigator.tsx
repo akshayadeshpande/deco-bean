@@ -11,6 +11,8 @@ import DictionaryScreen from '../screens/DictionaryScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import MeMaScreen from '../screens/MeMaScreen';
 import WordScreen from '../screens/WordScreen';
+import FriendsScreen from '../screens/FriendsScreen';
+import FriendsProfileScreen from '../screens/FriendsProfileScreen';
 import * as firebase from 'firebase';
 
 
@@ -221,6 +223,16 @@ function ProfileNavigator({navigation}) {
             navigation.navigate("SignIn");
           }}
         />)}}
+      />
+      <ProfileStack.Screen
+        name="FriendsScreen"
+        component={FriendsScreen}
+        options={{ headerTitle: 'Friends', headerTitleStyle: { alignSelf: 'center' }, }}
+      />
+      <ProfileStack.Screen
+        name="FriendsProfileScreen"
+        component={FriendsProfileScreen}
+        options={{ headerTitle: 'Friends Profile', headerTitleStyle: { alignSelf: 'center' }, }}
       />
     </ProfileStack.Navigator>
   );
