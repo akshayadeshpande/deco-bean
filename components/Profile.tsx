@@ -1,17 +1,20 @@
 import * as React from 'react';
-import { StyleSheet, Button, Image, Platform, ProgressBarAndroid } from 'react-native';
 import { useState, useEffect, Component } from 'react';
+import { StyleSheet, Button} from 'react-native';
 
 import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
+import NavTouchButton from "../components/NavTouchButton";
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import 'firebase/functions';
 import 'firebase/auth';
 
+
 var count = 0;
 
 export default function Profile(props) {
+    
     const [userName, setUserName] = useState('');
     const [name, setName] = useState('');
     const [country, setCountry] = useState('');
@@ -35,7 +38,7 @@ export default function Profile(props) {
             setForLang(user.forLang);
             setHomeLang(user.homeLang);
             setFriendCount(user.friendCount);
-            // setWordCount(user.wordCount);
+            setWordCount(user.wordCount);
             setSignedUp(user.signedUp);
         }).catch(function(err){
             console.log(err);
@@ -44,9 +47,22 @@ export default function Profile(props) {
     }, []);
 
     return (
-      <View style={styles.CMContainer}>   
+      <View style={styles.CMContainer}> 
+        <View style={styles.container}>
+        <Text style={styles.title}>{name}</Text>
+        <View
+          style={styles.separator}
+          lightColor="#eee"
+          darkColor="rgba(255,255,255,0.1)"
+        />
+        <Text style={styles.text}>Country : {country}</Text>
+        <Text style={styles.text}>Email : {email}</Text>
+        <Text style={styles.text}>Want to Learn : {forLang}</Text>
+        <NavTouchButton screenName="ChangeEmail" text="Change Email" /> 
+        
       </View>
-    )
+      </View>
+    );
 }
 
 
@@ -61,10 +77,16 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    ButtonView: {
+      padding: 5,
+    },
     CMContainer: {
-      flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      padding: 5
+    },
+    imgHolder: {
+      padding: 20,
     },
     title: {
       fontSize: 20,
@@ -80,7 +102,7 @@ const styles = StyleSheet.create({
     },
     imageStyle:{
       width: 200, 
-      height: 300, 
-      resizeMode: 'center'
+      height: 300,
+      resizeMode: 'stretch'
      }
   });

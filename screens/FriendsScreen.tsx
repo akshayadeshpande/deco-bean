@@ -5,19 +5,39 @@ import 'firebase/firestore';
 import 'firebase/functions';
 import 'firebase/auth';
 import * as firebase from 'firebase';
+import useColorScheme from '../hooks/useColorScheme';
+import Colors from '../constants/Colors';
+
+var DBFriendsData;
 
 
 import { useEffect, useState } from 'react';
 
-
+const colorScheme = useColorScheme();
 export default function FriendsScreen({navigation, props}) {
-    const [friendsList, setFriendsList] = useState([{title: "Letter", data : []}]);
+    
+
+    const [friendsList, setFriendsList] = useState([{title: "Loading...", 
+    data : [{
+        userName: 'Loading...',
+        country: "",
+        email: "",
+        forLang: "",
+        friendCount: 0,
+        homeLang: "",
+        name: "",
+        signedUp: "",
+        wordCount:{"Spanish": 0, 
+                    "Chinese": 0}
+    }
+    ]}]);
 
     useEffect(() => {
         const incomingFriends = firebase.functions().httpsCallable('getUserFriends')
         incomingFriends({}).then((result) => {
             console.log(result);
-            //setFriendsList(result.data['friends']);
+            DBFriendsData = result.data['friends'];
+            assembleFriends(result.data['friends'], setFriendsList);
         }).catch(function(err){
             console.log(err);
             alert('An internal error occured. Please try again later.')
@@ -25,20 +45,28 @@ export default function FriendsScreen({navigation, props}) {
       }, []);
 
     return (
-    <SectionList
+      <SectionList
       sections={friendsList}
-      renderSectionHeader={({section}) => (
-        <View style={styles.sectionHeader}>
-          <Text style={styles.headerText}>{section.title} Dictionary</Text>
-        </View>
-      )}
       stickySectionHeadersEnabled={true}
       renderItem={({item}) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("FriendsProfileScreen")}>
+            onPress={() => 
+                navigation.navigate("FriendsProfileScreen", {
+                    country: item.country,
+                    userName: item.userName,
+                    email: item.email,
+                    forLang: item.forLang,
+                    friendCount: item.friendCount,
+                    homeLang: item.homeLang,
+                    name: item.name,
+                    signedUp: item.signedUp,
+                    wordCount:{"Spanish": item.wordCount["Spanish"], 
+                                "Chinese": item.wordCount["Chinese"]}
+                }
+                )}>
             <View style={styles.listItemContainer}>
               <View style={styles.listItem}>
-                <Text style={styles.listText}>{item.friend}</Text>
+                <Text style={styles.listText}>{item.userName}</Text>
               </View>
               <View style={styles.listArrow}>
                 <FontAwesome name="chevron-right" size={16} color="black" />
@@ -46,11 +74,35 @@ export default function FriendsScreen({navigation, props}) {
             </View>
           </TouchableOpacity>
       )}
-      
+      keyExtractor={(item, index) => item.userName} //Unique words only
     />
     );
 }
 
+function assembleFriends(friendsData, setFriendsList) {
+    let friendsList = [{title: friendsData['userName'], data: []}]
+
+    friendsData.forEach((friendDoc) => {
+        switch(friendsData['userName']) {
+            default:
+                friendsList[0].data.push({
+                    "country": friendDoc['country'],
+                    "email": friendDoc['email'],
+                    "forLang": friendDoc['forLang'],
+                    "friendCount": friendDoc['friendCount'],
+                    "homeLang": friendDoc['homeLang'],
+                    "name": friendDoc['name'],
+                    "signedUp": friendDoc['signedUp'],
+                    "userName": friendDoc['userName'],
+                    "wordCount":{"Spanish": friendDoc['wordCount']['Spanish'], 
+                                "Chinese": friendDoc['wordCount']['Chinese']}
+                });
+        }
+    })
+
+    setFriendsList(friendsList);
+
+}
 
 
 const styles = StyleSheet.create({
