@@ -12,29 +12,39 @@ import 'firebase/auth';
 var count = 0;
 
 export default function Profile(props) {
+    const [userName, setUserName] = useState('');
+    const [name, setName] = useState('');
+    const [country, setCountry] = useState('');
+    const [email, setEmail] = useState('');
+    const [forLang, setForLang] = useState('');
+    const [homeLang, setHomeLang] = useState('');
+    const [friendCount, setFriendCount] = useState(0);
+    const [wordCount, setWordCount] = useState({});
+    const [signedUp, setSignedUp] = useState('');
 
-  //Runs on the first launch to get all the needed information for the game
+    //Runs on the first launch to get all the needed information for the user
     useEffect(() => {
-        var getUser = firebase.functions().httpsCallable('getUser')
-        getUser({}).then(function(result){
-          console.log(result);
+        const getUser = firebase.functions().httpsCallable('getUser')
+        getUser({}).then((result) => {
+            let user = result.data.user;
+            console.log(user);
+            setUserName(user.userName);
+            setName(user.name);
+            setCountry(user.country);
+            setEmail(user.email);
+            setForLang(user.forLang);
+            setHomeLang(user.homeLang);
+            setFriendCount(user.friendCount);
+            // setWordCount(user.wordCount);
+            setSignedUp(user.signedUp);
         }).catch(function(err){
-          console.log(err);
-          alert('An internal error occured. Please try again later.')
+            console.log(err);
+            alert('An internal error occured. Please try again later.')
         })
-    });
+    }, []);
 
     return (
       <View style={styles.CMContainer}>   
-      <Button title="Begin CH challenge" onPress={ () =>
-          console.log("CH")
-         }/>
-      <Button title="Begin SP challenge" onPress={ () =>
-        console.log("SP")
-      } />
-      <Button title='Tutorial' onPress={() =>
-        console.log("Tute")
-      }/>
       </View>
     )
 }
