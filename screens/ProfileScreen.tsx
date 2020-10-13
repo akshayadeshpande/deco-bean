@@ -7,19 +7,14 @@ import { db, auth } from "../App";
 import * as firebase from "firebase";
 import { useScreens } from "react-native-screens";
 import { Button } from "react-native";
-import useColorScheme from '../hooks/useColorScheme';
-import Colors from '../constants/Colors';
+
 
 
 export default function ProfileScreen({navigation, props}) {
-    const colorScheme = useColorScheme();
+    
     return (
         <View style={styles.container}>
-          <Profile/>
-          <Button title="Friends" 
-          color={Colors[colorScheme].activeTint}
-          onPress={() => {navigation.navigate("FriendsScreen")}}
-          />
+          <Profile navigation={navigation} props={props}/>
         </View>
       );
 };

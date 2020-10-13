@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, SectionList, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, SectionList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import 'firebase/firestore';
 import 'firebase/functions';
@@ -15,8 +15,7 @@ import { useEffect, useState } from 'react';
 
 const colorScheme = useColorScheme();
 export default function FriendsScreen({navigation, props}) {
-    
-
+    const [loaded, setLoading] = useState(true);
     const [friendsList, setFriendsList] = useState([{title: "Loading...", 
     data : [{
         userName: 'Loading...',
@@ -38,14 +37,19 @@ export default function FriendsScreen({navigation, props}) {
             console.log(result);
             DBFriendsData = result.data['friends'];
             assembleFriends(result.data['friends'], setFriendsList);
+            setLoading(false);
         }).catch(function(err){
             console.log(err);
             alert('An internal error occured. Please try again later.')
         });
       }, []);
 
-    return (
-      <SectionList
+    return (loaded ? 
+      <View style={styles.titleContainer}>
+        <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
+      </View>
+       :  
+        <SectionList
       sections={friendsList}
       stickySectionHeadersEnabled={true}
       renderItem={({item}) => (
@@ -76,7 +80,7 @@ export default function FriendsScreen({navigation, props}) {
       )}
       keyExtractor={(item, index) => item.userName} //Unique words only
     />
-    );
+      ); 
 }
 
 function assembleFriends(friendsData, setFriendsList) {
@@ -118,6 +122,11 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.55,
       shadowRadius: 3.84,
       elevation: 10,
+    },
+    titleContainer: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     headerText: {
       fontWeight: 'bold',

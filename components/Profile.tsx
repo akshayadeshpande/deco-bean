@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect, Component } from 'react';
-import { StyleSheet, Button} from 'react-native';
+import { StyleSheet, Button, ActivityIndicator} from 'react-native';
 
 import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
@@ -9,12 +9,14 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 import 'firebase/functions';
 import 'firebase/auth';
-
+import useColorScheme from '../hooks/useColorScheme';
+import Colors from '../constants/Colors';
 
 var count = 0;
 
-export default function Profile(props) {
-    
+export default function Profile({navigation, props}) {
+    const [loaded, setLoading] = useState(true);
+    const colorScheme = useColorScheme();
     const [userName, setUserName] = useState('');
     const [name, setName] = useState('');
     const [country, setCountry] = useState('');
@@ -40,29 +42,37 @@ export default function Profile(props) {
             setFriendCount(user.friendCount);
             setWordCount(user.wordCount);
             setSignedUp(user.signedUp);
+            setLoading(false);
         }).catch(function(err){
             console.log(err);
             alert('An internal error occured. Please try again later.')
         })
     }, []);
 
-    return (
+    return (loaded ? 
+        <View style={styles.titleContainer}>
+        <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
+        </View>
+    :
       <View style={styles.CMContainer}> 
-        <View style={styles.container}>
-        <Text style={styles.title}>{name}</Text>
-        <View
-          style={styles.separator}
-          lightColor="#eee"
-          darkColor="rgba(255,255,255,0.1)"
+      <View style={styles.container}>
+      <Text style={styles.title}>{name}</Text>
+      <View
+        style={styles.separator}
+        lightColor="#eee"
+        darkColor="rgba(255,255,255,0.1)"
+      />
+      <Text style={styles.text}>Country : {country}</Text>
+      <Text style={styles.text}>Email : {email}</Text>
+      <Text style={styles.text}>Want to Learn : {forLang}</Text>
+      <NavTouchButton screenName="ChangeEmail" text="Change Email" /> 
+      <Button title="Friends" 
+        color={Colors[colorScheme].activeTint}
+        onPress={() => {navigation.navigate("FriendsScreen")}}
         />
-        <Text style={styles.text}>Country : {country}</Text>
-        <Text style={styles.text}>Email : {email}</Text>
-        <Text style={styles.text}>Want to Learn : {forLang}</Text>
-        <NavTouchButton screenName="ChangeEmail" text="Change Email" /> 
-        
       </View>
       </View>
-    );
+      );
 }
 
 

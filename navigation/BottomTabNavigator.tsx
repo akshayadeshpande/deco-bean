@@ -101,7 +101,7 @@ function HomeNavigator({navigation}) {
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'MeMa Home', headerTitleStyle: { alignSelf: 'center' }, 
+        options={{ headerTitle: 'MeMa Home', headerTitleAlign:"center", 
         headerLeft: null,
         headerRight: (props) => (
           <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"

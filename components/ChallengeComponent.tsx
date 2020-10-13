@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Button, Image, Platform, ProgressBarAndroid } from 'react-native';
+import { StyleSheet, Button, Image, Platform, ProgressBarAndroid, ActivityIndicator } from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from '../components/EditScreenInfo';
@@ -39,6 +39,11 @@ var id : String;
 
 export default function ChallengeComponent(props) {
   const colorScheme = useColorScheme();
+  const [img, newImg] = useState('https://firebasestorage.googleapis.com/v0/b/bean-f1602.appspot.com/o/Images%2FApple.jpg?alt=media&token=9405ab95-7b0a-496a-9aa3-e20bff7d7bc4&fbclid=IwAR3Nv9bvimEEo4_nyN_IZpNO05bcMtC0Mhim50DEmqsg5JWkkJy7eYHCFX0');
+  const [start, startingGame] = useState(false)
+  const [answ, setCount] = useState(0)
+  const [tutorial, setTut] = useState(false)
+  const [loaded, setLoading] = useState(true);
 
   //Runs on the first launch to get all the needed information for the game
     useEffect(() => {
@@ -48,119 +53,125 @@ export default function ChallengeComponent(props) {
           makeWordURLDict(result.data['words']);
           challengeLanguage = result.data["Lang"];
           id = result.data["id"]
+          setLoading(false);
         }).catch(function(err){
           console.log(err);
           alert('An internal error occured. Please try again later.')
         })
          
     },[]);
-    const [img, newImg] = useState('https://firebasestorage.googleapis.com/v0/b/bean-f1602.appspot.com/o/Images%2FApple.jpg?alt=media&token=9405ab95-7b0a-496a-9aa3-e20bff7d7bc4&fbclid=IwAR3Nv9bvimEEo4_nyN_IZpNO05bcMtC0Mhim50DEmqsg5JWkkJy7eYHCFX0');
-    const [start, startingGame] = useState(false)
-    const [answ, setCount] = useState(0)
-    const [tutorial, setTut] = useState(false)
-
-    // Original Language Pick
-    if (start == false && tutorial == false) {
+    
+    if (loaded){
       return (
-
-        <View style={styles.CMContainer}> 
-        <View style={styles.ButtonView}>
-          <Button title="Start Game" color={Colors[colorScheme].activeTint} onPress={ () =>
-            IntroStateChange(newImg, startingGame)
-           } />
+        <View style={styles.titleContainer}>
+        <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
         </View>
-        <View style={styles.ButtonView}>
-          <Button title='Tutorial' color={Colors[colorScheme].activeTint} onPress={() =>
-          setTut(true)
-          }/>
-        </View>
-        
-        </View>
-
-      );
-    } else if (tutorial == true) {
-
-      return (
-        <View style={styles.CMContainer}>
-          <View style={styles.imgHolder}>
-            <Image 
-                  source = {{ uri: img}}
-      
-                  style = {styles.imageStyle} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 1"}  color={Colors[colorScheme].activeTint} onPress={
-              () => setTut(false)} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 2"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 3"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 4"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
-          </View>
-          
-          <Text>
-            Challenge mode works by displaying and image at the top of the screen, depicting
-            a word you have seen before through some other form of learning on MeMa. Underneath 
-            gives you 4 clickable buttons with words on them from the language(s) you
-            are learning. Your task will be to select the correct word that represents the picture,
-            10 times, then your score will be recorded on your profile so it can be viewed later. 
-            
-            Press any button to be taken back to the game menu.
-          </Text>
-          </View>
       );
     } else {
-      // Final view for how many correct answes
-      if (answ == gameLength) {
-        var endGameCall = firebase.functions().httpsCallable('endChallenge')
-        endGameCall({correct: correctAnswers, incorrect: incorrectAnswers, id: id, 
-          score: correctAnswers.length+ "/" + gameLength})
+        // Original Language Pick
+      if (start == false && tutorial == false) {
         return (
-          <View style={styles.CMContainer}>
-          <Text>You got {correctAnswers.length}/{gameLength}</Text>
+
+          <View style={styles.CMContainer}> 
           <View style={styles.ButtonView}>
-            <Button title="Play Again?" color={Colors[colorScheme].activeTint} onPress={
-              () => playAgain(setCount, startingGame)} />
+            <Button title="Start Game" color={Colors[colorScheme].activeTint} onPress={ () =>
+              IntroStateChange(newImg, startingGame)
+            } />
           </View>
+          <View style={styles.ButtonView}>
+            <Button title='Tutorial' color={Colors[colorScheme].activeTint} onPress={() =>
+            setTut(true)
+            }/>
           </View>
+          
+          </View>
+
         );
-      } else {
-        //View while playing giving the images and the button choices
+      } else if (tutorial == true) {
+
         return (
           <View style={styles.CMContainer}>
             <View style={styles.imgHolder}>
               <Image 
-                  source = {{ uri: img}}
-      
-                  style = {styles.imageStyle} />
+                    source = {{ uri: img}}
+        
+                    style = {styles.imageStyle} />
             </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[0]} color={Colors[colorScheme].activeTint} onPress={
-              () => finalStateChange(answ, setCount, newImg, currentButtons[0])} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[1]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[1])} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[2]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[2])} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[3]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[3])} />
-           </View>
-          </View>
-          
+            <View style={styles.ButtonView}>
+              <Button title={"Tutorial Button 1"}  color={Colors[colorScheme].activeTint} onPress={
+                () => setTut(false)} />
+            </View>
+            <View style={styles.ButtonView}>
+              <Button title={"Tutorial Button 2"} color={Colors[colorScheme].activeTint} onPress={
+              () => setTut(false)} />
+            </View>
+            <View style={styles.ButtonView}>
+              <Button title={"Tutorial Button 3"} color={Colors[colorScheme].activeTint} onPress={
+              () => setTut(false)} />
+            </View>
+            <View style={styles.ButtonView}>
+              <Button title={"Tutorial Button 4"} color={Colors[colorScheme].activeTint} onPress={
+              () => setTut(false)} />
+            </View>
+            
+            <Text>
+              Challenge mode works by displaying and image at the top of the screen, depicting
+              a word you have seen before through some other form of learning on MeMa. Underneath 
+              gives you 4 clickable buttons with words on them from the language(s) you
+              are learning. Your task will be to select the correct word that represents the picture,
+              10 times, then your score will be recorded on your profile so it can be viewed later. 
+              
+              Press any button to be taken back to the game menu.
+            </Text>
+            </View>
         );
+      } else {
+        // Final view for how many correct answes
+        if (answ == gameLength) {
+          var endGameCall = firebase.functions().httpsCallable('endChallenge')
+          endGameCall({correct: correctAnswers, incorrect: incorrectAnswers, id: id, 
+            score: correctAnswers.length+ "/" + gameLength})
+          return (
+            <View style={styles.CMContainer}>
+            <Text>You got {correctAnswers.length}/{gameLength}</Text>
+            <View style={styles.ButtonView}>
+              <Button title="Play Again?" color={Colors[colorScheme].activeTint} onPress={
+                () => playAgain(setCount, startingGame)} />
+            </View>
+            </View>
+          );
+        } else {
+          //View while playing giving the images and the button choices
+          return (
+            <View style={styles.CMContainer}>
+              <View style={styles.imgHolder}>
+                <Image 
+                    source = {{ uri: img}}
+        
+                    style = {styles.imageStyle} />
+              </View>
+            <View style={styles.ButtonView}>
+              <Button title={currentButtons[0]} color={Colors[colorScheme].activeTint} onPress={
+                () => finalStateChange(answ, setCount, newImg, currentButtons[0])} />
+            </View>
+            <View style={styles.ButtonView}>
+              <Button title={currentButtons[1]} color={Colors[colorScheme].activeTint} onPress={
+              () => finalStateChange(answ, setCount, newImg, currentButtons[1])} />
+            </View>
+            <View style={styles.ButtonView}>
+              <Button title={currentButtons[2]} color={Colors[colorScheme].activeTint} onPress={
+              () => finalStateChange(answ, setCount, newImg, currentButtons[2])} />
+            </View>
+            <View style={styles.ButtonView}>
+              <Button title={currentButtons[3]} color={Colors[colorScheme].activeTint} onPress={
+              () => finalStateChange(answ, setCount, newImg, currentButtons[3])} />
+            </View>
+            </View>
+            
+          );
       }
+    }
+
     }
 }
 

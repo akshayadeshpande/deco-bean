@@ -6,10 +6,13 @@ import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
 import * as firebase from 'firebase';
 import { TextInput } from 'react-native-gesture-handler';
+import useColorScheme from '../hooks/useColorScheme';
+import Colors from '../constants/Colors';
 
 
 
 export default function Register() {
+    const colorScheme = useColorScheme();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -27,7 +30,7 @@ export default function Register() {
             placeholder="Password"
             onChangeText={(t) => setPassword(t)}
             value={password}/>
-          <Button title="Login" onPress={event => loginUser(event, email, password)} />
+          <Button title="Login" color ={Colors[colorScheme].activeTint} onPress={event => loginUser(event, email, password)} />
         </View>
       </ScrollView>
     )

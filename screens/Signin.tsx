@@ -6,9 +6,12 @@ import { Text, View } from '../components/Themed';
 import Signin from '../components/Signin';
 import Navigation from '../navigation'
 import * as firebase from 'firebase';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 
 var started = false;
 export default function SigninScreen({navigation}) {
+  const colorScheme = useColorScheme();
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -22,7 +25,7 @@ export default function SigninScreen({navigation}) {
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Signin/>
       <Text>New user?</Text>
-      <Button title="Sign-Up Here!" onPress={() => 
+      <Button title="Sign-Up Here!" color={Colors[colorScheme].activeTint} onPress={() => 
       navigation.navigate("SignUp")}/>
     </View>
   );

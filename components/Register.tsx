@@ -8,10 +8,12 @@ import { Text, View } from './Themed';
 import * as firebase from 'firebase';
 import { TextInput } from 'react-native-gesture-handler';
 import * as SigninFunctions from './Signin';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 
 
 export default function Register() {
-
+    const colorScheme = useColorScheme();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -49,7 +51,7 @@ export default function Register() {
             <Picker.Item label="Spanish" value="Spanish" />
             <Picker.Item label="Chinese" value="Chinese" />
           </Picker>
-          <Button title="Register" onPress={event => registerUser(event, name, email, password, forLang, homeLang)} />
+          <Button title="Register" color={Colors[colorScheme].activeTint} onPress={event => registerUser(event, name, email, password, forLang, homeLang)} />
         </View>
       </ScrollView>
     )
