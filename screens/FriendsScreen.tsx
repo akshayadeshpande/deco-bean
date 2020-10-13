@@ -13,8 +13,9 @@ var DBFriendsData;
 
 import { useEffect, useState } from 'react';
 
-const colorScheme = useColorScheme();
+
 export default function FriendsScreen({navigation, props}) {
+    const colorScheme = useColorScheme();
     const [loaded, setLoading] = useState(true);
     const [friendsList, setFriendsList] = useState([{title: "Loading...", 
     data : [{
