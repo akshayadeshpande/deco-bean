@@ -30,7 +30,21 @@ export default function Register() {
             placeholder="Password"
             onChangeText={(t) => setPassword(t)}
             value={password}/>
-          <Button title="Login" color ={Colors[colorScheme].activeTint} onPress={event => loginUser(event, email, password)} />
+
+          {Platform.OS === "ios" ? 
+          <View style={styles.appButtonContainer}>
+          <Button title="Login" 
+          color={"#fff"}
+          onPress={event => loginUser(event, email, password)}
+          />
+          </View>
+          : 
+          <Button title="Login" 
+          color={Colors[colorScheme].activeTint}
+          onPress={event => loginUser(event, email, password)}
+          />
+          }
+
         </View>
       </ScrollView>
     )
@@ -80,5 +94,12 @@ const styles = StyleSheet.create({
       width: 200, 
       height: 300, 
       resizeMode: 'center'
-     }
+     },
+     appButtonContainer: {
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 5
+    }
   });

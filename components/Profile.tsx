@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect, Component } from 'react';
-import { StyleSheet, Button, ActivityIndicator} from 'react-native';
+import { StyleSheet, Button, ActivityIndicator, Platform} from 'react-native';
 
 import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
@@ -11,6 +11,7 @@ import 'firebase/functions';
 import 'firebase/auth';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
+
 
 var count = 0;
 
@@ -65,11 +66,21 @@ export default function Profile({navigation, props}) {
       <Text style={styles.text}>Country : {country}</Text>
       <Text style={styles.text}>Email : {email}</Text>
       <Text style={styles.text}>Want to Learn : {forLang}</Text>
-      <NavTouchButton screenName="ChangeEmail" text="Change Email" /> 
+      <NavTouchButton screenName="ChangeEmail" text="Change Email" />
+
+      {Platform.OS === "ios" ? 
+      <View style={styles.appButtonContainer}>
       <Button title="Friends" 
-        color={Colors[colorScheme].activeTint}
-        onPress={() => {navigation.navigate("FriendsScreen")}}
-        />
+      color={"#fff"}
+      onPress={() => {navigation.navigate("FriendsScreen")}}
+      />
+      </View>
+    : 
+      <Button title="Friends" 
+      color={Colors[colorScheme].activeTint}
+      onPress={() => {navigation.navigate("FriendsScreen")}}
+      />
+      }
       </View>
       </View>
       );
@@ -114,5 +125,12 @@ const styles = StyleSheet.create({
       width: 200, 
       height: 300,
       resizeMode: 'stretch'
-     }
+     },
+     appButtonContainer: {
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 5
+    }
   });

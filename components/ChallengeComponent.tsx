@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Button, Image, Platform, ProgressBarAndroid } from 'react-native';
+import { StyleSheet, Button, Image, Platform, ProgressBarAndroid, ActivityIndicator} from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from '../components/EditScreenInfo';
@@ -39,6 +39,11 @@ var id : String;
 
 export default function ChallengeComponent(props) {
   const colorScheme = useColorScheme();
+  const [loaded, setLoading] = useState(true);
+  const [img, newImg] = useState('https://firebasestorage.googleapis.com/v0/b/bean-f1602.appspot.com/o/Images%2FApple.jpg?alt=media&token=9405ab95-7b0a-496a-9aa3-e20bff7d7bc4&fbclid=IwAR3Nv9bvimEEo4_nyN_IZpNO05bcMtC0Mhim50DEmqsg5JWkkJy7eYHCFX0');
+  const [start, startingGame] = useState(false)
+  const [answ, setCount] = useState(0)
+  const [tutorial, setTut] = useState(false)
 
   //Runs on the first launch to get all the needed information for the game
     useEffect(() => {
@@ -46,37 +51,59 @@ export default function ChallengeComponent(props) {
         var incomingWords = firebase.functions().httpsCallable('startChallenge')
         incomingWords({count: gameLength}).then(function(result){
           makeWordURLDict(result.data['words']);
-          challengeLanguage = result.data["Lang"];
+          challengeLanguage = result.data["lang"];
           id = result.data["id"]
+          setLoading(false);
         }).catch(function(err){
           console.log(err);
           alert('An internal error occured. Please try again later.')
         })
          
     },[]);
-    const [img, newImg] = useState('https://firebasestorage.googleapis.com/v0/b/bean-f1602.appspot.com/o/Images%2FApple.jpg?alt=media&token=9405ab95-7b0a-496a-9aa3-e20bff7d7bc4&fbclid=IwAR3Nv9bvimEEo4_nyN_IZpNO05bcMtC0Mhim50DEmqsg5JWkkJy7eYHCFX0');
-    const [start, startingGame] = useState(false)
-    const [answ, setCount] = useState(0)
-    const [tutorial, setTut] = useState(false)
-
-    // Original Language Pick
+    
+    if (loaded) {
+      return(
+        <View style={styles.titleContainer}>
+        <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
+        </View>
+      );
+    } else {
+      // Original Language Pick
     if (start == false && tutorial == false) {
       return (
 
         <View style={styles.CMContainer}> 
         <View style={styles.ButtonView}>
-          <Button title="Start Game" color={Colors[colorScheme].activeTint} onPress={ () =>
-            IntroStateChange(newImg, startingGame)
-           } />
+        {Platform.OS === "ios" ? 
+        <View style={styles.appButtonContainer}>
+        <Button title="Start Game"
+        color={"#fff"}
+        onPress={() => IntroStateChange(newImg, startingGame)}
+        />
+        </View>
+        : 
+        <Button title="Start Game"
+        color={Colors[colorScheme].activeTint}
+        onPress={() => IntroStateChange(newImg, startingGame)}
+        />
+        }
         </View>
         <View style={styles.ButtonView}>
-          <Button title='Tutorial' color={Colors[colorScheme].activeTint} onPress={() =>
-          setTut(true)
-          }/>
-        </View>
-        
-        </View>
-
+        {Platform.OS === "ios" ? 
+      <View style={styles.appButtonContainer}>
+      <Button title='Tutorial'
+      color={"#fff"}
+      onPress={() => setTut(true)}
+      />
+      </View>
+      : 
+      <Button title='Tutorial' 
+      color={Colors[colorScheme].activeTint}
+      onPress={() => setTut(true)}
+      />
+      }
+      </View>
+      </View>
       );
     } else if (tutorial == true) {
 
@@ -89,20 +116,72 @@ export default function ChallengeComponent(props) {
                   style = {styles.imageStyle} />
           </View>
           <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 1"}  color={Colors[colorScheme].activeTint} onPress={
-              () => setTut(false)} />
+            {Platform.OS === "ios" ? 
+            <View style={styles.appButtonContainer}>
+            <Button title="Tutorial Button 1"
+            color={"#fff"}
+            onPress={
+              () => setTut(false)}
+            />
+            </View>
+            : 
+            <Button title="Tutorial Button 1"
+            color={Colors[colorScheme].activeTint}
+            onPress={
+              () => setTut(false)}
+            />
+            }
           </View>
           <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 2"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
+          {Platform.OS === "ios" ? 
+            <View style={styles.appButtonContainer}>
+            <Button title="Tutorial Button 2"
+            color={"#fff"}
+            onPress={
+              () => setTut(false)}
+            />
+            </View>
+            : 
+            <Button title="Tutorial Button 2"
+            color={Colors[colorScheme].activeTint}
+            onPress={
+              () => setTut(false)}
+            />
+            }
           </View>
           <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 3"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
+          {Platform.OS === "ios" ? 
+            <View style={styles.appButtonContainer}>
+            <Button title="Tutorial Button 3"
+            color={"#fff"}
+            onPress={
+              () => setTut(false)}
+            />
+            </View>
+            : 
+            <Button title="Tutorial Button 3"
+            color={Colors[colorScheme].activeTint}
+            onPress={
+              () => setTut(false)}
+            />
+            }
           </View>
           <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 4"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
+          {Platform.OS === "ios" ? 
+            <View style={styles.appButtonContainer}>
+            <Button title="Tutorial Button 4"
+            color={"#fff"}
+            onPress={
+              () => setTut(false)}
+            />
+            </View>
+            : 
+            <Button title="Tutorial Button 4"
+            color={Colors[colorScheme].activeTint}
+            onPress={
+              () => setTut(false)}
+            />
+            }
           </View>
           
           <Text>
@@ -126,8 +205,21 @@ export default function ChallengeComponent(props) {
           <View style={styles.CMContainer}>
           <Text>You got {correctAnswers.length}/{gameLength}</Text>
           <View style={styles.ButtonView}>
-            <Button title="Play Again?" color={Colors[colorScheme].activeTint} onPress={
-              () => playAgain(setCount, startingGame)} />
+          {Platform.OS === "ios" ? 
+            <View style={styles.appButtonContainer}>
+            <Button title="Play Again?"
+            color={"#fff"}
+            onPress={
+              () => playAgain(setCount, startingGame)}
+            />
+            </View>
+            : 
+            <Button title="Play Again?"
+            color={Colors[colorScheme].activeTint}
+            onPress={
+              () => playAgain(setCount, startingGame)}
+            />
+            }
           </View>
           </View>
         );
@@ -142,20 +234,72 @@ export default function ChallengeComponent(props) {
                   style = {styles.imageStyle} />
             </View>
           <View style={styles.ButtonView}>
-            <Button title={currentButtons[0]} color={Colors[colorScheme].activeTint} onPress={
-              () => finalStateChange(answ, setCount, newImg, currentButtons[0])} />
+          {Platform.OS === "ios" ? 
+            <View style={styles.appButtonContainer}>
+            <Button title={currentButtons[0]}
+            color={"#fff"}
+            onPress={
+              () => finalStateChange(answ, setCount, newImg, currentButtons[0])}
+            />
+            </View>
+            : 
+            <Button title={currentButtons[0]}
+            color={Colors[colorScheme].activeTint}
+            onPress={
+              () => finalStateChange(answ, setCount, newImg, currentButtons[0])}
+            />
+            }
           </View>
           <View style={styles.ButtonView}>
-            <Button title={currentButtons[1]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[1])} />
+          {Platform.OS === "ios" ? 
+            <View style={styles.appButtonContainer}>
+            <Button title={currentButtons[1]}
+            color={"#fff"}
+            onPress={
+              () => finalStateChange(answ, setCount, newImg, currentButtons[1])}
+            />
+            </View>
+            : 
+            <Button title={currentButtons[1]}
+            color={Colors[colorScheme].activeTint}
+            onPress={
+              () => finalStateChange(answ, setCount, newImg, currentButtons[1])}
+            />
+            }
           </View>
           <View style={styles.ButtonView}>
-            <Button title={currentButtons[2]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[2])} />
+          {Platform.OS === "ios" ? 
+            <View style={styles.appButtonContainer}>
+            <Button title={currentButtons[2]}
+            color={"#fff"}
+            onPress={
+              () => finalStateChange(answ, setCount, newImg, currentButtons[2])}
+            />
+            </View>
+            : 
+            <Button title={currentButtons[2]}
+            color={Colors[colorScheme].activeTint}
+            onPress={
+              () => finalStateChange(answ, setCount, newImg, currentButtons[2])}
+            />
+            }
           </View>
           <View style={styles.ButtonView}>
-            <Button title={currentButtons[3]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[3])} />
+          {Platform.OS === "ios" ? 
+            <View style={styles.appButtonContainer}>
+            <Button title={currentButtons[3]}
+            color={"#fff"}
+            onPress={
+              () => finalStateChange(answ, setCount, newImg, currentButtons[3])}
+            />
+            </View>
+            : 
+            <Button title={currentButtons[3]}
+            color={Colors[colorScheme].activeTint}
+            onPress={
+              () => finalStateChange(answ, setCount, newImg, currentButtons[3])}
+            />
+            }
            </View>
           </View>
           
@@ -163,6 +307,9 @@ export default function ChallengeComponent(props) {
       }
     }
 }
+
+    }
+    
 
 /*
 Restarts the the game allowing the user to try again.
@@ -366,5 +513,12 @@ const styles = StyleSheet.create({
       width: 200, 
       height: 300,
       resizeMode: 'stretch'
-     }
+     },
+     appButtonContainer: {
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 5
+    }
   });
