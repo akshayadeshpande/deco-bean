@@ -58,19 +58,7 @@ export default function FriendsScreen({navigation, props}) {
         
           <TouchableOpacity
             onPress={() => 
-                navigation.navigate("FriendsProfileScreen", {
-                    country: item.country,
-                    userName: item.userName,
-                    email: item.email,
-                    forLang: item.forLang,
-                    friendCount: item.friendCount,
-                    homeLang: item.homeLang,
-                    name: item.name,
-                    signedUp: item.signedUp,
-                    wordCount:{"Spanish": item.wordCount["Spanish"], 
-                                "Chinese": item.wordCount["Chinese"]}
-                }
-                )}>
+                navigation.navigate("FriendsProfileScreen", {user: item})}>
       
             <View style={styles.listItemContainer}>
               <View style={styles.listItem}>

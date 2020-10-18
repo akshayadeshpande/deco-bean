@@ -1,31 +1,15 @@
 import { StyleSheet } from "react-native";
 import * as React from 'react';
 import { View, Text } from '../components/Themed';
+import Profile from '../components/Profile'
 
 
 export default function FriendsProfileScreen({route, navigation}) { 
-    const {country,
-        userName,
-        email,
-        forLang,
-        friendCount,
-        homeLang,
-        name,
-        signedUp,
-        wordCount} = route.params;
+    const {user} = route.params;
 
     return(
     <View style={styles.container}>
-        <View style={styles.ButtonView}><Text>{userName}</Text></View>
-        <View style={styles.ButtonView}><Text>{country}</Text></View>
-        <View style={styles.ButtonView}><Text>{name}</Text></View>
-        <View style={styles.ButtonView}><Text>{email}</Text></View>
-        <View style={styles.ButtonView}><Text>{homeLang}</Text></View>
-        <View style={styles.ButtonView}><Text>{forLang}</Text></View>
-        <View style={styles.ButtonView}><Text>{friendCount}</Text></View>
-        <View style={styles.ButtonView}><Text>{signedUp}</Text></View>
-        <View style={styles.ButtonView}><Text>{wordCount["Spanish"]}</Text></View>
-        <View style={styles.ButtonView}><Text>{wordCount["Chinese"]}</Text></View>
+        <Profile navigation={navigation} user={user}/>
     </View>
     );
 }
