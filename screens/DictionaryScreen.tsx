@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import {Picker} from '@react-native-community/picker';
 import SearchBar from 'react-native-searchbar';
 import * as firebase from 'firebase';
 
 import { Text, View } from '../components/Themed';
 import DictionaryList from '../components/DictionaryList';
+import 'firebase/functions';
 
 
 /*
@@ -24,8 +24,7 @@ import DictionaryList from '../components/DictionaryList';
 export default function DictionaryScreen(props) {
   let searchBar;
   // States
-  const [activeLanguage, setActiveLanguage] = useState("SP");
-  console.log(`Active language set to: ${activeLanguage}`);
+  const [activeLanguage, setActiveLanguage] = useState("");
   // Dictionary data contains full db word lists
   const [dictionaryData, setDictionaryData] = useState([]);
   // Filtered dict based on search results, none == all.
@@ -48,6 +47,7 @@ export default function DictionaryScreen(props) {
    */
   useEffect(() => {
     getWords(setDictionaryData, setFilteredDict);
+    getLearnerLanguage(setActiveLanguage);
   }, []);
 
   return (
@@ -58,8 +58,8 @@ export default function DictionaryScreen(props) {
         data={dictionaryData}
         placeholder="Search for a word"
         handleResults={(results) => {
-          console.log("Search Results: ");
-          console.log(results);
+          // console.log("Search Results: ");
+          // console.log(results);
           setFilteredDict(results);
         }}
         showOnLoad={true}
@@ -68,19 +68,6 @@ export default function DictionaryScreen(props) {
         iconColor="#2e3131"
         textColor="#2e3131"
       />
-      <View style={styles.headingContainer}>
-        <Text style={styles.title}>Pick a Language</Text>
-        <Picker
-          selectedValue={activeLanguage}
-          style={{height: 50, width: '50%'}}
-          onValueChange={(itemValue, itemIndex) => {
-            setActiveLanguage(itemValue);
-          }}>
-          <Picker.Item label="Chinese" value="CH" />
-          <Picker.Item label="English" value="EN" />
-          <Picker.Item label="Spanish" value="SP" />
-        </Picker>
-      </View>
 
       <View style={styles.listContainer}>
         <DictionaryList 
@@ -122,9 +109,22 @@ async function getWords(setDictionaryData, setFilteredDict) {
     console.log(error);
   });
   console.log("Dictionary data retrieved.");
-  console.log(dictionary);
+  // console.log(dictionary);
   setDictionaryData(dictionary);
   setFilteredDict(dictionary);
+}
+
+/*
+ * Retrieve user's learner/target language.
+ */
+async function getLearnerLanguage(languageSetter) {
+  let userData = firebase.functions().httpsCallable('getUser')
+  await userData({}).then((res) => {
+    // console.log(res.data.user);
+    const language = res.data.user.forLang.slice(0, 2).toUpperCase();
+    languageSetter(language);
+    console.log(`Active language set to: ${language}`);
+  }).catch(err => console.log(err));
 }
 
 
