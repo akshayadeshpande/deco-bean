@@ -8,7 +8,7 @@ import NavTouchButton from '../components/NavTouchButton';
 import * as firebase from 'firebase';
 
 
-export default function HomeScreen({navigation}) {
+export default function HomeScreen({navigation, props}) {
  
   return (
     <View style={styles.wrapper}>
@@ -31,7 +31,7 @@ export default function HomeScreen({navigation}) {
       </View>
 
       <View style={styles.container}>
-          <WordOfTheDay word={getDailyWord()} />
+          <WordOfTheDay navigation={navigation} props={props} />
       </View>
     </View>
   );
