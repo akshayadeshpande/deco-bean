@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, SectionList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, SectionList, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import 'firebase/firestore';
 import 'firebase/functions';
@@ -7,9 +7,9 @@ import 'firebase/auth';
 import * as firebase from 'firebase';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
+import { View, Text } from '../components/Themed';
 
 var DBFriendsData;
-
 
 import { useEffect, useState } from 'react';
 
@@ -50,10 +50,12 @@ export default function FriendsScreen({navigation, props}) {
         <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
       </View>
        :  
+       <View style={styles.back}>
         <SectionList
       sections={friendsList}
       stickySectionHeadersEnabled={true}
       renderItem={({item}) => (
+        
           <TouchableOpacity
             onPress={() => 
                 navigation.navigate("FriendsProfileScreen", {
@@ -69,6 +71,7 @@ export default function FriendsScreen({navigation, props}) {
                                 "Chinese": item.wordCount["Chinese"]}
                 }
                 )}>
+      
             <View style={styles.listItemContainer}>
               <View style={styles.listItem}>
                 <Text style={styles.listText}>{item.userName}</Text>
@@ -78,9 +81,11 @@ export default function FriendsScreen({navigation, props}) {
               </View>
             </View>
           </TouchableOpacity>
+          
       )}
       keyExtractor={(item, index) => item.userName} //Unique words only
     />
+    </View>
       ); 
 }
 
@@ -124,6 +129,10 @@ const styles = StyleSheet.create({
       shadowRadius: 3.84,
       elevation: 10,
     },
+    back: {
+      backgroundColor: "#177AC1",
+      flex: 1,
+    }, 
     titleContainer: {
       flex: 1,
       alignItems: 'center',
