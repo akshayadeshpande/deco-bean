@@ -1,6 +1,13 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Text, View } from '../components/Themed';
+import * as React from 'react';
+import { StyleSheet, Button, Image, Platform, ProgressBarAndroid } from 'react-native';
+import { useState, useEffect, Component } from 'react';
+
+import EditScreenInfo from './EditScreenInfo';
+import { Text, View } from './Themed';
+import * as firebase from 'firebase';
+import 'firebase/firestore';
+import 'firebase/functions';
+import 'firebase/auth';
 
 /* Word of the Day Component. 
  * Allows us to plug this into a screen.
@@ -8,20 +15,25 @@ import { Text, View } from '../components/Themed';
 
 /* RENDERING */
 // This function needs to be upper case to be used as a component tag otherwise it thinks it's an html tag.
-function WordOfTheday(props) {
+export default function WordOfTheday(props) {
+  const [word, setWord] = useState('');
+
+  useEffect(()=>{
+    const getWotd = firebase.functions().httpsCallable('getWotd')
+    getWotd({}).then((result) => {
+      let wotd = result.data.word
+      console.log(wotd)
+      setWord(wotd.EN)
+    }).catch(function(err){
+      console.log(err)
+    })
+  },[])
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Word of the Day</Text>
-      <Text style={styles.text}>{props.word}</Text>
+      <Text style={styles.text}>{word}</Text>
     </View>
   )
-}
-
-/* Functionality */
-function getDailyWord() {
-  // Method to get the word of the day here from dictionary/db
-  const dummyWord:string = "Doggo";
-  return dummyWord;
 }
 
 /* STYLES */
@@ -40,4 +52,3 @@ const styles = StyleSheet.create({
     }
   });
 
-export { WordOfTheday as default, getDailyWord }
