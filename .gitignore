@@ -59,4 +59,8 @@ buck-out/
 /ios/Pods/
 
 # Expo
+.expo/
 .expo/*
+
+# Log Files
+*.log
