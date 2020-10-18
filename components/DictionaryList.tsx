@@ -107,8 +107,9 @@ function constructWordList(language, wordData, setWordList) {
 const styles = StyleSheet.create({
     sectionHeader: {
       padding: 10,
-      marginBottom: 2,
-      backgroundColor: 'rgba(44, 130, 201, 1)',
+      marginTop: 60,
+      // backgroundColor: 'rgba(44, 130, 201, 1)',
+      backgroundColor: '#2D9CDB',
       shadowColor: "#000",
       shadowOffset: {
         width: 0,
