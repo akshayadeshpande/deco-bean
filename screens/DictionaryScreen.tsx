@@ -5,6 +5,8 @@ import SearchBar from 'react-native-searchbar';
 import * as firebase from 'firebase';
 
 import { Text, View } from '../components/Themed';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 import DictionaryList from '../components/DictionaryList';
 import 'firebase/functions';
 
@@ -22,6 +24,7 @@ import 'firebase/functions';
  * @return Dictioanry Screen render.
  */
 export default function DictionaryScreen(props) {
+  const colorScheme = useColorScheme();
   let searchBar;
   // States
   const [activeLanguage, setActiveLanguage] = useState("");
@@ -56,7 +59,7 @@ export default function DictionaryScreen(props) {
         ref={(ref) => searchBar = ref}
         allDataOnEmptySearch={true}
         data={dictionaryData}
-        placeholder="Search for a word"
+        placeholder="Type to search for words"
         handleResults={(results) => {
           // console.log("Search Results: ");
           // console.log(results);
@@ -64,9 +67,10 @@ export default function DictionaryScreen(props) {
         }}
         showOnLoad={true}
         hideBack={true}
-        backgroundColor="#e8e8e8"
-        iconColor="#2e3131"
-        textColor="#2e3131"
+        backgroundColor={Colors[colorScheme].bottomTabBackground}
+        iconColor={Colors[colorScheme].tabIconDefault}
+        textColor="#FF9E1C"
+        placeholderTextColor="#fff"
       />
 
       <View style={styles.listContainer}>
