@@ -30,12 +30,12 @@ export default function Register() {
             value={name}/>
           <TextInput 
             placeholder="Email" 
-            onChangeText={(t) => setEmail(t)}
+            onChangeText={(t) => setEmail(t.trim())}
             value={email}/>
           <TextInput
             secureTextEntry={true}
             placeholder="Password"
-            onChangeText={(t) => setPassword(t)}
+            onChangeText={(t) => setPassword(t.trim())}
             value={password}/>
           <View style={{padding:40}}>
 
