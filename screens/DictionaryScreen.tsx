@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useIsFocused } from "@react-navigation/native";
 import SearchBar from 'react-native-searchbar';
 import * as firebase from 'firebase';
 
@@ -25,6 +26,7 @@ import 'firebase/functions';
  */
 export default function DictionaryScreen(props) {
   const colorScheme = useColorScheme();
+  const isFocused = useIsFocused();
   let searchBar;
   // States
   const [activeLanguage, setActiveLanguage] = useState("");
@@ -37,16 +39,13 @@ export default function DictionaryScreen(props) {
   /* useEffect is a hook that runs when the component is mounted.
    * Docs: https://reactjs.org/docs/hooks-effect.html
    * 
-   * Note that there is a second argument which is an array after the arrow function:
-   *  useEffect( () => {..}, []);
+   * Note that there is a second argument which is an array after the arrow function which tells useEffect when to 
+   * run/which states to track before activating:
+   *  useEffect( () => {..}, []);  // [] == only run on mount.
    * 
-   * This array tells react when to use the effect. When the array is empty it will 
-   * only run once on first render. So this is a good hook to use for one time db reads.
+   * Currently dictionary does not receive real time updates.
    * 
-   * If the state is updated again later it should re-render based on how React Native works.
-   * 
-   * For instance if you want a trigger to make the effect happen again, you could set a state
-   * that is a bool that when true will run the update (say with a refresh button).
+   * Will run a db call on first mount.
    */
   useEffect(() => {
     getWords(setDictionaryData, setFilteredDict);
@@ -124,7 +123,6 @@ async function getWords(setDictionaryData, setFilteredDict) {
 async function getLearnerLanguage(languageSetter) {
   let userData = firebase.functions().httpsCallable('getUser')
   await userData({}).then((res) => {
-    // console.log(res.data.user);
     const language = res.data.user.forLang.slice(0, 2).toUpperCase();
     languageSetter(language);
     console.log(`Active language set to: ${language}`);

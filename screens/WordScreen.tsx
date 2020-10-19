@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Image, ScrollView } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
+import * as firebase from 'firebase';
+import 'firebase/functions';
 
 import Colours from '../constants/Colors';
 import Layout from '../constants/Layout';
@@ -63,6 +65,13 @@ export default function WordScreen(props) {
 
 const getScore = async (word, scoreUpdater) => {
   // Get all user game sessions
+  let mcqSessions = firebase.functions().httpsCallable('getChallenges')
+  await mcqSessions({word: word}).then((res) => {
+    console.log(res.data.challenges);
+  }).catch(err => {
+    console.log("Error getting challenges!");
+    console.log(err);
+  });
 
   // Get word correctness across sessions
 
