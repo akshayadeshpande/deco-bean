@@ -30,6 +30,8 @@ export default {
           Profile: {
             screens: {
               ProfileScreen: 'profile',
+              FriendsScreen: 'friends',
+              FriendsProfileScreen: 'friendsProfile',
             },
           },
           Word: {

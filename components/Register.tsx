@@ -8,10 +8,12 @@ import { Text, View } from './Themed';
 import * as firebase from 'firebase';
 import { TextInput } from 'react-native-gesture-handler';
 import * as SigninFunctions from './Signin';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 
 
 export default function Register() {
-
+    const colorScheme = useColorScheme();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -35,6 +37,9 @@ export default function Register() {
             placeholder="Password"
             onChangeText={(t) => setPassword(t)}
             value={password}/>
+          <View style={{padding:40}}>
+
+          <Text>Native Language</Text>
           <Picker
             selectedValue={homeLang}
             onValueChange={homeLang => setHomeLang(homeLang)}>
@@ -42,6 +47,7 @@ export default function Register() {
             <Picker.Item label="Spanish" value="Spanish" />
             <Picker.Item label="Chinese" value="Chinese" />
           </Picker>
+          <Text>Language to learn</Text>
           <Picker
             selectedValue={forLang}
             onValueChange={forLang => setForLang(forLang)}>
@@ -49,7 +55,22 @@ export default function Register() {
             <Picker.Item label="Spanish" value="Spanish" />
             <Picker.Item label="Chinese" value="Chinese" />
           </Picker>
-          <Button title="Register" onPress={event => registerUser(event, name, email, password, forLang, homeLang)} />
+
+          </View>
+
+          {Platform.OS === "ios" ? 
+          <View style={styles.appButtonContainer}>
+          <Button title="Register" 
+          color={"#fff"}
+          onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
+          />
+          </View>
+          : 
+          <Button title="Register" 
+          color={Colors[colorScheme].activeTint}
+          onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
+          />
+          }
         </View>
       </ScrollView>
     )
@@ -133,5 +154,12 @@ const styles = StyleSheet.create({
       width: 200, 
       height: 300, 
       resizeMode: 'center'
-     }
+     },
+     appButtonContainer: {
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 5
+    }
   });

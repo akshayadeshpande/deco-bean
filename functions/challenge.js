@@ -57,7 +57,7 @@ exports.startChallenge = functions.https.onCall(async (data, context) => {
         // Updates the user's seen words to include those that are part of the challenge
         await admin.firestore().collection('users').doc(user_id).update({['seen.' + forLang]: Array.from(wordRefs)})
 
-        return {status: 'success', code: 201, id: newChallenge.id, words: challengeWords, Lang: forLang, message: 
+        return {status: 'success', code: 201, id: newChallenge.id, words: challengeWords, lang: forLang, message: 
         'Successfully started a new challenge instance!'};
       
     } catch (err) {

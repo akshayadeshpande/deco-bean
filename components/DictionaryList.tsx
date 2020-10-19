@@ -52,13 +52,13 @@ export default function DictionaryList(props) {
       sections={wordList}
       renderSectionHeader={({section}) => (
         <View style={styles.sectionHeader}>
-          <Text style={styles.headerText}>{section.title} Dictionary</Text>
+          <Text style={styles.headerText}>{section.title}</Text>
         </View>
       )}
       stickySectionHeadersEnabled={true}
       renderItem={({item}) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation, imgURL: item.imgURL })}>
+            onPress={() => navigation.navigate('WordScreen', { word: item.word, translation: item.translation, imgURL: item.imgURL, soundURI: item.soundURI })}>
             <View style={styles.listItemContainer}>
               <View style={styles.listItem}>
                 <Text style={styles.listText}>{item.word}</Text>
@@ -77,38 +77,39 @@ export default function DictionaryList(props) {
 }
 
 function constructWordList(language, wordData, setWordList) {
+  if (wordData.length === 0) {
+    return;
+  }
   // My Words is just dummy data for now
-  let wordList = [{title: language, data: []}]
+  let wordList = [{title: "Dictionary", data: []}]
   // Construct active word list, default translation is English
   wordData.forEach(wordDoc => {
-    switch(language) {
-      case 'Chinese':
-        wordList[0].data.push({'word': wordDoc['CH'], 'translation': wordDoc['EN'], 'imgURL': wordDoc['URL']});
-        break;
-      case 'English':
-        wordList[0].data.push({'word': wordDoc['EN'], 'translation': wordDoc['EN'], 'imgURL': wordDoc['URL']});
-        break;
-      case 'Spanish':
-        wordList[0].data.push({'word': wordDoc['SP'], 'translation': wordDoc['EN'], 'imgURL': wordDoc['URL']});
-        break;
-      default:
-        break;
-    }
+    wordList[0].data.push(
+      {
+        'word': wordDoc[language], 
+        'translation': wordDoc['EN'], 
+        'imgURL': wordDoc['URL'], 
+        'soundURI': wordDoc['Audio'] ? wordDoc['Audio'][language] : ""
+      }
+    );
   });
-  // Sort by language
-  // wordList[0].data.sort((data1, data2) => {
-  //   return data1.word.localeCompare(data2.word)
-  // });
+  // Delete undefined objects - not sure why they are appearing.
+  wordList[0].data = wordList[0].data.filter(data => data.word != null);
+
+  // Sort by translation
+  wordList[0].data.sort((data1, data2) => {
+    return data1.translation.localeCompare(data2.translation)
+  });
   setWordList(wordList);
 
 }
 
-
 const styles = StyleSheet.create({
     sectionHeader: {
       padding: 10,
-      marginBottom: 2,
-      backgroundColor: 'rgba(44, 130, 201, 1)',
+      marginTop: 60,
+      // backgroundColor: 'rgba(44, 130, 201, 1)',
+      backgroundColor: '#2D9CDB',
       shadowColor: "#000",
       shadowOffset: {
         width: 0,

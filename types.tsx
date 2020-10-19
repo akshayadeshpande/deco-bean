@@ -31,6 +31,8 @@ export type MeMaParamList = {
 
 export type ProfileParamList = {
   ProfileScreen: undefined;
+  FriendsScreen: undefined;
+  FriendsProfileScreen: undefined;
 };
 
 

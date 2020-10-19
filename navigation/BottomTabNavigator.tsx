@@ -11,6 +11,8 @@ import DictionaryScreen from '../screens/DictionaryScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import MeMaScreen from '../screens/MeMaScreen';
 import WordScreen from '../screens/WordScreen';
+import FriendsScreen from '../screens/FriendsScreen';
+import FriendsProfileScreen from '../screens/FriendsProfileScreen';
 import * as firebase from 'firebase';
 
 
@@ -99,7 +101,7 @@ function HomeNavigator({navigation}) {
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'MeMa Home', headerTitleStyle: { alignSelf: 'center' }, 
+        options={{ headerTitle: 'MeMa Home', headerTitleAlign:"center", 
         headerLeft: null,
         headerRight: (props) => (
           <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
@@ -221,6 +223,16 @@ function ProfileNavigator({navigation}) {
             navigation.navigate("SignIn");
           }}
         />)}}
+      />
+      <ProfileStack.Screen
+        name="FriendsScreen"
+        component={FriendsScreen}
+        options={{ headerTitle: 'Friends', headerTitleStyle: { alignSelf: 'center' }, }}
+      />
+      <ProfileStack.Screen
+        name="FriendsProfileScreen"
+        component={FriendsProfileScreen}
+        options={{ headerTitle: 'Friends Profile', headerTitleStyle: { alignSelf: 'center' }, }}
       />
     </ProfileStack.Navigator>
   );
