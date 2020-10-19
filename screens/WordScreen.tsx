@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, ScrollView } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
+import Colours from '../constants/Colors';
+import Layout from '../constants/Layout';
 import { Text, View } from '../components/Themed';
 import AudioPlayer from '../components/AudioPlayer';
 
@@ -22,7 +24,7 @@ export default function WordScreen(props) {
   const starImageCorner = 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_corner.png';
   console.log("Word Screen got word: " + params.word);
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.containerWords}>
         <Text style={styles.title}>{params.word}</Text>
         <Text style={styles.title}>Translation: {params.translation}</Text>
@@ -53,7 +55,7 @@ export default function WordScreen(props) {
         </View>
       </View>
 
-    </View>
+    </ScrollView>
   );
 }
 
@@ -61,7 +63,7 @@ export default function WordScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: Colours.light.background
   },
   containerWords: {
     flex: 1,
@@ -113,9 +115,8 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   imageStyle:{
-    width: 300, 
-    height: 300, 
-    resizeMode: 'center'
+    width: Layout.window.width / 2,
+    aspectRatio: 1
   },
   starImageStyle: {
     width: 40,
