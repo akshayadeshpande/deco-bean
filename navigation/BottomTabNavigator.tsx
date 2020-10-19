@@ -9,6 +9,7 @@ import HomeScreen from '../screens/HomeScreen';
 import ChallengeScreen from '../screens/ChallengeScreen';
 import DictionaryScreen from '../screens/DictionaryScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import ChangeEmail from "../screens/ChangeEmail";
 import MeMaScreen from '../screens/MeMaScreen';
 import WordScreen from '../screens/WordScreen';
 import FriendsScreen from '../screens/FriendsScreen';
@@ -22,6 +23,7 @@ import { BottomTabParamList,
           DictionaryParamList, 
           MeMaParamList,
           ProfileParamList,
+          EmailParamList,
           } from '../types';
 import Navigation from '.';
 
@@ -235,5 +237,36 @@ function ProfileNavigator({navigation}) {
         options={{ headerTitle: 'Friends Profile', headerTitleStyle: { alignSelf: 'center' }, }}
       />
     </ProfileStack.Navigator>
+  );
+}
+
+const EmailStack = createStackNavigator<EmailParamList>();
+
+function ChangeEmailNavigator({ navigation }) {
+  return (
+    <EmailStack.Navigator>
+      <EmailStack.Screen
+        name="ChangeEmail"
+        component={ChangeEmail}
+        options={{
+          headerTitle: "ChangeEmail",
+          headerTitleStyle: { alignSelf: "center" },
+          headerLeft: null,
+          headerRight: (props) => (
+            <MaterialCommunityIcons
+              name="exit-run"
+              size={24}
+              color="black"
+              title="Sign out"
+              {...props}
+              onPress={() => {
+                firebase.auth().signOut();
+                navigation.navigate("SignIn");
+              }}
+            />
+          ),
+        }}
+      />
+    </EmailStack.Navigator>
   );
 }

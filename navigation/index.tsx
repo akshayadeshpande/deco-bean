@@ -16,6 +16,7 @@ import Home from '../screens/HomeScreen'
 import Dictionary from '../screens/DictionaryScreen'
 import MeMa from '../screens/MeMaScreen'
 import Profile from '../screens/ProfileScreen'
+import ChangeEmail from "../screens/ChangeEmail";
 import MainApp from './BottomTabNavigator'
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -36,6 +37,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
       }}}>
         <Stack.Screen name="SignIn" options={{headerTitle:"Mema", headerTitleAlign:"center"}} component={SignIn}/>
         <Stack.Screen name="SignUp" options={{headerTitle:"Mema", headerTitleAlign:"center"}} component={SignUp}/>
+        <Stack.Screen name="ChangeEmail" component={ChangeEmail} />
         <Stack.Screen name="MainApp" options={({ navigation, route }) => ({
           headerLeft: false,
           headerShown:false,
