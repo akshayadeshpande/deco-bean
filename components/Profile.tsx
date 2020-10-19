@@ -6,7 +6,10 @@ import {FontAwesome, MaterialIcons} from '@expo/vector-icons';
 import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
 import NavTouchButton from "../components/NavTouchButton";
+import ChangeEmailNavigator from "../navigation/BottomTabNavigator"
+import ChangeEmail from "../screens/ChangeEmail"
 import * as firebase from 'firebase';
+import Navigation from "../navigation";
 import 'firebase/firestore';
 import 'firebase/functions';
 import 'firebase/auth';
@@ -93,24 +96,27 @@ export default function Profile({navigation, user, touchFriends}) {
             </View>
             <View>
                 <View style={[styles.profileItem]}>
-                    <MaterialIcons name={"email"} size={iconSize} color={Colors[colorScheme].tint} />
-                    <Text style={[styles.text]}>{email}</Text>
+                    <MaterialIcons name={"email"} size={iconSize} color={Colors[colorScheme].tint} /> 
+                    <Text style={[styles.text]}>Email : {email}</Text>
                 </View>
                 <View style={[styles.profileItem]}>
                     <MaterialIcons name={"home"} size={iconSize} color={Colors[colorScheme].tint} />
-                    <Text style={[styles.text]}>{homeLang}</Text>
+                    <Text style={[styles.text]}>Home Language : {homeLang}</Text>
                 </View>
                 <View style={[styles.profileItem]}>
                     <MaterialIcons name={"translate"} size={iconSize} color={Colors[colorScheme].tint} />
-                    <Text style={[styles.text]}>{forLang}</Text>
+                    <Text style={[styles.text]}>Foreign Language : {forLang}</Text>
                 </View>
                 <View style={[styles.profileItem]}>
-                    <MaterialIcons name={"room"} size={iconSize} color={Colors[colorScheme].tint} />
-                    <Text style={[styles.text]}>{country}</Text>
+                    <MaterialIcons name={"room"} size={iconSize} color={Colors[colorScheme].tint} /> 
+                    <Text style={[styles.text]}>Country : {country}</Text>
                 </View>
                 <View style={[styles.profileItem]}>
                     <MaterialIcons name={"create"} size={iconSize} color={Colors[colorScheme].tint} />
-                    <Text style={[styles.text]}>{signedUp}</Text>
+                    <Text style={[styles.text]}>Sign-up date : {signedUp}</Text>
+                </View>
+                <View style={[styles.profileItem]}>
+                    <NavTouchButton screenName="ChangeEmail" text="Edit Email/Password" />
                 </View>
             </View>
 
