@@ -14,7 +14,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 
 
-export default function Profile({navigation, user}) {
+export default function Profile({navigation, user, touchFriends}) {
     const [loaded, setLoading] = useState(true);
     const colorScheme = useColorScheme();
     const [userName, setUserName] = useState('');
@@ -43,16 +43,15 @@ export default function Profile({navigation, user}) {
         setFriendCount(user.friendCount);
         setWordCount(user.wordCount);
         setSignedUp(user.signedUp.split(" ").slice(0, 5).join(" "));
-        setLoading(false);
         setForLangCount(user.wordCount[user.forLang]);
+        setLoading(false);
     },[]);
 
     return (loaded ? 
         <View style={styles.titleContainer}>
         <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
         </View>
-    :   
-        
+    :       
     <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
 
@@ -72,7 +71,12 @@ export default function Profile({navigation, user}) {
                     <Text style={styles.subText}>Words</Text>
                 </View>
                 <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1}]}>
+                    {touchFriends ? 
                     <Text style={[styles.subText, { fontSize: 24 }]} onPress={() => {navigation.navigate("FriendsScreen")}}>{friendCount}</Text>
+                    :
+                    <Text style={[styles.subText, { fontSize: 24 }]}>{friendCount}</Text>
+                    }
+                    
                     <Text style={styles.subText}>Friends</Text>
                 </View>
             </View>

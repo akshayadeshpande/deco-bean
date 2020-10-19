@@ -9,7 +9,7 @@ export default function FriendsProfileScreen({route, navigation}) {
 
     return(
     <View style={styles.container}>
-        <Profile navigation={navigation} user={user}/>
+        <Profile navigation={navigation} user={user} touchFriends={false}/>
     </View>
     );
 }

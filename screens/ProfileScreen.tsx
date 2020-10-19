@@ -38,7 +38,7 @@ export default function ProfileScreen({navigation, props}) {
       </View>
     :   
         <View style={styles.container}>
-          <Profile navigation={navigation} user={user}/>
+          <Profile navigation={navigation} user={user} touchFriends={true}/>
         </View>
       );
 };

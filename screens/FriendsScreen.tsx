@@ -9,7 +9,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 import { View, Text } from '../components/Themed';
 
-var DBFriendsData;
+
 
 import { useEffect, useState } from 'react';
 
@@ -36,7 +36,6 @@ export default function FriendsScreen({navigation, props}) {
         const incomingFriends = firebase.functions().httpsCallable('getUserFriends')
         incomingFriends({}).then((result) => {
             console.log(result);
-            DBFriendsData = result.data['friends'];
             assembleFriends(result.data['friends'], setFriendsList);
             setLoading(false);
         }).catch(function(err){
