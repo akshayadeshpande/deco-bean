@@ -23,12 +23,12 @@ export default function Register() {
         <View>
           <TextInput 
             placeholder="Email" 
-            onChangeText={(t) => setEmail(t)}
+            onChangeText={(t) => setEmail(t.trim())}
             value={email}/>
           <TextInput
             secureTextEntry={true}
             placeholder="Password"
-            onChangeText={(t) => setPassword(t)}
+            onChangeText={(t) => setPassword(t.trim())}
             value={password}/>
 
           {Platform.OS === "ios" ? 
