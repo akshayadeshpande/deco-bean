@@ -13,10 +13,20 @@ import 'firebase/auth';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 
-
+/**
+ * Component that renders information about a user 
+ * 
+ * @param navigation: The nav stack to be passed around
+ * @param user: The user that will have their information rendered to the screen
+ * @param touchFriends: Determines if the profile will render a touchable for the friends button
+ *                      (This will allow for the main user to see their own friends but stop them
+ *                       from seeing information about other peoples friends, reducing the amount
+ *                       of personal information people can see about other people they don't know) 
+ */
 export default function Profile({navigation, user, touchFriends}) {
+    const colorScheme = useColorScheme(); // App colors
+    //States for the profile being loaded
     const [loaded, setLoading] = useState(true);
-    const colorScheme = useColorScheme();
     const [userName, setUserName] = useState('');
     const [name, setName] = useState('');
     const [country, setCountry] = useState('');
@@ -47,6 +57,7 @@ export default function Profile({navigation, user, touchFriends}) {
         setLoading(false);
     },[]);
 
+    //Renders profile information
     return (loaded ? 
         <View style={styles.titleContainer}>
         <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
@@ -106,23 +117,6 @@ export default function Profile({navigation, user, touchFriends}) {
         </ScrollView>
     </SafeAreaView>
     );
-    //   <NavTouchButton screenName="ChangeEmail" text="Change Email" />
-
-    //   {Platform.OS === "ios" ? 
-    //   <View style={styles.appButtonContainer}>
-    //   <Button title="Friends" 
-    //   color={"#fff"}
-    //   onPress={() => {navigation.navigate("FriendsScreen")}}
-    //   />
-    //   </View>
-    // : 
-    //   <Button title="Friends" 
-    //   color={Colors[colorScheme].activeTint}
-    //   onPress={() => {navigation.navigate("FriendsScreen")}}
-    //   />
-    //   }
-    //   </View>
-    //   </View>
 }
 
 

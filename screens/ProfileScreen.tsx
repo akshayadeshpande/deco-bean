@@ -15,23 +15,30 @@ import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 
 
-export default function ProfileScreen({navigation, props}) {
+/**
+ * Renders the screen that holds all the user information for the logged in account
+ * 
+ * @param navigation: Takes a navigation object of what screens have occured beforehand
+ *                  and allows future navigation from this screen 
+ */
+export default function ProfileScreen({navigation}) {
+  const [user, setUser] = useState({}); //User
+  const [loaded, setLoading] = useState(true); //if loading
+  const colorScheme = useColorScheme(); //Colors of the app
 
-  const [user, setUser] = useState({});
-  const [loaded, setLoading] = useState(true);
-  const colorScheme = useColorScheme();
-
+  //gets information about the current user that is logged in and changes the state
   useEffect(() => {
         const getUser = firebase.functions().httpsCallable('getUser')
         getUser({}).then((result) => {
             setUser(result.data.user);
-            setLoading(false);
+            setLoading(false); //finished loading
         }).catch(function(err){
             console.log(err);
             alert('An internal error occured. Please try again later.')
         })
     },[]);
     
+    //Render screen
     return (loaded ? 
       <View style={styles.container}>
       <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
