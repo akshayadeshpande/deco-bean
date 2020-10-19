@@ -8,14 +8,17 @@ import * as firebase from 'firebase';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 import { View, Text } from '../components/Themed';
-
-
-
 import { useEffect, useState } from 'react';
 
+/**
+ * Renders all the friends of the current user in a touchable list
+ * 
+ * @param navigation: The nav stack being passed around, allowing navigation between screens 
+ */
+export default function FriendsScreen({navigation}) {
+    const colorScheme = useColorScheme(); //App colors
 
-export default function FriendsScreen({navigation, props}) {
-    const colorScheme = useColorScheme();
+    //States of the page
     const [loaded, setLoading] = useState(true);
     const [friendsList, setFriendsList] = useState([{title: "Loading...", 
     data : [{
@@ -32,6 +35,7 @@ export default function FriendsScreen({navigation, props}) {
     }
     ]}]);
 
+    //Loads only once, getting information about all the current users friends.
     useEffect(() => {
         const incomingFriends = firebase.functions().httpsCallable('getUserFriends')
         incomingFriends({}).then((result) => {
@@ -43,7 +47,8 @@ export default function FriendsScreen({navigation, props}) {
             alert('An internal error occured. Please try again later.')
         });
       }, []);
-
+      
+    //Renders the touchable list of all the users friends
     return (loaded ? 
       <View style={styles.titleContainer}>
         <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
@@ -76,9 +81,16 @@ export default function FriendsScreen({navigation, props}) {
       ); 
 }
 
+/**
+ * Assembles the information about a user's friend in a way that can be rendered
+ * 
+ * @param friendsData: Information about the the user's friend
+ * @param setFriendsList: State change function that will hold the data about friends
+ */
 function assembleFriends(friendsData, setFriendsList) {
     let friendsList = [{title: friendsData['userName'], data: []}]
 
+    //Iterate through all user friends
     friendsData.forEach((friendDoc) => {
         switch(friendsData['userName']) {
             default:
@@ -96,9 +108,7 @@ function assembleFriends(friendsData, setFriendsList) {
                 });
         }
     })
-
-    setFriendsList(friendsList);
-
+    setFriendsList(friendsList); //Changes state of screen
 }
 
 
