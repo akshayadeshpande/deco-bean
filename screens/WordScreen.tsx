@@ -66,7 +66,7 @@ export default function WordScreen(props) {
 const getScore = async (word, scoreUpdater) => {
   // Get all user game sessions
   let mcqSessions = firebase.functions().httpsCallable('getChallenges')
-  await mcqSessions({word: word}).then((res) => {
+  await mcqSessions({}).then((res) => {
     console.log(res.data.challenges);
   }).catch(err => {
     console.log("Error getting challenges!");
