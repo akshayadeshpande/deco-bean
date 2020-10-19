@@ -21,6 +21,7 @@
     "@react-navigation/stack": "^5.9.0",
     "expo": "^38.0.10",
     "expo-asset": "~8.1.7",
+    "expo-av": "~8.2.1",
     "expo-constants": "~9.1.1",
     "expo-font": "~8.2.1",
     "expo-linking": "^1.0.1",
@@ -39,8 +40,8 @@
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
     "react-native-searchbar": "^1.16.0",
-    "react-native-web": "~0.11.7",
-    "expo-av": "~8.2.1"
+    "react-native-star-rating": "^1.1.0",
+    "react-native-web": "~0.11.7"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
