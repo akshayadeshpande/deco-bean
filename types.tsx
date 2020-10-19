@@ -35,4 +35,6 @@ export type ProfileParamList = {
   FriendsProfileScreen: undefined;
 };
 
-
+export type EmailParamList = {
+  ChangeEmail: undefined;
+};
