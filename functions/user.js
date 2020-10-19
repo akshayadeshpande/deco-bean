@@ -6,16 +6,17 @@ var handleUserData = function(data) {
 
     // Manipulates the user's data to remove vebosity add summary stats
     if (data.friends){
-        data['friend_count'] = data['friends'].length;
+        data['friendCount'] = data['friends'].length;
         delete data['friends']; 
     }
     if (data.seen){
-        data['word_count'] = {};
+        data['wordCount'] = {};
         for (var key in data.seen){
-            data['word_count'][key] = data.seen[key].length;
+            data['wordCount'][key] = data.seen[key].length;
         }
         delete data['seen'];
     }
+    data['signedUp'] = data['signedUp'].toDate().toString();
     // Output handling to remove verbose data e.g. friends/seen words. Firebase does not support 
     // currently support getting multiple specific fields in one request, hence removing some is more efficient.
 

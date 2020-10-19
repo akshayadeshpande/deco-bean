@@ -17,6 +17,8 @@ import Dictionary from '../screens/DictionaryScreen'
 import MeMa from '../screens/MeMaScreen'
 import Profile from '../screens/ProfileScreen'
 import MainApp from './BottomTabNavigator'
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -25,11 +27,15 @@ const Stack = createStackNavigator();
 
 //Root stack object that allows Sign in and sign up.
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+  const colorSch = useColorScheme();
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="SignIn" component={SignIn}/>
-        <Stack.Screen name="SignUp" component={SignUp}/>
+      <Stack.Navigator screenOptions={{
+      headerStyle: {
+        backgroundColor: Colors[colorSch].bottomTabBackground,
+      }}}>
+        <Stack.Screen name="SignIn" options={{headerTitle:"Mema", headerTitleAlign:"center"}} component={SignIn}/>
+        <Stack.Screen name="SignUp" options={{headerTitle:"Mema", headerTitleAlign:"center"}} component={SignUp}/>
         <Stack.Screen name="MainApp" options={({ navigation, route }) => ({
           headerLeft: false,
           headerShown:false,
