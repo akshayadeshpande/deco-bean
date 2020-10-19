@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Image, ScrollView } from 'react-native';
+import { StyleSheet, Alert, Image, ScrollView } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 import * as firebase from 'firebase';
@@ -10,6 +10,7 @@ import Colours from '../constants/Colors';
 import Layout from '../constants/Layout';
 import { Text, View } from '../components/Themed';
 import AudioPlayer from '../components/AudioPlayer';
+import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
 
 /*
@@ -27,6 +28,7 @@ export default function WordScreen(props) {
   const [score, setScore] = useState(0);
   const [correct, setCorrect] = useState(0);
   const [incorrect, setIncorrect] = useState(0);
+  const [statsVisible, setStatsVisible] = useState(false);
 
   useEffect(() => {
     getScore(params.word, setStars, setScore, setCorrect, setIncorrect);
@@ -57,8 +59,12 @@ export default function WordScreen(props) {
             maxStars={3}
             starSize={60}
             rating={stars}
-            selectedStar={() => alert(`Times Correct: ${correct}\nTimes Incorrect: ${incorrect}\nRaw Score: ${score}`)}
+            selectedStar={() => setStatsVisible(!statsVisible)}
           />
+        </View>
+        <View>
+          <Text style={styles.text}>Touch Stars to show stats</Text>
+          {showStats(params.word, correct, incorrect, score, statsVisible)}
         </View>
       </View>
 
@@ -66,6 +72,21 @@ export default function WordScreen(props) {
   );
 }
 
+const showStats = (word, correct, incorrect, score, visible) => {
+  if (visible) {
+    return (
+      <View>
+        <Text style={styles.text}>Attempts: {correct + incorrect}</Text>
+        <Text style={styles.text}>Correct: {correct}</Text>
+        <Text style={styles.text}>Incorrect: {incorrect}</Text>
+        <Text style={styles.text}>Score: {score}</Text>
+      </View>
+    )
+  } else {
+    return null;
+  }
+
+}
 const getScore = async (word, setStars, setScore, setCorrect, setIncorrect) => {
   // Get all user game sessions
   // let mcqSessions = firebase.functions().httpsCallable('getChallenges')
@@ -200,7 +221,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   text: {
-    margin: 10,
+    margin: 5,
+    fontSize: 20,
   },
   imageStyle:{
     width: Layout.window.width / 2,
