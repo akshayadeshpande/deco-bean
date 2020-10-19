@@ -2,6 +2,7 @@ import { FontAwesome, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@e
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { Image, StyleSheet } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -14,7 +15,6 @@ import WordScreen from '../screens/WordScreen';
 import FriendsScreen from '../screens/FriendsScreen';
 import FriendsProfileScreen from '../screens/FriendsProfileScreen';
 import * as firebase from 'firebase';
-
 
 import { BottomTabParamList, 
           HomeParamList, 
@@ -46,35 +46,51 @@ export default function BottomTabNavigator() {
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" size={iconSize} color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" size={iconSize} color={color}/>,
         }}
       />
       <BottomTab.Screen
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="user" size={iconSize} color={color} />,
+          tabBarIcon: () => <Image
+          source={require('../assets/images/Profile.png')}
+          fadeDuration={0}
+          style={styles.icon}
+        />,
         }}
       />
       <BottomTab.Screen
         name="Words"
         component={DictionaryNavigator}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome name="book" size={iconSize} color={color} />,
+          tabBarIcon: () => <Image
+          source={require('../assets/images/Dictionary.png')}
+          fadeDuration={0}
+          style={styles.icon}
+        />,
         }}
       />
       <BottomTab.Screen
         name="Challenge"
         component={ChallengeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <MaterialIcons name="gamepad" size={iconSize} color={color} />,
+          tabBarIcon: () => <Image
+          source={require('../assets/images/Challenge.png')}
+          fadeDuration={0}
+          style={styles.icon}
+        />,
         }}
       />
       <BottomTab.Screen
         name="MeMa"
         component={MeMaScreen}
         options={{
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="robot" size={iconSize} color={color} />,
+          tabBarIcon: () => <Image
+          source={require('../assets/images/Talk to Mema.png')}
+          fadeDuration={0}
+          style={styles.icon}
+        />,
         }}
       /> 
     </BottomTab.Navigator>
@@ -237,3 +253,10 @@ function ProfileNavigator({navigation}) {
     </ProfileStack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 25, 
+    height: 25,
+  },
+});
