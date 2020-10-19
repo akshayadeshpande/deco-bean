@@ -23,10 +23,13 @@ import AudioPlayer from '../components/AudioPlayer';
 export default function WordScreen(props) {
   const params = props.route.params;
   // Score is out of 3, where 1 == 1, 5 == 2, 10 == 3
+  const [stars, setStars] = useState(0);
   const [score, setScore] = useState(0);
+  const [correct, setCorrect] = useState(0);
+  const [incorrect, setIncorrect] = useState(0);
 
   useEffect(() => {
-    getScore(params.word, setScore);
+    getScore(params.word, setStars, setScore, setCorrect, setIncorrect);
   }, []);
 
   console.log("Word Screen got word: " + params.word);
@@ -53,8 +56,8 @@ export default function WordScreen(props) {
             fullStarColor="gold"
             maxStars={3}
             starSize={60}
-            rating={score}
-            selectedStar={(rating) => alert(`Hit star rating ${rating}`)}
+            rating={stars}
+            selectedStar={() => alert(`Times Correct: ${correct}\nTimes Incorrect: ${incorrect}\nRaw Score: ${score}`)}
           />
         </View>
       </View>
@@ -63,7 +66,7 @@ export default function WordScreen(props) {
   );
 }
 
-const getScore = async (word, scoreUpdater) => {
+const getScore = async (word, setStars, setScore, setCorrect, setIncorrect) => {
   // Get all user game sessions
   // let mcqSessions = firebase.functions().httpsCallable('getChallenges')
   // await mcqSessions({}).then((res) => {
@@ -87,7 +90,7 @@ const getScore = async (word, scoreUpdater) => {
     console.log(error);
   });
   const scoredSessions = mcqSessions.filter(doc => doc.score && (doc.correct.includes(word) || doc.incorrect.includes(word)));
-  // Get word correctness across sessions
+  // Get word correctness and incorrectness across sessions
   let correctWords = {};
   let incorrectWords = {};
   scoredSessions.forEach((session, idx) => {
@@ -105,13 +108,43 @@ const getScore = async (word, scoreUpdater) => {
   console.log("Incorrect words:")
   console.log(incorrectWords);
 
-  // Get word incorrectness across sessions
-
   // Compute score
-  let dummyScore = Math.floor(Math.random() * 3) + 1  
-
+  let score = { correct: 0, incorrect: 0 }
+  Object.keys(correctWords).forEach(key => {
+    if (correctWords[key][word]) {
+      score.correct += correctWords[key][word];
+    }
+  });
+  Object.keys(incorrectWords).forEach(key => {
+    if (incorrectWords[key][word]) {
+      score.incorrect += incorrectWords[key][word];
+    }
+  })
+  console.log(score);
+  let rawScore = score.correct - score.incorrect;
+  console.log(`Raw Score: ${rawScore}`);
+  // Compute Star Score
+  // 1 == 1 star, < 5 == 1.5 stars, 5 == 2 stars, < 10 == 2.5 stars, 10+ == 3 stars
+  let starScore = 0;
+  if (rawScore < 1) {
+    starScore = 0;
+  } else if (rawScore === 1) {
+    starScore = 1;
+  } else if (rawScore < 5) {
+    starScore = 1.5;
+  } else if (rawScore === 5) {
+    starScore = 2;
+  } else if (rawScore < 10) {
+    starScore = 2.5;
+  } else if (rawScore >= 10) {
+    starScore = 3;
+  }
+  console.log(`Stars: ${starScore}`);
   // Update state with score
-  scoreUpdater(dummyScore);
+  setStars(starScore);
+  setScore(rawScore);
+  setCorrect(score.correct);
+  setIncorrect(score.incorrect);
 }
 
 
