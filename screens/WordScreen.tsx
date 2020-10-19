@@ -65,15 +65,45 @@ export default function WordScreen(props) {
 
 const getScore = async (word, scoreUpdater) => {
   // Get all user game sessions
-  let mcqSessions = firebase.functions().httpsCallable('getChallenges')
-  await mcqSessions({}).then((res) => {
-    console.log(res.data.challenges);
-  }).catch(err => {
-    console.log("Error getting challenges!");
-    console.log(err);
-  });
+  // let mcqSessions = firebase.functions().httpsCallable('getChallenges')
+  // await mcqSessions({}).then((res) => {
+  //   console.log("Retrieve MCQ Sessions")
+  //   console.log(res.data.challenges);
+  // }).catch(err => {
+  //   console.log("Error getting challenges!");
+  //   console.log(err);
+  // });
 
+  const userID = firebase.auth().currentUser.uid;
+  const db = firebase.firestore()
+  const mcqRefs = db.collection(`users/${userID}/mcq`);
+  let mcqSessions = [];
+  await mcqRefs.get().then(data => {
+    data.forEach(doc => {
+        mcqSessions.push(doc.data());
+    })
+  }).catch(error => {
+    console.log("Unable to retrieve user mcq sessions, WordScreen.");
+    console.log(error);
+  });
+  const scoredSessions = mcqSessions.filter(doc => doc.score && (doc.correct.includes(word) || doc.incorrect.includes(word)));
   // Get word correctness across sessions
+  let correctWords = {};
+  let incorrectWords = {};
+  scoredSessions.forEach((session, idx) => {
+    correctWords[idx] = session.correct.reduce((acc, word) => {
+      acc[word] = acc[word] + 1 || 1
+      return acc
+    }, {})
+    incorrectWords[idx] = session.incorrect.reduce((acc, word) => {
+      acc[word] = acc[word] + 1 || 1
+      return acc
+    }, {})
+  })
+  console.log("Correct words:")
+  console.log(correctWords);
+  console.log("Incorrect words:")
+  console.log(incorrectWords);
 
   // Get word incorrectness across sessions
 
