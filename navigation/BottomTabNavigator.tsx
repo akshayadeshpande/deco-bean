@@ -46,7 +46,7 @@ export default function BottomTabNavigator() {
         component={HomeNavigator}
         options={{
           tabBarIcon: () => <Image
-          source={require('../assets/images/Home Button.png')}
+          source={require('../assets/images/HomeButton.png')}
           fadeDuration={0}
           style={styles.icon}
         />,
@@ -90,7 +90,7 @@ export default function BottomTabNavigator() {
         component={MeMaScreen}
         options={{
           tabBarIcon: () => <Image
-          source={require('../assets/images/Talk to Mema.png')}
+          source={require('../assets/images/TalktoMema.png')}
           fadeDuration={0}
           style={styles.icon}
         />,
@@ -121,7 +121,7 @@ function HomeNavigator({navigation}) {
         name="HomeScreen"
         component={HomeScreen}
         options={{ headerTitle: () => (
-          <Image source={require('../assets/images/MEMA LOGO.png')}  style={styles.headerTitle}/>
+          <Image source={require('../assets/images/MEMALOGO.png')}  style={styles.headerTitle}/>
         ), 
         headerTitleAlign:"center", 
         headerLeft: null,

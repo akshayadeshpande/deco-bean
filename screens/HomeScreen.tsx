@@ -26,7 +26,7 @@ export default function HomeScreen({navigation}) {
           <NavTouchButton screenName="Challenge" text="Challenge Mode" iconName={require("../assets/images/Challenge.png")}/>
         </View>
         <View style={styles.navBox}>
-          <NavTouchButton screenName="MeMa" text="Talk to MeMa" iconName={require("../assets/images/Talk to Mema.png")}/>
+          <NavTouchButton screenName="MeMa" text="Talk to MeMa" iconName={require("../assets/images/TalktoMema.png")}/>
         </View>
       </View>
 

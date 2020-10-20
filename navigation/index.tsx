@@ -24,17 +24,17 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
         backgroundColor: Colors[colorSch].bottomTabBackground,
       }}}>
         <Stack.Screen name="StartLearning" options={{headerTitle: () => (
-          <Image source={require('../assets/images/MEMA LOGO.png')}  
+          <Image source={require('../assets/images/MEMALOGO.png')}  
           style={styles.headerTitle}/>
         ),
          headerTitleAlign:"center"}} component={StartLearning}/>
         <Stack.Screen name="SignIn" options={{headerTitle: () => (
-          <Image source={require('../assets/images/MEMA LOGO.png')}  
+          <Image source={require('../assets/images/MEMALOGO.png')}  
           style={styles.headerTitle}/>
         ),
          headerTitleAlign:"center"}} component={SignIn}/>
         <Stack.Screen name="SignUp" options={{headerTitle: () => (
-          <Image source={require('../assets/images/MEMA LOGO.png')}  
+          <Image source={require('../assets/images/MEMALOGO.png')}  
           style={styles.headerTitle}/>
         ),
          headerTitleAlign:"center"}} component={SignUp}/>

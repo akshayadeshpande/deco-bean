@@ -10,17 +10,17 @@ export default function StartLearningScreen({navigation}) {
     return (
         <View style={styles.viewStyle}>
             <View style={styles.imageWrap}>
-            <Image source={require("../assets/images/MEMA LOGO2.png")} style={styles.imageView}/>
+            <Image source={require("../assets/images/MEMALOGO2.png")} style={styles.imageView}/>
             </View>
             {Platform.OS === "ios" ? 
             <View style={styles.appButtonContainer}>
-            <Button title="Start Game"
+            <Button title="Start Learning"
             color={"#fff"}
             onPress={() => navigation.navigate("SignIn")}/>
             </View>
             :
             <View style={styles.appButtonContainer}>
-            <Button title="Start Game"
+            <Button title="Start Learning"
             color={Colors[colorScheme].activeTint}
             onPress={() => navigation.navigate("SignIn")}
             />
