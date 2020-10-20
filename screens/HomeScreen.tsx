@@ -15,18 +15,18 @@ export default function HomeScreen({navigation}) {
 
       <View style={styles.containerRow}>
         <View style={styles.navBox}>
-          <NavTouchButton screenName="Profile" text="My Profile" iconName="user"/>
+          <NavTouchButton screenName="Profile" text="My Profile" iconName={require("../assets/images/Profile.png")}/>
         </View>
         <View style={styles.navBox}>
-          <NavTouchButton screenName="Words" text="My Words" iconName="book"/>
+          <NavTouchButton screenName="Words" text="My Words" iconName={require("../assets/images/Dictionary.png")}/>
         </View>
       </View>
       <View style={styles.containerRow}>
         <View style={styles.navBox}>
-          <NavTouchButton screenName="Challenge" text="Challenge Mode" iconName="gamepad"/>
+          <NavTouchButton screenName="Challenge" text="Challenge Mode" iconName={require("../assets/images/Challenge.png")}/>
         </View>
         <View style={styles.navBox}>
-          <NavTouchButton screenName="MeMa" text="Talk to MeMa" iconName="comments-o"/>
+          <NavTouchButton screenName="MeMa" text="Talk to MeMa" iconName={require("../assets/images/Talk to Mema.png")}/>
         </View>
       </View>
 

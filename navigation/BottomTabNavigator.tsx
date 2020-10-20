@@ -32,7 +32,6 @@ Handles the Tabbar at the bottom of the app screen and what screens can be rende
 */
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-  const iconSize = 25;
 
 
   return (
@@ -46,7 +45,11 @@ export default function BottomTabNavigator() {
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-home" size={iconSize} color={color}/>,
+          tabBarIcon: () => <Image
+          source={require('../assets/images/Home Button.png')}
+          fadeDuration={0}
+          style={styles.icon}
+        />,
         }}
       />
       <BottomTab.Screen
@@ -117,7 +120,10 @@ function HomeNavigator({navigation}) {
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'MeMa Home', headerTitleAlign:"center", 
+        options={{ headerTitle: () => (
+          <Image source={require('../assets/images/MEMA LOGO.png')}  style={styles.headerTitle}/>
+        ), 
+        headerTitleAlign:"center", 
         headerLeft: null,
         headerRight: (props) => (
           <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
@@ -259,4 +265,8 @@ const styles = StyleSheet.create({
     width: 25, 
     height: 25,
   },
+  headerTitle: {
+    width: 200, 
+    height: 50,
+  }
 });
