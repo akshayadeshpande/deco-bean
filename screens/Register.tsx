@@ -18,7 +18,6 @@ export default function RegisterScreen({navigation}) {
   return (
     <View style={styles.container}>
       <View style={{padding:10}}/>
-      <Text style={styles.title}>Create Account</Text>
       <Register navigation={navigation}/>
       <Image source={require('../assets/images/MEMALOGO.png')} style={styles.imgLogo}/>
     </View>

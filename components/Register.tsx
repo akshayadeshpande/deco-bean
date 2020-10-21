@@ -47,15 +47,6 @@ export default function Register({navigation}) {
               style={styles.textInput}/>
             <View style={{padding:40}}>
             </View>
-
-            <View style={styles.buttonWrapper}>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.appButtonContainer} onPress={() => {navigation.navigate("StartLearning")}}>
-                  <Text>Back</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-  
             
             {Platform.OS === "ios" ? 
             <View style={styles.Register}>

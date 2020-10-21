@@ -21,12 +21,11 @@ export default function SigninScreen({navigation}) {
   
   return (
     <View style={styles.container}>
-      <View style={{padding:10}}/>
-      <Text style={styles.headerTitle}>Sign In</Text>
       <View style={{padding:100}}/>
       <Signin navigation={navigation}/>
       <Image source={require('../assets/images/MEMALOGO.png')} style={styles.imgLogo}/>
     </View>
+
   );
   
 }
@@ -34,6 +33,11 @@ export default function SigninScreen({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container2: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -53,18 +57,13 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 5
   },
+  headerBar: {
+    backgroundColor: "#FF9E1C",
+    padding: 10,
+  },
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    elevation: 8,
-    backgroundColor: "#FF9E1C",
-    paddingVertical: 5,
-    paddingHorizontal: 75,
-    justifyContent: "center",
-    alignItems: "center",
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10
   },
   imgLogo: {
     height: 100,

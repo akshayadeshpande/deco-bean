@@ -24,8 +24,18 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
         backgroundColor: Colors[colorSch].bottomTabBackground,
       }}}>
         <Stack.Screen name="StartLearning" options={{headerShown: false}} component={StartLearning}/>
-        <Stack.Screen name="SignIn" options={{headerShown: false}} component={SignIn}/>
-        <Stack.Screen name="SignUp" options={{headerShown: false}} component={SignUp}/>
+        <Stack.Screen name="SignIn" options={{headerTitle: "SIGN IN",
+        headerStyle: {
+          backgroundColor:Colors[colorSch].activeTint
+        },
+        headerTintColor: "#fff",
+        headerTitleAlign:"center"}} component={SignIn}/>
+        <Stack.Screen name="SignUp" options={{headerTitle: "CREATE ACCOUNT",
+        headerStyle: {
+          backgroundColor:Colors[colorSch].activeTint
+        },
+        headerTintColor: "#fff",
+        headerTitleAlign:"center"}} component={SignUp}/>
         <Stack.Screen name="MainApp" options={({ navigation, route }) => ({
           headerLeft: false,
           headerShown:false,
