@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {Picker} from '@react-native-community/picker';
-import { StyleSheet, Button, ScrollView, Platform } from 'react-native';
+import { StyleSheet, Button, ScrollView, Platform, Image } from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
 import * as firebase from 'firebase';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import * as SigninFunctions from './Signin';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -18,10 +18,11 @@ export default function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [homeLang, setHomeLang] = useState('English');
-    const [forLang, setForLang] = useState('Spanish');
+    const [forLang, setForLang] = useState('');
 
     return (
       <ScrollView>
+        <View style={styles.buttonWrapper}>
         <Text > Register for MeMa </Text>
         <View>
           <TextInput 
@@ -38,40 +39,78 @@ export default function Register() {
             onChangeText={(t) => setPassword(t)}
             value={password}/>
           <View style={{padding:40}}>
-
-          <Text>Native Language</Text>
-          <Picker
-            selectedValue={homeLang}
-            onValueChange={homeLang => setHomeLang(homeLang)}>
-            <Picker.Item label="English" value="English" />
-            <Picker.Item label="Spanish" value="Spanish" />
-            <Picker.Item label="Chinese" value="Chinese" />
-          </Picker>
-          <Text>Language to learn</Text>
-          <Picker
-            selectedValue={forLang}
-            onValueChange={forLang => setForLang(forLang)}>
-            <Picker.Item label="English" value="English" />
-            <Picker.Item label="Spanish" value="Spanish" />
-            <Picker.Item label="Chinese" value="Chinese" />
-          </Picker>
-
           </View>
 
+          <View style={styles.buttonWrapper}>
+          <Text>Language to learn</Text>
+          </View>
+          
+
+
+          <View style={styles.buttonWrapper}>
+          { forLang === "Chinese" ?
+          <View style={styles.buttonContainer}>
+            <Image source={require('../assets/images/Chinese.png')} style={styles.icon}/>
+            
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {setForLang("Chinese")}}>
+                <Text>Chinese</Text>
+              </TouchableOpacity>
+            
+          </View>
+          :
+          <View style={styles.buttonContainer}>
+            <Image source={require('../assets/images/Chinese.png')} style={styles.icon}/>
+            
+              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setForLang("Chinese")}}>
+                <Text>Chinese</Text>
+              </TouchableOpacity>
+            
+          </View>
+          }
+          </View>
+
+          <View style={styles.buttonWrapper}>
+          { forLang === "Spanish" ?
+          <View style={styles.buttonContainer}>
+            <Image source={require('../assets/images/Spanish.png')} style={styles.icon}/>
+            
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {setForLang("Spanish")}}>
+                <Text>Spanish</Text>
+              </TouchableOpacity>
+            
+          </View>
+          :
+          <View style={styles.buttonContainer}>
+            <Image source={require('../assets/images/Spanish.png')} style={styles.icon}/>
+            
+              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setForLang("Spanish")}}>
+                <Text>Spanish</Text>
+              </TouchableOpacity>
+            
+          </View>
+          }
+          </View>
+
+          </View>
+          </View>
+          
           {Platform.OS === "ios" ? 
-          <View style={styles.appButtonContainer}>
+          <View style={styles.Register}>
           <Button title="Register" 
           color={"#fff"}
           onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
           />
           </View>
-          : 
+          :
+          
           <Button title="Register" 
           color={Colors[colorScheme].activeTint}
           onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
           />
+          
           }
-        </View>
+        
+        
       </ScrollView>
     )
 }
@@ -133,10 +172,14 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-    CMContainer: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+    Register: {
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 50,
+      justifyContent: "center",
+      alignItems: "center",
     },
     title: {
       fontSize: 20,
@@ -155,11 +198,36 @@ const styles = StyleSheet.create({
       height: 300, 
       resizeMode: 'center'
      },
+     buttonContainer: {
+       flexDirection: 'row',
+       alignItems: "stretch"
+     },
+     buttonWrapper: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 10,
+     },
+     icon: {
+      width: 30, 
+      height: 30,
+    },
      appButtonContainer: {
       elevation: 8,
       backgroundColor: "#FF9E1C",
       borderRadius: 10,
       paddingVertical: 5,
-      paddingHorizontal: 5
+      paddingHorizontal: 25,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    appButtonContainer2: {
+      elevation: 8,
+      backgroundColor: "#FCEB97",
+      borderRadius: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 25,
+      justifyContent: "center",
+      alignItems: "center",
     }
   });

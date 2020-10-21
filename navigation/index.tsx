@@ -23,21 +23,19 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
       headerStyle: {
         backgroundColor: Colors[colorSch].bottomTabBackground,
       }}}>
-        <Stack.Screen name="StartLearning" options={{headerTitle: () => (
-          <Image source={require('../assets/images/MEMALOGO.png')}  
-          style={styles.headerTitle}/>
-        ),
-         headerTitleAlign:"center"}} component={StartLearning}/>
+        <Stack.Screen name="StartLearning" options={{headerShown: false}} component={StartLearning}/>
         <Stack.Screen name="SignIn" options={{headerTitle: () => (
           <Image source={require('../assets/images/MEMALOGO.png')}  
           style={styles.headerTitle}/>
         ),
-         headerTitleAlign:"center"}} component={SignIn}/>
+        headerTintColor:"#fff",
+        headerTitleAlign:"center"}} component={SignIn}/>
         <Stack.Screen name="SignUp" options={{headerTitle: () => (
           <Image source={require('../assets/images/MEMALOGO.png')}  
           style={styles.headerTitle}/>
         ),
-         headerTitleAlign:"center"}} component={SignUp}/>
+        headerTintColor:"#fff",
+        headerTitleAlign:"center"}} component={SignUp}/>
         <Stack.Screen name="MainApp" options={({ navigation, route }) => ({
           headerLeft: false,
           headerShown:false,

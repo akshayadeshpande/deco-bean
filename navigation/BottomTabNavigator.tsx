@@ -2,6 +2,7 @@ import { FontAwesome, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@e
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { View, Text } from '../components/Themed';
 import { Image, StyleSheet } from 'react-native';
 
 import Colors from '../constants/Colors';
@@ -143,6 +144,7 @@ const ChallengeStack = createStackNavigator<ChallengeParamList>();
 
 function ChallengeNavigator({navigation}) {
   const colorScheme = useColorScheme();
+  
   return (
     <ChallengeStack.Navigator screenOptions={{
       headerStyle: {
@@ -151,7 +153,7 @@ function ChallengeNavigator({navigation}) {
       <ChallengeStack.Screen
         name="ChallengeScreen"
         component={ChallengeScreen}
-        options={{ headerTitle: 'Challenge Mode', headerTitleStyle: { alignSelf: 'center' },
+        options={{ headerTitle: "Challenge Mode", headerTintColor:"#fff", headerTitleAlign: 'center',
         headerLeft: null,
         headerRight: (props) => (
           <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
@@ -178,7 +180,7 @@ function DictionaryNavigator({navigation}) {
       <DictionaryStack.Screen
         name="DictionaryScreen"
         component={DictionaryScreen}
-        options={{ headerTitle: 'My Words', headerTitleStyle: { alignSelf: 'center' },
+        options={{ headerTitle: 'My Words', headerTintColor:"#fff", headerTitleAlign: 'center',
         headerLeft: null,
         headerRight: (props) => (
           <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
@@ -192,7 +194,7 @@ function DictionaryNavigator({navigation}) {
       <DictionaryStack.Screen
         name="WordScreen"
         component={WordScreen}
-        options={{ headerTitle: 'Word Details', headerTitleStyle: { alignSelf: 'center' }, }}
+        options={{ headerTitle: 'Word Details', headerTintColor:"#fff",  headerTitleAlign: 'center', }}
       />
     </DictionaryStack.Navigator>
   );
@@ -210,7 +212,7 @@ function MeMaNavigator({navigation}) {
       <MeMaStack.Screen
         name="MeMaScreen"
         component={MeMaScreen}
-        options={{ headerTitle: 'Talk to MeMa', headerTitleStyle: { alignSelf: 'center' }, headerLeft: null,
+        options={{ headerTitle: 'Talk to MeMa', headerTintColor:"#fff", headerTitleAlign: 'center', headerLeft: null,
         headerRight: (props) => (
           <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
           {...props}
@@ -236,7 +238,7 @@ function ProfileNavigator({navigation}) {
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: 'Profile', headerTitleStyle: { alignSelf: 'center' }, headerLeft: null,
+        options={{ headerTitle: 'Profile', headerTintColor:"#fff",   headerTitleAlign: 'center', headerLeft: null,
         headerRight: (props) => (
           <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
           {...props}
@@ -249,12 +251,12 @@ function ProfileNavigator({navigation}) {
       <ProfileStack.Screen
         name="FriendsScreen"
         component={FriendsScreen}
-        options={{ headerTitle: 'Friends', headerTitleStyle: { alignSelf: 'center' }, }}
+        options={{ headerTitle: 'Friends', headerTintColor:"#fff", headerTitleAlign: 'center', }}
       />
       <ProfileStack.Screen
         name="FriendsProfileScreen"
         component={FriendsProfileScreen}
-        options={{ headerTitle: 'Friends Profile', headerTitleStyle: { alignSelf: 'center' }, }}
+        options={{ headerTitle: 'Friends Profile', headerTintColor:"#fff", headerTitleAlign: 'center', }}
       />
     </ProfileStack.Navigator>
   );
@@ -268,5 +270,10 @@ const styles = StyleSheet.create({
   headerTitle: {
     width: 200, 
     height: 50,
+  },
+  writingStyle: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   }
 });
