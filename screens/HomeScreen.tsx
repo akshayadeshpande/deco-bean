@@ -1,38 +1,61 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 
 import { Text, View } from '../components/Themed';
 import { getDailyWord } from '../components/WOTD';
 import WordOfTheDay from '../components/WOTD';
 import NavTouchButton from '../components/NavTouchButton';
 import * as firebase from 'firebase';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 export default function HomeScreen({navigation}) {
  
   return (
-    <View style={styles.wrapper}>
+    <View style={{flex:1}}>
 
-      <View style={styles.containerRow}>
-        <View style={styles.navBox}>
-          <NavTouchButton screenName="Profile" text="My Profile" iconName={require("../assets/images/Profile.png")}/>
-        </View>
-        <View style={styles.navBox}>
-          <NavTouchButton screenName="Words" text="My Words" iconName={require("../assets/images/Dictionary.png")}/>
-        </View>
+      <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
+      <View style={{alignItems:"center", justifyContent: 'center', paddingHorizontal: 50}}>
+      <Image source={require('../assets/images/MEMALOGO.png')}  style={styles.headerTitle}/>
       </View>
-      <View style={styles.containerRow}>
-        <View style={styles.navBox}>
-          <NavTouchButton screenName="Challenge" text="Challenge Mode" iconName={require("../assets/images/Challenge.png")}/>
-        </View>
-        <View style={styles.navBox}>
-          <NavTouchButton screenName="MeMa" text="Talk to MeMa" iconName={require("../assets/images/TalktoMema.png")}/>
-        </View>
+      <TouchableOpacity onPress={() => {firebase.auth().signOut(); navigation.navigate("SignIn");}}>
+        <Image source={require("../assets/images/HomeButton.png")} style={styles.icon}/>
+      </TouchableOpacity>
       </View>
+    
+    <View style={styles.wrapper}>
 
       <View style={styles.container}>
           <WordOfTheDay word={getDailyWord()} />
       </View>
+
+      <View style={styles.containerRow}>
+
+        <View style={styles.navBox}>
+          <NavTouchButton screenName="Challenge" text="Challenge Mode" iconName={require("../assets/images/Challenge.png")}/>
+        </View>
+
+        
+
+        <View style={styles.navBox}>
+          <NavTouchButton screenName="Words" text="My Words" iconName={require("../assets/images/Dictionary.png")}/>
+        </View>
+
+      </View>
+
+      <View style={styles.containerRow}>
+
+        <View style={styles.navBox}>
+          <NavTouchButton screenName="Profile" text="My Profile" iconName={require("../assets/images/Profile.png")}/>
+        </View>
+
+        <View style={styles.navBox}>
+          <NavTouchButton screenName="MeMa" text="Talk to MeMa" iconName={require("../assets/images/TalktoMema.png")}/>
+        </View>
+
+      </View>
+
+    </View>
     </View>
   );
 }
@@ -40,6 +63,10 @@ export default function HomeScreen({navigation}) {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+  },
+  headerTitle: {
+    width: 200, 
+    height: 50,
   },
   container: {
     flex: 1,
@@ -59,5 +86,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
+  },
+  icon: {
+    width: 30, 
+    height: 30,
   },
 });

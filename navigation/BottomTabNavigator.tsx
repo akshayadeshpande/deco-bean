@@ -1,5 +1,6 @@
 import { FontAwesome, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { View, Text } from '../components/Themed';
@@ -26,7 +27,7 @@ import { BottomTabParamList,
           } from '../types';
 import Navigation from '.';
 
-const BottomTab = createMaterialBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createBottomTabNavigator();
 
 /*
 Handles the Tabbar at the bottom of the app screen and what screens can be rended to the app from the Nav.
@@ -38,27 +39,20 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      activeColor={Colors[colorScheme].activeTint}
-      inactiveColor={Colors[colorScheme].inactiveTint}
-      barStyle={{backgroundColor:Colors[colorScheme].bottomTabBackground}}
+      tabBarOptions={{
+        activeBackgroundColor:Colors[colorScheme].background,
+        inactiveBackgroundColor:Colors[colorScheme].bottomTabBackground,
+        inactiveTintColor: Colors[colorScheme].inactiveTint,
+        activeTintColor: Colors[colorScheme].activeTint,
+      }}
+      
       >
-      <BottomTab.Screen
-        name="Home"
-        component={HomeNavigator}
+        <BottomTab.Screen
+        name="Challenge"
+        component={ChallengeNavigator}
         options={{
           tabBarIcon: () => <Image
-          source={require('../assets/images/HomeButton.png')}
-          fadeDuration={0}
-          style={styles.icon}
-        />,
-        }}
-      />
-      <BottomTab.Screen
-        name="Profile"
-        component={ProfileNavigator}
-        options={{
-          tabBarIcon: () => <Image
-          source={require('../assets/images/Profile.png')}
+          source={require('../assets/images/Challenge.png')}
           fadeDuration={0}
           style={styles.icon}
         />,
@@ -76,11 +70,23 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Challenge"
-        component={ChallengeNavigator}
+        name="Home"
+        component={HomeNavigator}
         options={{
           tabBarIcon: () => <Image
-          source={require('../assets/images/Challenge.png')}
+          source={require('../assets/images/HomeButton.png')}
+          fadeDuration={0}
+          style={styles.icon}
+        />,
+        tabBarVisible: false,
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileNavigator}
+        options={{
+          tabBarIcon: () => <Image
+          source={require('../assets/images/Profile.png')}
           fadeDuration={0}
           style={styles.icon}
         />,
@@ -121,7 +127,9 @@ function HomeNavigator({navigation}) {
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: () => (
+        options={{ 
+          headerShown:false,
+          headerTitle: () => (
           <Image source={require('../assets/images/MEMALOGO.png')}  style={styles.headerTitle}/>
         ), 
         headerTitleAlign:"center", 
