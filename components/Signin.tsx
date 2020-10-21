@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Button, ScrollView, Platform, Picker } from 'react-native';
+import { StyleSheet, Button, ScrollView, Platform, TouchableOpacity } from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from './EditScreenInfo';
@@ -11,7 +11,7 @@ import Colors from '../constants/Colors';
 
 
 
-export default function Register() {
+export default function Register({navigation}) {
     const colorScheme = useColorScheme();
 
     const [email, setEmail] = useState('');
@@ -19,18 +19,31 @@ export default function Register() {
   
     return (
       <ScrollView>
-        <Text > MeMa Login </Text>
+        
         <View>
+          <Text style={styles.text}>Email</Text>
           <TextInput 
-            placeholder="Email" 
+            placeholder="Enter email" 
             onChangeText={(t) => setEmail(t)}
-            value={email}/>
+            value={email}
+            style={styles.textInput}/>
+          <Text style={styles.text}>Password</Text>
           <TextInput
             secureTextEntry={true}
-            placeholder="Password"
+            placeholder="Enter password"
             onChangeText={(t) => setPassword(t)}
-            value={password}/>
-
+            value={password}
+            style={styles.textInput}/>
+          <View style={{padding:25}}/>
+          
+          <View style={styles.buttonWrapper}>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.appButtonContainer} onPress={() => {navigation.navigate('StartLearning')}}>
+                  <Text>Back</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          
           {Platform.OS === "ios" ? 
           <View style={styles.appButtonContainer}>
           <Button title="Login" 
@@ -47,7 +60,7 @@ export default function Register() {
 
         </View>
       </ScrollView>
-    )
+      );
 }
 
 export async function loginUser(event, email, password){
@@ -63,6 +76,16 @@ export async function loginUser(event, email, password){
 } 
 
 const styles = StyleSheet.create({
+    textInput: {
+    height: 20, 
+    borderColor: 'gray', 
+    borderWidth: 1,
+    backgroundColor: "#fff",
+    padding: 10,
+    },
+    text: {
+      padding: 5,
+    },
     container: {
       flex: 1,
       alignItems: 'center',
@@ -87,9 +110,6 @@ const styles = StyleSheet.create({
       height: 1,
       width: '80%',
     },
-    text: {
-      padding: 20,
-    },
     imageStyle:{
       width: 200, 
       height: 300, 
@@ -100,6 +120,16 @@ const styles = StyleSheet.create({
       backgroundColor: "#FF9E1C",
       borderRadius: 10,
       paddingVertical: 5,
-      paddingHorizontal: 5
-    }
+      paddingHorizontal: 30
+    },
+    buttonContainer: {
+      flexDirection: 'row',
+      alignItems: "stretch"
+    },
+    buttonWrapper: {
+     flex: 1,
+     alignItems: 'center',
+     justifyContent: 'center',
+     padding: 10,
+    },
   });

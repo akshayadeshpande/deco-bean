@@ -10,109 +10,151 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import * as SigninFunctions from './Signin';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import Navigation from '../navigation';
 
 
-export default function Register() {
+export default function Register({navigation}) {
     const colorScheme = useColorScheme();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [homeLang, setHomeLang] = useState('English');
     const [forLang, setForLang] = useState('');
+    const [pickingLang, setPicking] = useState(false);
 
-    return (
-      <ScrollView>
-        <View style={styles.buttonWrapper}>
-        <Text > Register for MeMa </Text>
-        <View>
-          <TextInput 
-            placeholder="Name" 
-            onChangeText={(t) => setName(t)}
-            value={name}/>
-          <TextInput 
-            placeholder="Email" 
-            onChangeText={(t) => setEmail(t)}
-            value={email}/>
-          <TextInput
-            secureTextEntry={true}
-            placeholder="Password"
-            onChangeText={(t) => setPassword(t)}
-            value={password}/>
-          <View style={{padding:40}}>
-          </View>
+    if (!pickingLang) {
+      return (
+        <ScrollView>
+          <View>
+            <Text style={styles.text}>Name</Text>
+            <TextInput 
+              placeholder="Your Name" 
+              onChangeText={(t) => setName(t)}
+              value={name}
+              style={styles.textInput}/>
+            <Text style={styles.text}>Email</Text>
+            <TextInput 
+              placeholder="Your Email" 
+              onChangeText={(t) => setEmail(t)}
+              value={email}
+              style={styles.textInput}/>
+            <Text style={styles.text}>Password</Text>
+            <TextInput
+              secureTextEntry={true}
+              placeholder="Enter password"
+              onChangeText={(t) => setPassword(t)}
+              value={password}
+              style={styles.textInput}/>
+            <View style={{padding:40}}>
+            </View>
 
-          <View style={styles.buttonWrapper}>
-          <Text>Language to learn</Text>
-          </View>
-          
-
-
-          <View style={styles.buttonWrapper}>
-          { forLang === "Chinese" ?
-          <View style={styles.buttonContainer}>
-            <Image source={require('../assets/images/Chinese.png')} style={styles.icon}/>
+            <View style={styles.buttonWrapper}>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.appButtonContainer} onPress={() => {navigation.navigate("StartLearning")}}>
+                  <Text>Back</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+  
             
-              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {setForLang("Chinese")}}>
-                <Text>Chinese</Text>
-              </TouchableOpacity>
-            
-          </View>
-          :
-          <View style={styles.buttonContainer}>
-            <Image source={require('../assets/images/Chinese.png')} style={styles.icon}/>
-            
-              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setForLang("Chinese")}}>
-                <Text>Chinese</Text>
-              </TouchableOpacity>
-            
-          </View>
-          }
-          </View>
-
-          <View style={styles.buttonWrapper}>
-          { forLang === "Spanish" ?
-          <View style={styles.buttonContainer}>
-            <Image source={require('../assets/images/Spanish.png')} style={styles.icon}/>
-            
-              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {setForLang("Spanish")}}>
-                <Text>Spanish</Text>
-              </TouchableOpacity>
-            
-          </View>
-          :
-          <View style={styles.buttonContainer}>
-            <Image source={require('../assets/images/Spanish.png')} style={styles.icon}/>
-            
-              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setForLang("Spanish")}}>
-                <Text>Spanish</Text>
-              </TouchableOpacity>
-            
-          </View>
-          }
-          </View>
-
-          </View>
-          </View>
-          
-          {Platform.OS === "ios" ? 
-          <View style={styles.Register}>
-          <Button title="Register" 
-          color={"#fff"}
-          onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
-          />
-          </View>
-          :
-          
-          <Button title="Register" 
-          color={Colors[colorScheme].activeTint}
-          onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
-          />
-          
-          }
-        
-        
+            {Platform.OS === "ios" ? 
+            <View style={styles.Register}>
+            <Button title="Next" 
+            color={"#fff"}
+            onPress={() => setPicking(true)}
+            />
+            </View>
+            :
+            <Button title="Next" 
+            color={Colors[colorScheme].activeTint}
+            onPress={() => setPicking(true)}
+            />
+            }
+        </View>
       </ScrollView>
-    )
+      );
+
+    } else {
+      return (
+        <ScrollView>
+          <View>
+            <View style={styles.buttonWrapper}>
+              <Text>I want to learn...</Text>
+            </View>
+          
+            <View style={styles.buttonWrapper}>
+            { forLang === "Chinese" ?
+            <View style={styles.buttonContainer}>
+              <Image source={require('../assets/images/Chinese.png')} style={styles.icon}/>
+              
+                <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {setForLang("Chinese")}}>
+                  <Text>Chinese</Text>
+                </TouchableOpacity>
+              
+            </View>
+            :
+            <View style={styles.buttonContainer}>
+              <Image source={require('../assets/images/Chinese.png')} style={styles.icon}/>
+              
+                <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setForLang("Chinese")}}>
+                  <Text>Chinese</Text>
+                </TouchableOpacity>
+              
+            </View>
+            }
+            </View>
+  
+            <View style={styles.buttonWrapper}>
+            { forLang === "Spanish" ?
+            <View style={styles.buttonContainer}>
+              <Image source={require('../assets/images/Spanish.png')} style={styles.icon}/>
+              
+                <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {setForLang("Spanish")}}>
+                  <Text>Spanish</Text>
+                </TouchableOpacity>
+              
+            </View>
+            :
+            <View style={styles.buttonContainer}>
+              <Image source={require('../assets/images/Spanish.png')} style={styles.icon}/>
+              
+                <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setForLang("Spanish")}}>
+                  <Text>Spanish</Text>
+                </TouchableOpacity>
+              
+            </View>
+            }
+            </View>
+
+            <View style={styles.buttonWrapper}>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setPicking(false)}}>
+                  <Text>Back</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            
+            {Platform.OS === "ios" ? 
+            
+            <View style={styles.Register}>
+            <Button title="Register" 
+            color={"#fff"}
+            onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
+            />
+            </View>
+            :
+            
+            <Button title="Register" 
+            color={Colors[colorScheme].activeTint}
+            onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
+            />
+            }
+          </View>
+        </ScrollView>
+      );
+    }
+    
 }
 
 async function registerUser(event, name, email, password, forLang, homeLang){
@@ -162,6 +204,13 @@ async function registerUser(event, name, email, password, forLang, homeLang){
 
 
 const styles = StyleSheet.create({
+    textInput: {
+      height: 20, 
+      borderColor: 'gray', 
+      borderWidth: 1,
+      backgroundColor: "#fff",
+      padding: 10,
+    },
     container: {
       flex: 1,
       alignItems: 'center',
@@ -191,7 +240,7 @@ const styles = StyleSheet.create({
       width: '80%',
     },
     text: {
-      padding: 20,
+      padding: 5,
     },
     imageStyle:{
       width: 200, 
