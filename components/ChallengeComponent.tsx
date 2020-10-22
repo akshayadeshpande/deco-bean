@@ -94,37 +94,25 @@ export default function ChallengeComponent(props) {
 
       return (
         <View style={styles.CMContainer}>
+          
           <View style={styles.imgHolder}>
             <Image 
                   source = {{ uri: img}}
       
                   style = {styles.imageStyle} />
-          </View>
+              <TouchableOpacity style={styles.imgWord}>
+                <Text style={{ justifyContent:"center", alignItems:"center", padding:5}}>Apple</Text>
+              </TouchableOpacity>
+            </View>
+          
           
           <View style={styles.SmallSeperator}>
             <TouchableOpacity style={styles.appButtonContainer2} onPress={() => setTut(false)}>
-              <Text>Tutorial Button 1</Text>
+              <Text style={styles.text}>Tutorial Button 1</Text>
             </TouchableOpacity>
           </View>
 
-          <View style={styles.SmallSeperator}>
-            <TouchableOpacity style={styles.appButtonContainer2} onPress={() => setTut(false)}>
-              <Text>Tutorial Button 2</Text>
-            </TouchableOpacity>
-          </View>
 
-          <View style={styles.SmallSeperator}>
-          <TouchableOpacity style={styles.appButtonContainer2} onPress={() => setTut(false)}>
-            <Text>Tutorial Button 3</Text>
-          </TouchableOpacity>
-          </View>
-
-          <View style={styles.SmallSeperator}>
-          <TouchableOpacity style={styles.appButtonContainer2} onPress={() => setTut(false)}>
-            <Text>Tutorial Button 4</Text>
-          </TouchableOpacity>
-          </View>
-          
           <ScrollView>
             <Text>
             Challenge mode works by displaying and image at the top of the screen, depicting
@@ -136,6 +124,7 @@ export default function ChallengeComponent(props) {
             Press any button to be taken back to the game menu.
             </Text>
           </ScrollView>
+          
           </View>
       );
     } else {
@@ -165,11 +154,16 @@ export default function ChallengeComponent(props) {
         //View while playing giving the images and the button choices
         return (
           <View style={styles.CMContainer}>
+            
+            
             <View style={styles.imgHolder}>
-              <Image 
+            <Image 
                   source = {{ uri: img}}
       
                   style = {styles.imageStyle} />
+              <TouchableOpacity style={styles.imgWord}>
+                <Text style={{ justifyContent:"center", alignItems:"center", padding:5}}>{currentWord}</Text>
+              </TouchableOpacity>
             </View>
 
             <View style={styles.SmallSeperator}>
@@ -389,10 +383,6 @@ const styles = StyleSheet.create({
     },
     CMContainer: {
       alignItems: 'center',
-      
-    },
-    imgHolder: {
-      padding: 20,
     },
     title: {
       fontSize: 20,
@@ -411,6 +401,14 @@ const styles = StyleSheet.create({
       width: 200, 
       height: 300,
       resizeMode: 'stretch'
+     },
+     imgWord: {
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 20,
+      paddingVertical: 10,
+      paddingHorizontal: 100,
+      bottom: 40,
      },
      appButtonContainer2: {
       elevation: 8,
@@ -432,5 +430,15 @@ const styles = StyleSheet.create({
     },
     SmallSeperator: {
       padding: 10
-    }
+    },
+    gameHolding: {
+      top:250
+
+    },
+    imgHolder: {
+      padding: 10,
+      position:"relative",
+      justifyContent:"center",
+      alignItems:"center",
+    },
   });
