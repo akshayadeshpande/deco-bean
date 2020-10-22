@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button, StyleSheet, Image, Platform } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Text, View } from '../components/Themed';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -17,20 +18,11 @@ export default function StartLearningScreen({navigation}) {
                     New User?
                 </Text>
             </View>
-            {Platform.OS === "ios" ? 
-            <View style={styles.appButtonContainer}>
-            <Button title="Start Learning"
-            color={"#fff"}
-            onPress={() => navigation.navigate("SignUp")}/>
-            </View>
-            :
-            <View style={styles.appButtonContainer}>
-            <Button title="Start Learning"
-            color={Colors[colorScheme].activeTint}
-            onPress={() => navigation.navigate("SignUp")}
-            />
-            </View>
-            }
+            
+            <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={styles.appButtonContainer}>
+                <Text style={styles.textColor}>Start Learning</Text>
+            </TouchableOpacity>
+            
 
             <View style={{padding:10}}>
                 <Text>
@@ -39,20 +31,11 @@ export default function StartLearningScreen({navigation}) {
             </View>
 
             <View>
-            {Platform.OS === "ios" ? 
-                <View style={styles.appButtonContainer2}>
-                    <Button title="Sign In"
-                    color={"#fff"}
-                    onPress={() => navigation.navigate("SignIn")}/>
-                    </View>
-                    :
-                    <View style={styles.appButtonContainer2}>
-                    <Button title="Sign In"
-                    color={Colors[colorScheme].activeTint}
-                    onPress={() => navigation.navigate("SignIn")}
-                    />
-                </View>
-            }
+            
+                <TouchableOpacity onPress={() => navigation.navigate("SignIn")} style={styles.appButtonContainer2}>
+                    <Text style={styles.textColor}>Sign In</Text>
+                </TouchableOpacity>
+            
             </View>
         </View>
     );
@@ -61,6 +44,10 @@ export default function StartLearningScreen({navigation}) {
 const styles = StyleSheet.create({
     imageWrap: {
         padding: 20,
+    },
+    textColor: {
+        color:"#fff",
+        alignItems:"center",
     },
     imageView: {
         resizeMode: 'stretch',
