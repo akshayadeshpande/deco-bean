@@ -102,25 +102,25 @@ export default function ChallengeComponent(props) {
           </View>
           
           <View style={styles.SmallSeperator}>
-            <TouchableOpacity style={styles.appButtonContainer} onPress={() => setTut(false)}>
+            <TouchableOpacity style={styles.appButtonContainer2} onPress={() => setTut(false)}>
               <Text>Tutorial Button 1</Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.SmallSeperator}>
-            <TouchableOpacity style={styles.appButtonContainer} onPress={() => setTut(false)}>
+            <TouchableOpacity style={styles.appButtonContainer2} onPress={() => setTut(false)}>
               <Text>Tutorial Button 2</Text>
             </TouchableOpacity>
           </View>
 
           <View style={styles.SmallSeperator}>
-          <TouchableOpacity style={styles.appButtonContainer} onPress={() => setTut(false)}>
+          <TouchableOpacity style={styles.appButtonContainer2} onPress={() => setTut(false)}>
             <Text>Tutorial Button 3</Text>
           </TouchableOpacity>
           </View>
 
           <View style={styles.SmallSeperator}>
-          <TouchableOpacity style={styles.appButtonContainer} onPress={() => setTut(false)}>
+          <TouchableOpacity style={styles.appButtonContainer2} onPress={() => setTut(false)}>
             <Text>Tutorial Button 4</Text>
           </TouchableOpacity>
           </View>
@@ -173,25 +173,25 @@ export default function ChallengeComponent(props) {
             </View>
 
             <View style={styles.SmallSeperator}>
-              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[0])}}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[0])}}>
                 <Text style={styles.text}>{currentButtons[0]}</Text>
               </TouchableOpacity>
             </View>
 
             <View style={styles.SmallSeperator}>
-              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[1])}}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[1])}}>
                 <Text style={styles.text}>{currentButtons[1]}</Text>
               </TouchableOpacity>
             </View>
 
             <View style={styles.SmallSeperator}>
-              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[2])}}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[2])}}>
                 <Text style={styles.text}>{currentButtons[2]}</Text>
               </TouchableOpacity>
             </View>
 
             <View style={styles.SmallSeperator}>
-              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[3])}}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[3])}}>
                 <Text style={styles.text}>{currentButtons[3]}</Text>
               </TouchableOpacity>
             </View>
@@ -403,6 +403,7 @@ const styles = StyleSheet.create({
     },
     text: {
       padding: 3,
+      color: "black",
     },
     imageStyle:{
       width: 200, 
@@ -411,10 +412,11 @@ const styles = StyleSheet.create({
      },
      appButtonContainer2: {
       elevation: 8,
-      backgroundColor: "#FF9E1C",
-      borderRadius: 30,
+      backgroundColor: "#fff",
+      borderWidth: 1,
+      borderColor: "#FF9E1C",
       paddingVertical: 10,
-      paddingHorizontal: 40
+      paddingHorizontal: 40,
     },
     appButtonContainer: {
       elevation: 8,
