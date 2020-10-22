@@ -50,7 +50,7 @@ export default function ChallengeComponent(props) {
     useEffect(() => {
         dbh = firebase.firestore();
         var incomingWords = firebase.functions().httpsCallable('startChallenge')
-        incomingWords({count: gameLength}).then(function(result){
+          incomingWords({count: gameLength}).then(function(result){
           makeWordURLDict(result.data['words']);
           challengeLanguage = result.data["lang"];
           id = result.data["id"]
@@ -150,13 +150,13 @@ export default function ChallengeComponent(props) {
 
           <View style={styles.SmallSeperator}>
               <TouchableOpacity style={styles.appButtonContainer} onPress={() => {playAgain(setCount, startingGame)}}>
-                <Text style={styles.text}>Play Again?</Text>
+                <Text style={{padding:5}}>Play Again?</Text>
               </TouchableOpacity>
             </View>
           
             <View style={styles.SmallSeperator}>
               <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setCount(0);startingGame(false);}}>
-                <Text style={styles.text}>Back to challenge screen</Text>
+                <Text style={{padding:5}}>Back to challenge screen</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -215,6 +215,8 @@ function playAgain(
   setCount: React.Dispatch<React.SetStateAction<number>>,
   startingGame: React.Dispatch<React.SetStateAction<boolean>>
 ) {
+  correctAnswers = [];
+  incorrectAnswers = [];
   setCount(0)
   startingGame(true)
 }
