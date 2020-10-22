@@ -196,11 +196,12 @@ async function registerUser(event, name, email, password, forLang, homeLang){
 
 const styles = StyleSheet.create({
     textInput: {
-      height: 20, 
+      height: 40, 
       borderColor: 'gray', 
       borderWidth: 1,
       backgroundColor: "#fff",
       padding: 10,
+      color: "#FF9E1C"
     },
     container: {
       flex: 1,
