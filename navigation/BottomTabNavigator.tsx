@@ -115,8 +115,9 @@ function TabBarIcon(props: { name: string; color: string; iconSize: number }) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const HomeStack = createStackNavigator<HomeParamList>();
 
+const HomeStack = createStackNavigator<HomeParamList>();
+//Handles navigation to the Home screen and adjusts the header for the page
 function HomeNavigator({navigation}) {
   const colorScheme = useColorScheme();
   return (
@@ -146,122 +147,112 @@ function HomeNavigator({navigation}) {
 
 
 const ChallengeStack = createStackNavigator<ChallengeParamList>();
-
+//Handles navigation to the Challenge screen and adjusts the header for the page
 function ChallengeNavigator({navigation}) {
   const colorScheme = useColorScheme();
   
   return (
     <ChallengeStack.Navigator screenOptions={{
       headerStyle: {
-        backgroundColor: Colors[colorScheme].bottomTabBackground,
+        backgroundColor: Colors[colorScheme].activeTint,
       }}}>
       <ChallengeStack.Screen
         name="ChallengeScreen"
         component={ChallengeScreen}
-        options={{ headerTitle: "Challenge Mode", headerTintColor:"#fff", headerTitleAlign: 'center',
+        options={{ headerTitle: "Challenge Mode", 
+        headerTintColor:"#fff", 
+        headerTitleAlign: 'center',
         headerLeft: null,
-        headerRight: (props) => (
-          <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
-          {...props}
-          onPress={() => {
-            firebase.auth().signOut();
-            navigation.navigate("SignIn");
         }}
-        />)}}
       />
     </ChallengeStack.Navigator>
   );
 }
 
 const DictionaryStack = createStackNavigator<DictionaryParamList>();
-
+//Handles navigation to the Dictionary screen and adjusts the header for the page
 function DictionaryNavigator({navigation}) {
   const colorScheme = useColorScheme();
   return (
     <DictionaryStack.Navigator screenOptions={{
       headerStyle: {
-        backgroundColor: Colors[colorScheme].bottomTabBackground,
+        backgroundColor: Colors[colorScheme].activeTint,
       }}}>
       <DictionaryStack.Screen
         name="DictionaryScreen"
         component={DictionaryScreen}
-        options={{ headerTitle: 'My Words', headerTintColor:"#fff", headerTitleAlign: 'center',
+        options={{ headerTitle: 'My Words', 
+        headerTintColor:"#fff", 
+        headerTitleAlign: 'center',
         headerLeft: null,
-        headerRight: (props) => (
-          <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
-          {...props}
-          onPress={() => {
-            firebase.auth().signOut();
-            navigation.navigate("SignIn");
-          }}
-        />)}}
+        }}
       />
       <DictionaryStack.Screen
         name="WordScreen"
         component={WordScreen}
-        options={{ headerTitle: 'Word Details', headerTintColor:"#fff",  headerTitleAlign: 'center', }}
+        options={{ headerTitle: 'Word Details', 
+        headerTintColor:"#fff",  
+        headerTitleAlign: 'center', 
+      }}
       />
     </DictionaryStack.Navigator>
   );
 }
 
 const MeMaStack = createStackNavigator<MeMaParamList>();
-
+//Handles navigation to the Mema screen and adjusts the header for the page
 function MeMaNavigator({navigation}) {
   const colorScheme = useColorScheme();
   return (
     <MeMaStack.Navigator screenOptions={{
       headerStyle: {
-        backgroundColor: Colors[colorScheme].bottomTabBackground,
+        backgroundColor: Colors[colorScheme].activeTint,
       }}}>
       <MeMaStack.Screen
         name="MeMaScreen"
         component={MeMaScreen}
-        options={{ headerTitle: 'Talk to MeMa', headerTintColor:"#fff", headerTitleAlign: 'center', headerLeft: null,
-        headerRight: (props) => (
-          <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
-          {...props}
-          onPress={() => {
-            firebase.auth().signOut();
-            navigation.navigate("SignIn");
-          }}
-        />)}}
+        options={{ headerTitle: 'Talk to MeMa', 
+        headerTintColor:"#fff", headerTitleAlign: 'center', 
+        headerLeft: null,
+        }}
       />
     </MeMaStack.Navigator>
   );
 }
 
-const ProfileStack = createStackNavigator<ProfileParamList>();
 
+
+const ProfileStack = createStackNavigator<ProfileParamList>();
+//Handles navigation to the profile screen and adjusts the header for the page
 function ProfileNavigator({navigation}) {
   const colorScheme = useColorScheme();
   return (
     <ProfileStack.Navigator screenOptions={{
       headerStyle: {
-        backgroundColor: Colors[colorScheme].bottomTabBackground,
+        backgroundColor: Colors[colorScheme].activeTint,
       }}}>
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: 'Profile', headerTintColor:"#fff",   headerTitleAlign: 'center', headerLeft: null,
-        headerRight: (props) => (
-          <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
-          {...props}
-          onPress={() => {
-            firebase.auth().signOut();
-            navigation.navigate("SignIn");
-          }}
-        />)}}
+        options={{ headerTitle: 'Profile', 
+        headerTintColor:"#fff",   
+        headerTitleAlign: 'center', 
+        headerLeft: null,
+        }}
       />
       <ProfileStack.Screen
         name="FriendsScreen"
         component={FriendsScreen}
-        options={{ headerTitle: 'Friends', headerTintColor:"#fff", headerTitleAlign: 'center', }}
+        options={{ headerTitle: 'Friends', 
+        headerTintColor:"#fff", 
+        headerTitleAlign: 'center', }}
       />
       <ProfileStack.Screen
         name="FriendsProfileScreen"
         component={FriendsProfileScreen}
-        options={{ headerTitle: 'Friends Profile', headerTintColor:"#fff", headerTitleAlign: 'center', }}
+        options={{ headerTitle: 'Friends Profile', 
+        headerTintColor:"#fff", 
+        headerTitleAlign: 'center', }}
       />
     </ProfileStack.Navigator>
   );
