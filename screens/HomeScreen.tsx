@@ -21,29 +21,13 @@ export default function HomeScreen({navigation}) {
       </View>
 
       <View style={styles.containerRow}>
-
-        <View style={styles.navBox}>
           <NavTouchButton screenName="Challenge" text="Challenge Mode" iconName={require("../assets/images/Challenge.png")}/>
-        </View>
-
-        
-
-        <View style={styles.navBox}>
           <NavTouchButton screenName="Words" text="My Words" iconName={require("../assets/images/Dictionary.png")}/>
-        </View>
-
       </View>
 
       <View style={styles.containerRow}>
-
-        <View style={styles.navBox}>
           <NavTouchButton screenName="Profile" text="My Profile" iconName={require("../assets/images/Profile.png")}/>
-        </View>
-
-        <View style={styles.navBox}>
           <NavTouchButton screenName="MeMa" text="Talk to MeMa" iconName={require("../assets/images/TalktoMema.png")}/>
-        </View>
-
       </View>
 
     </View>
@@ -67,7 +51,7 @@ const styles = StyleSheet.create({
   containerRow: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: "center"
   },
   navBox: {
     flex: 1,

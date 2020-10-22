@@ -10,18 +10,23 @@ export default function NavTouchButton(props) {
   const colorScheme = useColorScheme();
 
   return (
-    <TouchableOpacity
-      style={styles.button}
+    <TouchableOpacity style={styles.button}
       onPress={() => navigation.navigate(props.screenName)}>
-      <Image source={props.iconName} style={styles.iconButton}/>
-      <Text style={styles.text}>{props.text}</Text>
+        <View style={{alignItems:"center"}}>
+          <Image source={props.iconName} style={styles.iconButton}/>
+        </View>
+        <View>
+          <Text style={styles.text}>{props.text}</Text>
+        </View>
+
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    alignItems: 'center',
+    flex:1, 
+    flexDirection:"column",
     padding: 10,
   },
   iconButton: {
