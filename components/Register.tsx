@@ -116,13 +116,15 @@ export default function Register({navigation}) {
             </View>
             }
             </View>
-
+            
+            <View style={{padding:30}}>
             <View style={styles.buttonWrapper}>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setPicking(false)}}>
                   <Text>Back</Text>
                 </TouchableOpacity>
               </View>
+            </View>
             </View>
 
             

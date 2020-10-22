@@ -13,15 +13,6 @@ export default function HomeScreen({navigation}) {
  
   return (
     <View style={{flex:1}}>
-
-      <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
-      <View style={{alignItems:"center", justifyContent: 'center', paddingHorizontal: 50}}>
-      <Image source={require('../assets/images/MEMALOGO.png')}  style={styles.headerTitle}/>
-      </View>
-      <TouchableOpacity onPress={() => {firebase.auth().signOut(); navigation.navigate("SignIn");}}>
-        <Image source={require("../assets/images/HomeButton.png")} style={styles.icon}/>
-      </TouchableOpacity>
-      </View>
     
     <View style={styles.wrapper}>
 

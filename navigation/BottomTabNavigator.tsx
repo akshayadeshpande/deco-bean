@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { View, Text } from '../components/Themed';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -122,26 +122,23 @@ function HomeNavigator({navigation}) {
   return (
     <HomeStack.Navigator screenOptions={{
       headerStyle: {
-        backgroundColor: Colors[colorScheme].bottomTabBackground,
+        backgroundColor: Colors[colorScheme].background,
       }}}>
       <HomeStack.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={{ 
-          headerShown:false,
           headerTitle: () => (
           <Image source={require('../assets/images/MEMALOGO.png')}  style={styles.headerTitle}/>
         ), 
         headerTitleAlign:"center", 
         headerLeft: null,
-        headerRight: (props) => (
-          <MaterialCommunityIcons name="exit-run" size={24} color="black" title="Sign out"
-          {...props}
-          onPress={() => {
-            firebase.auth().signOut();
-            navigation.navigate("SignIn");
-          }}
-          />)}}
+        headerRight: () => (
+          <TouchableOpacity onPress={() => {firebase.auth().signOut();navigation.navigate("StartLearning");}}>
+          <Image source={require('../assets/images/SignOut.png')} style={styles.icon}/>
+          </TouchableOpacity>
+        )
+        }}
       />
     </HomeStack.Navigator>
   );
@@ -272,8 +269,8 @@ function ProfileNavigator({navigation}) {
 
 const styles = StyleSheet.create({
   icon: {
-    width: 25, 
-    height: 25,
+    width: 40, 
+    height: 40,
   },
   headerTitle: {
     width: 200, 

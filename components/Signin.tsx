@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Button, ScrollView, Platform, TouchableOpacity } from 'react-native';
+import { StyleSheet, Button, ScrollView, Platform, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from './EditScreenInfo';
@@ -16,44 +16,55 @@ export default function Register({navigation}) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-  
-    return (
-      <ScrollView>
-        
-        <View>
-          <Text style={styles.text}>Email</Text>
-          <TextInput 
-            placeholder="Enter email" 
-            onChangeText={(t) => setEmail(t)}
-            value={email}
-            style={styles.textInput}/>
-          <Text style={styles.text}>Password</Text>
-          <TextInput
-            secureTextEntry={true}
-            placeholder="Enter password"
-            onChangeText={(t) => setPassword(t)}
-            value={password}
-            style={styles.textInput}/>
-          <View style={{padding:25}}/>
-          
-          
-          {Platform.OS === "ios" ? 
-          <View style={styles.appButtonContainer}>
-          <Button title="Login" 
-          color={"#fff"}
-          onPress={event => loginUser(event, email, password)}
-          />
-          </View>
-          : 
-          <Button title="Login" 
-          color={Colors[colorScheme].activeTint}
-          onPress={event => loginUser(event, email, password)}
-          />
-          }
+    const [loaded, setLoading] = useState(false);
 
+    if (loaded) {
+      return(
+        <View style={styles.titleContainer}>
+        <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
         </View>
-      </ScrollView>
-      );
+      )
+    } else {
+  
+      return (
+        <View>
+          
+          <View>
+            <Text style={styles.text}>Email</Text>
+            <TextInput 
+              placeholder="Enter email" 
+              onChangeText={(t) => setEmail(t)}
+              value={email}
+              style={styles.textInput}/>
+            <Text style={styles.text}>Password</Text>
+            <TextInput
+              secureTextEntry={true}
+              placeholder="Enter password"
+              onChangeText={(t) => setPassword(t)}
+              value={password}
+              style={styles.textInput}/>
+            <View style={{padding:25}}/>
+            
+            
+            {Platform.OS === "ios" ? 
+            <View style={styles.appButtonContainer}>
+            <Button title="Login" 
+            color={"#fff"}
+            onPress={event => loginUser(event, email, password)}
+            />
+            </View>
+            : 
+            <Button title="Login" 
+            color={Colors[colorScheme].activeTint}
+            onPress={event => {
+              setLoading(true);loginUser(event, email, password); setLoading(false);}}
+            />
+            }
+
+          </View>
+        </View>
+        );
+    }
 }
 
 export async function loginUser(event, email, password){
