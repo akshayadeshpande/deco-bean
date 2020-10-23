@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ActivityIndicator } from 'react-native';
 import SearchBar from 'react-native-searchbar';
 import * as firebase from 'firebase';
 
@@ -27,6 +27,9 @@ export default function DictionaryScreen(props) {
   const colorScheme = useColorScheme();
   let searchBar;
   // States
+  // Loading State
+  const [loading, setLoading] = useState(true);
+  // User's active language
   const [activeLanguage, setActiveLanguage] = useState("");
   // Dictionary data contains full db word lists
   const [dictionaryData, setDictionaryData] = useState([]);
@@ -46,11 +49,27 @@ export default function DictionaryScreen(props) {
    * Will run a db call on first mount.
    */
   useEffect(() => {
-    getWords(setDictionaryData, setFilteredDict);
-    getLearnerLanguage(setActiveLanguage);
-  }, []);
+    async function loadData() {
+      await getWords(setDictionaryData, setFilteredDict);
+      await getLearnerLanguage(setActiveLanguage);
+    }
+    if (loading) {
+      loadData().then(() => {
+        setLoading(false);
+      }).catch(err => {
+          console.log("Error occured while dictionary loading data.");
+          console.log(err);
+          alert('An internal error occured. Please try again later.');
+      });
+    }
+  }, [loading]);
 
   return (
+    loading ? 
+    <View style={styles.loadContainer}>
+      <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
+    </View>
+    :
     <View style={styles.container}>
       <SearchBar
         ref={(ref) => searchBar = ref}
@@ -131,6 +150,11 @@ async function getLearnerLanguage(languageSetter) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loadContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headingContainer: {
     alignItems: 'center',

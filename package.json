@@ -32,6 +32,7 @@
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
+    "react-native-dots-pagination": "^0.1.10",
     "react-native-flat-button": "^1.0.6",
     "react-native-gesture-handler": "~1.6.0",
     "react-native-material-buttons": "^0.6.0",
@@ -40,8 +41,9 @@
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
     "react-native-searchbar": "^1.16.0",
-    "react-native-star-rating": "^1.1.0",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "rn-viewpager": "^1.2.9",
+    "react-native-star-rating": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

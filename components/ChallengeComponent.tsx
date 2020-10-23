@@ -12,6 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 var count = 0;
 
@@ -49,7 +50,7 @@ export default function ChallengeComponent(props) {
     useEffect(() => {
         dbh = firebase.firestore();
         var incomingWords = firebase.functions().httpsCallable('startChallenge')
-        incomingWords({count: gameLength}).then(function(result){
+          incomingWords({count: gameLength}).then(function(result){
           makeWordURLDict(result.data['words']);
           challengeLanguage = result.data["lang"];
           id = result.data["id"]
@@ -73,118 +74,47 @@ export default function ChallengeComponent(props) {
       return (
 
         <View style={styles.CMContainer}> 
-        <View style={styles.ButtonView}>
-        {Platform.OS === "ios" ? 
-        <View style={styles.appButtonContainer}>
-        <Button title="Start Game"
-        color={"#fff"}
-        onPress={() => IntroStateChange(newImg, startingGame)}
-        />
+        
+        <View style={styles.BigSeperator}>
+        <TouchableOpacity style={styles.appButtonContainer} onPress={() => setTut(true)}>
+          <Text>Tutorial</Text>
+        </TouchableOpacity>
         </View>
-        : 
-        <Button title="Start Game"
-        color={Colors[colorScheme].activeTint}
-        onPress={() => IntroStateChange(newImg, startingGame)}
-        />
-        }
+
+        <View style={styles.BigSeperator}>
+        <TouchableOpacity style={styles.appButtonContainer} onPress={() => {IntroStateChange(newImg, startingGame)}}>
+          <Text>Start Game</Text>
+        </TouchableOpacity>
         </View>
-        <View style={styles.ButtonView}>
-        {Platform.OS === "ios" ? 
-      <View style={styles.appButtonContainer}>
-      <Button title='Tutorial'
-      color={"#fff"}
-      onPress={() => setTut(true)}
-      />
-      </View>
-      : 
-      <Button title='Tutorial' 
-      color={Colors[colorScheme].activeTint}
-      onPress={() => setTut(true)}
-      />
-      }
-      </View>
-      </View>
+
+        </View>
+
       );
     } else if (tutorial == true) {
 
       return (
         <View style={styles.CMContainer}>
+          
           <View style={styles.imgHolder}>
             <Image 
                   source = {{ uri: img}}
       
                   style = {styles.imageStyle} />
-          </View>
-          <View style={styles.ButtonView}>
-            {Platform.OS === "ios" ? 
-            <View style={styles.appButtonContainer}>
-            <Button title="Tutorial Button 1"
-            color={"#fff"}
-            onPress={
-              () => setTut(false)}
-            />
+              <TouchableOpacity style={styles.imgWord}>
+                <Text style={{ justifyContent:"center", alignItems:"center", padding:5}}>Apple</Text>
+              </TouchableOpacity>
             </View>
-            : 
-            <Button title="Tutorial Button 1"
-            color={Colors[colorScheme].activeTint}
-            onPress={
-              () => setTut(false)}
-            />
-            }
-          </View>
-          <View style={styles.ButtonView}>
-          {Platform.OS === "ios" ? 
-            <View style={styles.appButtonContainer}>
-            <Button title="Tutorial Button 2"
-            color={"#fff"}
-            onPress={
-              () => setTut(false)}
-            />
-            </View>
-            : 
-            <Button title="Tutorial Button 2"
-            color={Colors[colorScheme].activeTint}
-            onPress={
-              () => setTut(false)}
-            />
-            }
-          </View>
-          <View style={styles.ButtonView}>
-          {Platform.OS === "ios" ? 
-            <View style={styles.appButtonContainer}>
-            <Button title="Tutorial Button 3"
-            color={"#fff"}
-            onPress={
-              () => setTut(false)}
-            />
-            </View>
-            : 
-            <Button title="Tutorial Button 3"
-            color={Colors[colorScheme].activeTint}
-            onPress={
-              () => setTut(false)}
-            />
-            }
-          </View>
-          <View style={styles.ButtonView}>
-          {Platform.OS === "ios" ? 
-            <View style={styles.appButtonContainer}>
-            <Button title="Tutorial Button 4"
-            color={"#fff"}
-            onPress={
-              () => setTut(false)}
-            />
-            </View>
-            : 
-            <Button title="Tutorial Button 4"
-            color={Colors[colorScheme].activeTint}
-            onPress={
-              () => setTut(false)}
-            />
-            }
-          </View>
           
-          <Text>
+          
+          <View style={styles.SmallSeperator}>
+            <TouchableOpacity style={styles.appButtonContainer2} onPress={() => setTut(false)}>
+              <Text style={styles.text}>Tutorial Button 1</Text>
+            </TouchableOpacity>
+          </View>
+
+
+          <ScrollView>
+            <Text>
             Challenge mode works by displaying and image at the top of the screen, depicting
             a word you have seen before through some other form of learning on MeMa. Underneath 
             gives you 4 clickable buttons with words on them from the language(s) you
@@ -192,7 +122,9 @@ export default function ChallengeComponent(props) {
             10 times, then your score will be recorded on your profile so it can be viewed later. 
             
             Press any button to be taken back to the game menu.
-          </Text>
+            </Text>
+          </ScrollView>
+          
           </View>
       );
     } else {
@@ -203,106 +135,62 @@ export default function ChallengeComponent(props) {
           score: correctAnswers.length+ "/" + gameLength})
         return (
           <View style={styles.CMContainer}>
-          <Text>You got {correctAnswers.length}/{gameLength}</Text>
-          <View style={styles.ButtonView}>
-          {Platform.OS === "ios" ? 
-            <View style={styles.appButtonContainer}>
-            <Button title="Play Again?"
-            color={"#fff"}
-            onPress={
-              () => playAgain(setCount, startingGame)}
-            />
+          <Text style={styles.SmallSeperator}>You got {correctAnswers.length}/{gameLength}</Text>
+
+          <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {playAgain(setCount, startingGame)}}>
+                <Text style={{padding:5}}>Play Again?</Text>
+              </TouchableOpacity>
             </View>
-            : 
-            <Button title="Play Again?"
-            color={Colors[colorScheme].activeTint}
-            onPress={
-              () => playAgain(setCount, startingGame)}
-            />
-            }
-          </View>
+          
+            <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setCount(0);startingGame(false);}}>
+                <Text style={{padding:5}}>Back to challenge screen</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         );
       } else {
         //View while playing giving the images and the button choices
         return (
           <View style={styles.CMContainer}>
+            
+            
             <View style={styles.imgHolder}>
-              <Image 
+            <Image 
                   source = {{ uri: img}}
       
                   style = {styles.imageStyle} />
+              <TouchableOpacity style={styles.imgWord}>
+                <Text style={{ justifyContent:"center", alignItems:"center", padding:5}}>{currentWord}</Text>
+              </TouchableOpacity>
             </View>
-          <View style={styles.ButtonView}>
-          {Platform.OS === "ios" ? 
-            <View style={styles.appButtonContainer}>
-            <Button title={currentButtons[0]}
-            color={"#fff"}
-            onPress={
-              () => finalStateChange(answ, setCount, newImg, currentButtons[0])}
-            />
+
+            <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[0])}}>
+                <Text style={styles.text}>{currentButtons[0]}</Text>
+              </TouchableOpacity>
             </View>
-            : 
-            <Button title={currentButtons[0]}
-            color={Colors[colorScheme].activeTint}
-            onPress={
-              () => finalStateChange(answ, setCount, newImg, currentButtons[0])}
-            />
-            }
-          </View>
-          <View style={styles.ButtonView}>
-          {Platform.OS === "ios" ? 
-            <View style={styles.appButtonContainer}>
-            <Button title={currentButtons[1]}
-            color={"#fff"}
-            onPress={
-              () => finalStateChange(answ, setCount, newImg, currentButtons[1])}
-            />
+
+            <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[1])}}>
+                <Text style={styles.text}>{currentButtons[1]}</Text>
+              </TouchableOpacity>
             </View>
-            : 
-            <Button title={currentButtons[1]}
-            color={Colors[colorScheme].activeTint}
-            onPress={
-              () => finalStateChange(answ, setCount, newImg, currentButtons[1])}
-            />
-            }
-          </View>
-          <View style={styles.ButtonView}>
-          {Platform.OS === "ios" ? 
-            <View style={styles.appButtonContainer}>
-            <Button title={currentButtons[2]}
-            color={"#fff"}
-            onPress={
-              () => finalStateChange(answ, setCount, newImg, currentButtons[2])}
-            />
+
+            <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[2])}}>
+                <Text style={styles.text}>{currentButtons[2]}</Text>
+              </TouchableOpacity>
             </View>
-            : 
-            <Button title={currentButtons[2]}
-            color={Colors[colorScheme].activeTint}
-            onPress={
-              () => finalStateChange(answ, setCount, newImg, currentButtons[2])}
-            />
-            }
-          </View>
-          <View style={styles.ButtonView}>
-          {Platform.OS === "ios" ? 
-            <View style={styles.appButtonContainer}>
-            <Button title={currentButtons[3]}
-            color={"#fff"}
-            onPress={
-              () => finalStateChange(answ, setCount, newImg, currentButtons[3])}
-            />
+
+            <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[3])}}>
+                <Text style={styles.text}>{currentButtons[3]}</Text>
+              </TouchableOpacity>
             </View>
-            : 
-            <Button title={currentButtons[3]}
-            color={Colors[colorScheme].activeTint}
-            onPress={
-              () => finalStateChange(answ, setCount, newImg, currentButtons[3])}
-            />
-            }
-           </View>
-          </View>
-          
+
+          </View> 
         );
       }
     }
@@ -321,8 +209,10 @@ function playAgain(
   setCount: React.Dispatch<React.SetStateAction<number>>,
   startingGame: React.Dispatch<React.SetStateAction<boolean>>
 ) {
+  correctAnswers = [];
+  incorrectAnswers = [];
   setCount(0)
-  startingGame(false)
+  startingGame(true)
 }
 
 /*
@@ -480,6 +370,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    buttonText: {
+      alignItems: "center",
+    },
     titleContainer: {
       flex: 1,
       alignItems: 'center',
@@ -489,13 +382,7 @@ const styles = StyleSheet.create({
       padding: 5,
     },
     CMContainer: {
-      flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
-      padding: 10
-    },
-    imgHolder: {
-      padding: 20,
     },
     title: {
       fontSize: 20,
@@ -507,18 +394,51 @@ const styles = StyleSheet.create({
       width: '80%',
     },
     text: {
-      padding: 20,
+      padding: 3,
+      color: "black",
     },
     imageStyle:{
       width: 200, 
       height: 300,
       resizeMode: 'stretch'
      },
-     appButtonContainer: {
+     imgWord: {
       elevation: 8,
       backgroundColor: "#FF9E1C",
-      borderRadius: 10,
-      paddingVertical: 5,
-      paddingHorizontal: 5
-    }
+      borderRadius: 20,
+      paddingVertical: 10,
+      paddingHorizontal: 100,
+      bottom: 40,
+     },
+     appButtonContainer2: {
+      elevation: 8,
+      backgroundColor: "#fff",
+      borderWidth: 1,
+      borderColor: "#FF9E1C",
+      paddingVertical: 10,
+      paddingHorizontal: 40,
+    },
+    appButtonContainer: {
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 20,
+      paddingVertical: 10,
+      paddingHorizontal: 40,
+    },
+    BigSeperator: {
+      padding: 100,
+    },
+    SmallSeperator: {
+      padding: 10
+    },
+    gameHolding: {
+      top:250
+
+    },
+    imgHolder: {
+      padding: 10,
+      position:"relative",
+      justifyContent:"center",
+      alignItems:"center",
+    },
   });
