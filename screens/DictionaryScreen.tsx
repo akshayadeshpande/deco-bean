@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
-import {Picker} from '@react-native-community/picker';
+import { StyleSheet, ActivityIndicator } from 'react-native';
 import SearchBar from 'react-native-searchbar';
 import * as firebase from 'firebase';
 
 import { Text, View } from '../components/Themed';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 import DictionaryList from '../components/DictionaryList';
+import 'firebase/functions';
 
 
 /*
@@ -22,10 +24,13 @@ import DictionaryList from '../components/DictionaryList';
  * @return Dictioanry Screen render.
  */
 export default function DictionaryScreen(props) {
+  const colorScheme = useColorScheme();
   let searchBar;
   // States
-  const [activeLanguage, setActiveLanguage] = useState("Spanish");
-  console.log(`Active language set to: ${activeLanguage}`);
+  // Loading State
+  const [loading, setLoading] = useState(true);
+  // User's active language
+  const [activeLanguage, setActiveLanguage] = useState("");
   // Dictionary data contains full db word lists
   const [dictionaryData, setDictionaryData] = useState([]);
   // Filtered dict based on search results, none == all.
@@ -47,40 +52,45 @@ export default function DictionaryScreen(props) {
    * that is a bool that when true will run the update (say with a refresh button).
    */
   useEffect(() => {
-    getWords(setDictionaryData, setFilteredDict);
-  }, []);
+    async function loadData() {
+      await getWords(setDictionaryData, setFilteredDict);
+      await getLearnerLanguage(setActiveLanguage);
+    }
+    if (loading) {
+      loadData().then(() => {
+        setLoading(false);
+      }).catch(err => {
+          console.log("Error occured while dictionary loading data.");
+          console.log(err);
+          alert('An internal error occured. Please try again later.');
+      });
+    }
+  }, [loading]);
 
   return (
+    loading ? 
+    <View style={styles.loadContainer}>
+      <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
+    </View>
+    :
     <View style={styles.container}>
       <SearchBar
         ref={(ref) => searchBar = ref}
         allDataOnEmptySearch={true}
         data={dictionaryData}
-        placeholder="Search for a word"
+        placeholder="Type to search for words"
         handleResults={(results) => {
-          console.log("Search Results: ");
-          console.log(results);
+          // console.log("Search Results: ");
+          // console.log(results);
           setFilteredDict(results);
         }}
         showOnLoad={true}
         hideBack={true}
-        backgroundColor="#e8e8e8"
-        iconColor="#2e3131"
-        textColor="#2e3131"
+        backgroundColor={Colors[colorScheme].bottomTabBackground}
+        iconColor={Colors[colorScheme].tabIconDefault}
+        textColor="#FF9E1C"
+        placeholderTextColor="#fff"
       />
-      <View style={styles.headingContainer}>
-        <Text style={styles.title}>Pick a Language</Text>
-        <Picker
-          selectedValue={activeLanguage}
-          style={{height: 50, width: '50%'}}
-          onValueChange={(itemValue, itemIndex) => {
-            setActiveLanguage(itemValue);
-          }}>
-          <Picker.Item label="Chinese" value="Chinese" />
-          <Picker.Item label="English" value="English" />
-          <Picker.Item label="Spanish" value="Spanish" />
-        </Picker>
-      </View>
 
       <View style={styles.listContainer}>
         <DictionaryList 
@@ -122,15 +132,33 @@ async function getWords(setDictionaryData, setFilteredDict) {
     console.log(error);
   });
   console.log("Dictionary data retrieved.");
-  console.log(dictionary);
+  // console.log(dictionary);
   setDictionaryData(dictionary);
   setFilteredDict(dictionary);
+}
+
+/*
+ * Retrieve user's learner/target language.
+ */
+async function getLearnerLanguage(languageSetter) {
+  let userData = firebase.functions().httpsCallable('getUser')
+  await userData({}).then((res) => {
+    // console.log(res.data.user);
+    const language = res.data.user.forLang.slice(0, 2).toUpperCase();
+    languageSetter(language);
+    console.log(`Active language set to: ${language}`);
+  }).catch(err => console.log(err));
 }
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  loadContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headingContainer: {
     alignItems: 'center',

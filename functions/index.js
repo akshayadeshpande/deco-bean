@@ -11,6 +11,7 @@ exports.getChallenges = challenge.getChallenges;
 exports.getUser = user.getUser;
 exports.getUserFriends = user.getUserFriends;
 exports.addUserFriends = user.addUserFriends;
+exports.searchUsers = user.searchUsers;
 
 
 // // Create and Deploy Your First Cloud Functions

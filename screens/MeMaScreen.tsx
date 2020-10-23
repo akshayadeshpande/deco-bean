@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -7,14 +7,32 @@ import { Text, View } from '../components/Themed';
 export default function MeMaScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Talk to MeMa</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Text style={styles.text}>Talk to MeMa!</Text>
+      <View style={styles.imgGap}>
+          <Image source={require('../assets/images/TalkMema.png')} style={styles.mema}/>
+      </View>
+      
+      <View style={styles.imgGap}>
+        <Image source={require('../assets/images/Mic.png')} style={styles.imgWrap}/>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  imgWrap: {
+    width:150,
+    height:150,
+    resizeMode: "stretch",
+  },
+  mema: {
+    width: 300,
+    height: 300,
+  },
+  imgGap: {
+    padding: 50,
+    alignItems:"center",
+    justifyContent: "center"
+  },
   container: {
     flex: 1,
     alignItems: 'center',

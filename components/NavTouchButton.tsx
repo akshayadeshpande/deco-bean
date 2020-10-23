@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { FontAwesome } from '@expo/vector-icons';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -11,19 +10,28 @@ export default function NavTouchButton(props) {
   const colorScheme = useColorScheme();
 
   return (
-    <TouchableOpacity
-      style={styles.button}
+    <TouchableOpacity style={styles.button}
       onPress={() => navigation.navigate(props.screenName)}>
-      {props.iconName ? <FontAwesome name={props.iconName} size={60} color={Colors[colorScheme].tint} /> : null}
-      <Text style={styles.text}>{props.text}</Text>
+        <View style={{alignItems:"center"}}>
+          <Image source={props.iconName} style={styles.iconButton}/>
+        </View>
+        <View>
+          <Text style={styles.text}>{props.text}</Text>
+        </View>
+
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    alignItems: 'center',
+    flex:1, 
+    flexDirection:"column",
     padding: 10,
+  },
+  iconButton: {
+    height: 100,
+    width: 100,
   },
   text: {
     fontSize: 30,
