@@ -105,13 +105,19 @@ exports.getChallenges = functions.https.onCall(async (data, context) => {
         const user_id = context.auth.uid;
         
         let response = [];
-        let result = await admin.firestore().collection('users').doc(user_id).collection('mcq').get(); 
-      
-        result.forEach(doc => {
-          response.push(doc.data());
+        // const res = await admin.firestore().collection('users').doc(user_id).collection('mcq').doc('f1EVtfXQjpjYyo8tBaHi').get();
+        // res.then(doc => response.push(doc.data()));
+        // const res = (await admin.firestore().collection('users').doc(user_id).get()).collection('mcq').doc('f1EVtfXQjpjYyo8tBaHi').get();
+        // response.push(res.data());
+        // let res = (await admin.firestore().collection('users').doc(user_id).get()).data();
+        let res = await admin.firestore().collection(`users/${user_id}/mcq`).get().then(data => {
+            data.forEach(doc => {
+                response.push(doc.data());
+            })
         });
+
       
-        return {status: 'success', code: 200, message: 'Successfully retrieved challenge scores', challenges: result};
+        return {status: 'success', code: 200, message: 'Successfully retrieved challenge scores', challenges: response};
     } catch (err) {
         console.log(err);
         throw new functions.https.HttpsError('internal', 'An internal error occured.');
