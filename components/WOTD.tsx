@@ -14,7 +14,6 @@ import 'firebase/auth';
 /* RENDERING */
 // This function needs to be upper case to be used as a component tag otherwise it thinks it's an html tag.
 function WordOfTheday(props) {
-  console.log(props);
   return (
     <View style={{flex:1, alignItems:"center", justifyContent:"center"}}>
       <View style={{flex:1, flexDirection:"row", elevation:0.3}}>
