@@ -21,7 +21,12 @@ export default function SigninScreen({navigation}) {
   
   return (
     <View style={styles.container}>
-      <View style={{padding:100}}/>
+      <View style={{flex:1, flexDirection: "row", padding:20}}>
+        <View style={{position:"relative"}}>
+          <Image source={require("../assets/images/MEMA3.png")}style={{right:30, width: 250, height:250, resizeMode:"stretch"}}/> 
+        </View>
+      <Text style={{right:10, top: 100, right:60}}>Welcome!</Text>
+      </View>
       <Signin navigation={navigation}/>
       <Image source={require('../assets/images/MEMALOGO.png')} style={styles.imgLogo}/>
     </View>

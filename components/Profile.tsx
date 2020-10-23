@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect, Component } from 'react';
-import { StyleSheet, Button, ActivityIndicator, SafeAreaView, ScrollView} from 'react-native';
+import { StyleSheet, Button, ActivityIndicator, SafeAreaView, ScrollView, Image} from 'react-native';
 import {FontAwesome, MaterialIcons} from '@expo/vector-icons';
 
 import EditScreenInfo from './EditScreenInfo';
@@ -68,7 +68,7 @@ export default function Profile({navigation, user, touchFriends}) {
 
             <View style={{ alignSelf: "center" }}>
                 <View>
-                    <MaterialIcons name={"account-circle"} color={"white"} size={200}/>
+                    <Image source={require('../assets/images/profileMEMA.png')} style={{width:200, height:200}}/>
                 </View>
             </View>
 

@@ -27,7 +27,7 @@ export default function Register({navigation}) {
     } else {
   
       return (
-        <View>
+        <View style={{flex:1}}>
           
           <View>
             <Text style={styles.text}>Email</Text>

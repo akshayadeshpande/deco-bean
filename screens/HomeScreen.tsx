@@ -17,7 +17,7 @@ export default function HomeScreen({navigation}) {
     <View style={styles.wrapper}>
       
       <View style={styles.container}>
-        <View style={{flex: 0.5, padding: 20, paddingHorizontal: 40, paddingVertical:10, alignItems: "center", justifyContent: "center"}}>
+        <View style={styles.WOTDWrapper}>
           <WordOfTheDay word={getDailyWord()} />
         </View>
       </View>
@@ -40,6 +40,14 @@ export default function HomeScreen({navigation}) {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+  },
+   WOTDWrapper: {
+    flex: 0.5, 
+    padding: 20, 
+    paddingHorizontal: 40, 
+    paddingVertical:10, 
+    alignItems: "center", 
+    justifyContent: "center"
   },
   headerTitle: {
     width: 200, 

@@ -13,7 +13,7 @@ function WordOfTheday(props) {
     <View style={{flex:1, alignItems:"center", justifyContent:"center"}}>
       <View style={{flex:1, flexDirection:"row", elevation:0.3}}>
         <Image source={require('../assets/images/MEMA2.png')} style={{bottom: 35, width:75, height:75, resizeMode:"stretch"}}/>
-        <Text>MEMA'S WORD OF THE DAY</Text>
+        <Text style={{fontWeight:"bold"}}>MEMA'S WORD OF THE DAY</Text>
       </View>
     <View style={styles.container}>
       <View style={{ flex: 1,  paddingHorizontal:10, flexDirection: 'row', justifyContent:"center", alignItems:"center", backgroundColor: "#FF9E1C"}}>
@@ -48,18 +48,19 @@ const styles = StyleSheet.create({
       paddingVertical: 35,
       paddingHorizontal: 5,
     },
-    
     title: {
       fontSize: 10,
       fontWeight: 'bold',
     },
     RightTranslation: {
       fontSize: 20,
+      fontWeight: "bold",
       backgroundColor: "#FF9E1C",
     },
     LeftWord: {
       fontSize: 20,
       backgroundColor: "#FF9E1C",
+      fontWeight: "bold",
     }
   });
 

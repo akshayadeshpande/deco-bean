@@ -8,8 +8,9 @@ export default function MeMaScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.imgGap}>
-        <Image source={require('../assets/images/TalkMema.png')} style={styles.mema}/>
+          <Image source={require('../assets/images/TalkMema.png')} style={styles.mema}/>
       </View>
+      
       <View style={styles.imgGap}>
         <Image source={require('../assets/images/Mic.png')} style={styles.imgWrap}/>
       </View>
@@ -29,6 +30,8 @@ const styles = StyleSheet.create({
   },
   imgGap: {
     padding: 50,
+    alignItems:"center",
+    justifyContent: "center"
   },
   container: {
     flex: 1,
