@@ -18,6 +18,11 @@ import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
  *
  * Accessed via dictionary.
  * 
+ * Shows:
+ * - Word and translation
+ * - Image and audio player
+ * - Progression and statistics
+ * 
  * @param {react.Props} props Properties passed to this screen.
  * @return Word screen render
  */
@@ -25,13 +30,11 @@ export default function WordScreen(props) {
   const params = props.route.params;
   // Score is out of 3, where 1 == 1, 5 == 2, 10 == 3
   const [stars, setStars] = useState(0);
-  const [score, setScore] = useState(0);
-  const [correct, setCorrect] = useState(0);
-  const [incorrect, setIncorrect] = useState(0);
+  const [stats, setStats] = useState({score: 0, correct: 0, incorrect: 0});
   const [statsVisible, setStatsVisible] = useState(false);
 
   useEffect(() => {
-    getScore(params.word, setStars, setScore, setCorrect, setIncorrect);
+    getScore(params.word, setStars, setStats);
   }, []);
 
   console.log("Word Screen got word: " + params.word);
@@ -64,7 +67,7 @@ export default function WordScreen(props) {
         </View>
         <View>
           <Text style={styles.text}>Touch Stars to show stats</Text>
-          {showStats(params.word, correct, incorrect, score, statsVisible)}
+          {showStats(params.word, stats, statsVisible)}
         </View>
       </View>
 
@@ -72,14 +75,22 @@ export default function WordScreen(props) {
   );
 }
 
-const showStats = (word, correct, incorrect, score, visible) => {
+/*
+ * Shows word statistics if visible.
+ *
+ * @param {string} word The word displayed on this screen.
+ * @param {Object} stats  State object that stores statistics data.
+ * @param {boolean} visible Indicates if statistics are set to visible (true).
+ * @returns Returns view with statistics text or null if not visible.
+ */
+const showStats = (word, stats, visible) => {
   if (visible) {
     return (
       <View>
-        <Text style={styles.text}>Attempts: {correct + incorrect}</Text>
-        <Text style={styles.text}>Correct: {correct}</Text>
-        <Text style={styles.text}>Incorrect: {incorrect}</Text>
-        <Text style={styles.text}>Score: {score}</Text>
+        <Text style={styles.text}>Seen: {stats.correct + stats.incorrect}</Text>
+        <Text style={styles.text}>Correct: {stats.correct}</Text>
+        <Text style={styles.text}>Incorrect: {stats.incorrect}</Text>
+        <Text style={styles.text}>Score: {stats.score}</Text>
       </View>
     )
   } else {
@@ -87,19 +98,21 @@ const showStats = (word, correct, incorrect, score, visible) => {
   }
 
 }
-const getScore = async (word, setStars, setScore, setCorrect, setIncorrect) => {
-  // Get all user game sessions
-  // let mcqSessions = firebase.functions().httpsCallable('getChallenges')
-  // await mcqSessions({}).then((res) => {
-  //   console.log("Retrieve MCQ Sessions")
-  //   console.log(res.data.challenges);
-  // }).catch(err => {
-  //   console.log("Error getting challenges!");
-  //   console.log(err);
-  // });
-
+/*
+ * Function gets the overall score and statistics for the word displayed on WordScreen.
+ * From the base score it will calculate a star score for visual representation.
+ * 
+ * Final scores and statistics update react state.
+ * 
+ * @param {string} word The word that this screen is displaying data for.
+ * @param {function} setStars Setter for stars state.
+ * @param {function} setStats Setter for statistics for this word.
+ */
+const getScore = async (word, setStars, setStats) => {
   const userID = firebase.auth().currentUser.uid;
   const db = firebase.firestore()
+
+  // Retrieve user's mcq sessions
   const mcqRefs = db.collection(`users/${userID}/mcq`);
   let mcqSessions = [];
   await mcqRefs.get().then(data => {
@@ -110,8 +123,11 @@ const getScore = async (word, setStars, setScore, setCorrect, setIncorrect) => {
     console.log("Unable to retrieve user mcq sessions, WordScreen.");
     console.log(error);
   });
+
+  // Sessions that include this screen's word only
   const scoredSessions = mcqSessions.filter(doc => doc.score && (doc.correct.includes(word) || doc.incorrect.includes(word)));
-  // Get word correctness and incorrectness across sessions
+  
+  // Get correct/incorrect counts
   let correctWords = {};
   let incorrectWords = {};
   scoredSessions.forEach((session, idx) => {
@@ -124,12 +140,8 @@ const getScore = async (word, setStars, setScore, setCorrect, setIncorrect) => {
       return acc
     }, {})
   })
-  console.log("Correct words:")
-  console.log(correctWords);
-  console.log("Incorrect words:")
-  console.log(incorrectWords);
 
-  // Compute score
+  // Compute score for this screen's word
   let score = { correct: 0, incorrect: 0 }
   Object.keys(correctWords).forEach(key => {
     if (correctWords[key][word]) {
@@ -141,10 +153,9 @@ const getScore = async (word, setStars, setScore, setCorrect, setIncorrect) => {
       score.incorrect += incorrectWords[key][word];
     }
   })
-  console.log(score);
   let rawScore = score.correct - score.incorrect;
-  console.log(`Raw Score: ${rawScore}`);
-  // Compute Star Score
+
+  // Compute Star Score for graphical display on screen
   // 1 == 1 star, < 5 == 1.5 stars, 5 == 2 stars, < 10 == 2.5 stars, 10+ == 3 stars
   let starScore = 0;
   if (rawScore < 1) {
@@ -160,12 +171,10 @@ const getScore = async (word, setStars, setScore, setCorrect, setIncorrect) => {
   } else if (rawScore >= 10) {
     starScore = 3;
   }
-  console.log(`Stars: ${starScore}`);
+
   // Update state with score
   setStars(starScore);
-  setScore(rawScore);
-  setCorrect(score.correct);
-  setIncorrect(score.incorrect);
+  setStats({score: rawScore, correct: score.correct, incorrect: score.incorrect})
 }
 
 
