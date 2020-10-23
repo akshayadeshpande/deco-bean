@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Audio } from 'expo-av';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -55,7 +55,7 @@ export default function AudioPlayer(props) {
         soundObject.unloadAsync();
       }
     }
-  }, [])
+  })
 
 
   return (
