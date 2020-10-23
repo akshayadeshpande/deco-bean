@@ -11,8 +11,15 @@ import { Text, View } from '../components/Themed';
 function WordOfTheday(props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Word of the Day</Text>
-      <Text style={styles.text}>{props.word}</Text>
+      <View style={{ flex: 1,  paddingHorizontal:10, flexDirection: 'row', justifyContent:"center", alignItems:"center", backgroundColor: "#FF9E1C"}}>
+        <View style={{flex: 1,  backgroundColor: "#FF9E1C", alignItems:"center",justifyContent:"center", paddingHorizontal:10}}>
+          <Text style={styles.LeftWord}>{props.word}</Text>
+        </View>
+        <View style={{paddingVertical:50, backgroundColor: "#FF9E1C", position: "relative" , borderStartWidth: 1.5 ,borderColor:"#fff", borderWidth:1, alignItems: "center", justifyContent: "center"}}/>
+        <View  style={{ flex: 1, backgroundColor: "#FF9E1C",justifyContent:"center", paddingHorizontal:20 }}>
+          <Text style={styles.RightTranslation}> Translation </Text>
+        </View>
+      </View>
     </View>
   )
 }
@@ -30,13 +37,24 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 20,
+      paddingVertical: 10,
+      paddingHorizontal: 30,
     },
+    
     title: {
-      fontSize: 30,
+      fontSize: 10,
       fontWeight: 'bold',
     },
-    text: {
-      fontSize: 30,
+    RightTranslation: {
+      fontSize: 20,
+      backgroundColor: "#FF9E1C",
+    },
+    LeftWord: {
+      fontSize: 20,
+      backgroundColor: "#FF9E1C",
     }
   });
 

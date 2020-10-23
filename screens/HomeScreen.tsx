@@ -15,9 +15,11 @@ export default function HomeScreen({navigation}) {
     <View style={{flex:1}}>
     
     <View style={styles.wrapper}>
-
+      
       <View style={styles.container}>
+        <View style={{flex: 0.5, padding: 20, paddingHorizontal: 40, paddingVertical:10, alignItems: "center", justifyContent: "center"}}>
           <WordOfTheDay word={getDailyWord()} />
+        </View>
       </View>
 
       <View style={styles.containerRow}>
@@ -45,8 +47,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    position:"relative",
+    alignItems: "stretch",
+    justifyContent: "space-evenly",
   },
   containerRow: {
     flex: 1,
@@ -65,5 +68,9 @@ const styles = StyleSheet.create({
   icon: {
     width: 30, 
     height: 30,
+  },
+  seperator: {
+    
+
   },
 });
