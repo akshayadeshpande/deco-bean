@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Button, Image, Platform, ProgressBarAndroid } from 'react-native';
+import { StyleSheet, Button, Image, Platform, ProgressBarAndroid, ActivityIndicator} from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from '../components/EditScreenInfo';
@@ -12,6 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 var count = 0;
 
@@ -39,42 +40,53 @@ var id : String;
 
 export default function ChallengeComponent(props) {
   const colorScheme = useColorScheme();
+  const [loaded, setLoading] = useState(true);
+  const [img, newImg] = useState('https://firebasestorage.googleapis.com/v0/b/bean-f1602.appspot.com/o/Images%2FApple.jpg?alt=media&token=9405ab95-7b0a-496a-9aa3-e20bff7d7bc4&fbclid=IwAR3Nv9bvimEEo4_nyN_IZpNO05bcMtC0Mhim50DEmqsg5JWkkJy7eYHCFX0');
+  const [start, startingGame] = useState(false)
+  const [answ, setCount] = useState(0)
+  const [tutorial, setTut] = useState(false)
 
   //Runs on the first launch to get all the needed information for the game
     useEffect(() => {
         dbh = firebase.firestore();
         var incomingWords = firebase.functions().httpsCallable('startChallenge')
-        incomingWords({count: gameLength}).then(function(result){
+          incomingWords({count: gameLength}).then(function(result){
           makeWordURLDict(result.data['words']);
-          challengeLanguage = result.data["Lang"];
+          challengeLanguage = result.data["lang"];
           id = result.data["id"]
+          setLoading(false);
         }).catch(function(err){
           console.log(err);
           alert('An internal error occured. Please try again later.')
         })
          
     },[]);
-    const [img, newImg] = useState('https://firebasestorage.googleapis.com/v0/b/bean-f1602.appspot.com/o/Images%2FApple.jpg?alt=media&token=9405ab95-7b0a-496a-9aa3-e20bff7d7bc4&fbclid=IwAR3Nv9bvimEEo4_nyN_IZpNO05bcMtC0Mhim50DEmqsg5JWkkJy7eYHCFX0');
-    const [start, startingGame] = useState(false)
-    const [answ, setCount] = useState(0)
-    const [tutorial, setTut] = useState(false)
-
-    // Original Language Pick
+    
+    if (loaded) {
+      return(
+        <View style={styles.titleContainer}>
+        <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
+        </View>
+      );
+    } else {
+      // Original Language Pick
     if (start == false && tutorial == false) {
       return (
 
         <View style={styles.CMContainer}> 
-        <View style={styles.ButtonView}>
-          <Button title="Start Game" color={Colors[colorScheme].activeTint} onPress={ () =>
-            IntroStateChange(newImg, startingGame)
-           } />
-        </View>
-        <View style={styles.ButtonView}>
-          <Button title='Tutorial' color={Colors[colorScheme].activeTint} onPress={() =>
-          setTut(true)
-          }/>
-        </View>
         
+        <View style={styles.BigSeperator}>
+        <TouchableOpacity style={styles.appButtonContainer} onPress={() => setTut(true)}>
+          <Text>Tutorial</Text>
+        </TouchableOpacity>
+        </View>
+
+        <View style={styles.BigSeperator}>
+        <TouchableOpacity style={styles.appButtonContainer} onPress={() => {IntroStateChange(newImg, startingGame)}}>
+          <Text>Start Game</Text>
+        </TouchableOpacity>
+        </View>
+
         </View>
 
       );
@@ -82,30 +94,27 @@ export default function ChallengeComponent(props) {
 
       return (
         <View style={styles.CMContainer}>
+          
           <View style={styles.imgHolder}>
             <Image 
                   source = {{ uri: img}}
       
                   style = {styles.imageStyle} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 1"}  color={Colors[colorScheme].activeTint} onPress={
-              () => setTut(false)} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 2"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 3"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={"Tutorial Button 4"} color={Colors[colorScheme].activeTint} onPress={
-            () => setTut(false)} />
-          </View>
+              <TouchableOpacity style={styles.imgWord}>
+                <Text style={{ justifyContent:"center", alignItems:"center", padding:5}}>Apple</Text>
+              </TouchableOpacity>
+            </View>
           
-          <Text>
+          
+          <View style={styles.SmallSeperator}>
+            <TouchableOpacity style={styles.appButtonContainer2} onPress={() => setTut(false)}>
+              <Text style={styles.text}>Tutorial Button 1</Text>
+            </TouchableOpacity>
+          </View>
+
+
+          <ScrollView>
+            <Text>
             Challenge mode works by displaying and image at the top of the screen, depicting
             a word you have seen before through some other form of learning on MeMa. Underneath 
             gives you 4 clickable buttons with words on them from the language(s) you
@@ -113,7 +122,9 @@ export default function ChallengeComponent(props) {
             10 times, then your score will be recorded on your profile so it can be viewed later. 
             
             Press any button to be taken back to the game menu.
-          </Text>
+            </Text>
+          </ScrollView>
+          
           </View>
       );
     } else {
@@ -124,45 +135,69 @@ export default function ChallengeComponent(props) {
           score: correctAnswers.length+ "/" + gameLength})
         return (
           <View style={styles.CMContainer}>
-          <Text>You got {correctAnswers.length}/{gameLength}</Text>
-          <View style={styles.ButtonView}>
-            <Button title="Play Again?" color={Colors[colorScheme].activeTint} onPress={
-              () => playAgain(setCount, startingGame)} />
-          </View>
+          <Text style={styles.SmallSeperator}>You got {correctAnswers.length}/{gameLength}</Text>
+
+          <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {playAgain(setCount, startingGame)}}>
+                <Text style={{padding:5}}>Play Again?</Text>
+              </TouchableOpacity>
+            </View>
+          
+            <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setCount(0);startingGame(false);}}>
+                <Text style={{padding:5}}>Back to challenge screen</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         );
       } else {
         //View while playing giving the images and the button choices
         return (
           <View style={styles.CMContainer}>
+            
+            
             <View style={styles.imgHolder}>
-              <Image 
+            <Image 
                   source = {{ uri: img}}
       
                   style = {styles.imageStyle} />
+              <TouchableOpacity style={styles.imgWord}>
+                <Text style={{ justifyContent:"center", alignItems:"center", padding:5}}>{currentWord}</Text>
+              </TouchableOpacity>
             </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[0]} color={Colors[colorScheme].activeTint} onPress={
-              () => finalStateChange(answ, setCount, newImg, currentButtons[0])} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[1]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[1])} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[2]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[2])} />
-          </View>
-          <View style={styles.ButtonView}>
-            <Button title={currentButtons[3]} color={Colors[colorScheme].activeTint} onPress={
-            () => finalStateChange(answ, setCount, newImg, currentButtons[3])} />
-           </View>
-          </View>
-          
+
+            <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[0])}}>
+                <Text style={styles.text}>{currentButtons[0]}</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[1])}}>
+                <Text style={styles.text}>{currentButtons[1]}</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[2])}}>
+                <Text style={styles.text}>{currentButtons[2]}</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.SmallSeperator}>
+              <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {finalStateChange(answ, setCount, newImg, currentButtons[3])}}>
+                <Text style={styles.text}>{currentButtons[3]}</Text>
+              </TouchableOpacity>
+            </View>
+
+          </View> 
         );
       }
     }
 }
+
+    }
+    
 
 /*
 Restarts the the game allowing the user to try again.
@@ -174,8 +209,10 @@ function playAgain(
   setCount: React.Dispatch<React.SetStateAction<number>>,
   startingGame: React.Dispatch<React.SetStateAction<boolean>>
 ) {
+  correctAnswers = [];
+  incorrectAnswers = [];
   setCount(0)
-  startingGame(false)
+  startingGame(true)
 }
 
 /*
@@ -333,6 +370,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    buttonText: {
+      alignItems: "center",
+    },
     titleContainer: {
       flex: 1,
       alignItems: 'center',
@@ -342,13 +382,7 @@ const styles = StyleSheet.create({
       padding: 5,
     },
     CMContainer: {
-      flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
-      padding: 10
-    },
-    imgHolder: {
-      padding: 20,
     },
     title: {
       fontSize: 20,
@@ -360,11 +394,51 @@ const styles = StyleSheet.create({
       width: '80%',
     },
     text: {
-      padding: 20,
+      padding: 3,
+      color: "black",
     },
     imageStyle:{
       width: 200, 
       height: 300,
       resizeMode: 'stretch'
-     }
+     },
+     imgWord: {
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 20,
+      paddingVertical: 10,
+      paddingHorizontal: 100,
+      bottom: 40,
+     },
+     appButtonContainer2: {
+      elevation: 8,
+      backgroundColor: "#fff",
+      borderWidth: 1,
+      borderColor: "#FF9E1C",
+      paddingVertical: 10,
+      paddingHorizontal: 40,
+    },
+    appButtonContainer: {
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 20,
+      paddingVertical: 10,
+      paddingHorizontal: 40,
+    },
+    BigSeperator: {
+      padding: 100,
+    },
+    SmallSeperator: {
+      padding: 10
+    },
+    gameHolding: {
+      top:250
+
+    },
+    imgHolder: {
+      padding: 10,
+      position:"relative",
+      justifyContent:"center",
+      alignItems:"center",
+    },
   });

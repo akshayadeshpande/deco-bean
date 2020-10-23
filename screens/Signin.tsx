@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { Button, StyleSheet } from 'react-native';
+import { Button, StyleSheet, Platform, Image } from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import { Text, View } from '../components/Themed';
 import Signin from '../components/Signin';
 import Navigation from '../navigation'
 import * as firebase from 'firebase';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 
 var started = false;
 export default function SigninScreen({navigation}) {
+  const colorScheme = useColorScheme();
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -18,13 +21,16 @@ export default function SigninScreen({navigation}) {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Into MeMa</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Signin/>
-      <Text>New user?</Text>
-      <Button title="Sign-Up Here!" onPress={() => 
-      navigation.navigate("SignUp")}/>
+      <View style={{flex:1, flexDirection: "row", padding:20}}>
+        <View style={{position:"relative"}}>
+          <Image source={require("../assets/images/MEMA3.png")}style={{right:30, width: 250, height:250, resizeMode:"stretch"}}/> 
+        </View>
+      <Text style={{right:10, top: 100, right:60}}>Welcome!</Text>
+      </View>
+      <Signin navigation={navigation}/>
+      <Image source={require('../assets/images/MEMALOGO.png')} style={styles.imgLogo}/>
     </View>
+
   );
   
 }
@@ -36,9 +42,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  container2: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   separator: {
     marginVertical: 30,
@@ -47,5 +54,25 @@ const styles = StyleSheet.create({
   },
   text: {
     padding: 20,
-  }
+  },
+  appButtonContainer: {
+    elevation: 8,
+    backgroundColor: "#FF9E1C",
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 5
+  },
+  headerBar: {
+    backgroundColor: "#FF9E1C",
+    padding: 10,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  imgLogo: {
+    height: 100,
+    width: 200,
+    resizeMode: 'stretch',
+  },
 });

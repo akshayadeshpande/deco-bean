@@ -1,58 +1,153 @@
 import * as React from 'react';
 import {Picker} from '@react-native-community/picker';
-import { StyleSheet, Button, ScrollView, Platform } from 'react-native';
+import { StyleSheet, Button, ScrollView, Platform, Image } from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
 import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
 import * as firebase from 'firebase';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import * as SigninFunctions from './Signin';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
+import Navigation from '../navigation';
 
 
-export default function Register() {
-
+export default function Register({navigation}) {
+    const colorScheme = useColorScheme();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [homeLang, setHomeLang] = useState('English');
-    const [forLang, setForLang] = useState('Spanish');
+    const [forLang, setForLang] = useState('');
+    const [pickingLang, setPicking] = useState(false);
 
-    return (
-      <ScrollView>
-        <Text > Register for MeMa </Text>
-        <View>
-          <TextInput 
-            placeholder="Name" 
-            onChangeText={(t) => setName(t)}
-            value={name}/>
-          <TextInput 
-            placeholder="Email" 
-            onChangeText={(t) => setEmail(t)}
-            value={email}/>
-          <TextInput
-            secureTextEntry={true}
-            placeholder="Password"
-            onChangeText={(t) => setPassword(t)}
-            value={password}/>
-          <Picker
-            selectedValue={homeLang}
-            onValueChange={homeLang => setHomeLang(homeLang)}>
-            <Picker.Item label="English" value="English" />
-            <Picker.Item label="Spanish" value="Spanish" />
-            <Picker.Item label="Chinese" value="Chinese" />
-          </Picker>
-          <Picker
-            selectedValue={forLang}
-            onValueChange={forLang => setForLang(forLang)}>
-            <Picker.Item label="English" value="English" />
-            <Picker.Item label="Spanish" value="Spanish" />
-            <Picker.Item label="Chinese" value="Chinese" />
-          </Picker>
-          <Button title="Register" onPress={event => registerUser(event, name, email, password, forLang, homeLang)} />
+    if (!pickingLang) {
+      return (
+        <ScrollView>
+          <View>
+            <Text style={styles.text}>Name</Text>
+            <TextInput 
+              placeholder="Your Name" 
+              onChangeText={(t) => setName(t)}
+              value={name}
+              style={styles.textInput}/>
+            <Text style={styles.text}>Email</Text>
+            <TextInput 
+              placeholder="Your Email" 
+              onChangeText={(t) => setEmail(t.trim())}
+              value={email}
+              style={styles.textInput}/>
+            <Text style={styles.text}>Password</Text>
+            <TextInput
+              secureTextEntry={true}
+              placeholder="Enter password"
+              onChangeText={(t) => setPassword(t.trim())}
+              value={password}
+              style={styles.textInput}/>
+            <View style={{padding:40}}>
+            </View>
+            
+            {Platform.OS === "ios" ? 
+            <View style={styles.Register}>
+            <Button title="Next" 
+            color={"#fff"}
+            onPress={() => setPicking(true)}
+            />
+            </View>
+            :
+            <Button title="Next" 
+            color={Colors[colorScheme].activeTint}
+            onPress={() => setPicking(true)}
+            />
+            }
         </View>
       </ScrollView>
-    )
+      );
+
+    } else {
+      return (
+        <ScrollView>
+          <View>
+            <View style={styles.buttonWrapper}>
+              <Text>I want to learn...</Text>
+            </View>
+          
+            <View style={styles.buttonWrapper}>
+            { forLang === "Chinese" ?
+            <View style={styles.buttonContainer}>
+              <Image source={require('../assets/images/Chinese.png')} style={styles.icon}/>
+              
+                <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {setForLang("Chinese")}}>
+                  <Text>Chinese</Text>
+                </TouchableOpacity>
+              
+            </View>
+            :
+            <View style={styles.buttonContainer}>
+              <Image source={require('../assets/images/Chinese.png')} style={styles.icon}/>
+              
+                <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setForLang("Chinese")}}>
+                  <Text>Chinese</Text>
+                </TouchableOpacity>
+              
+            </View>
+            }
+            </View>
+  
+            <View style={styles.buttonWrapper}>
+            { forLang === "Spanish" ?
+            <View style={styles.buttonContainer}>
+              <Image source={require('../assets/images/Spanish.png')} style={styles.icon}/>
+              
+                <TouchableOpacity style={styles.appButtonContainer2} onPress={() => {setForLang("Spanish")}}>
+                  <Text>Spanish</Text>
+                </TouchableOpacity>
+              
+            </View>
+            :
+            <View style={styles.buttonContainer}>
+              <Image source={require('../assets/images/Spanish.png')} style={styles.icon}/>
+              
+                <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setForLang("Spanish")}}>
+                  <Text>Spanish</Text>
+                </TouchableOpacity>
+              
+            </View>
+            }
+            </View>
+            
+            <View style={{padding:30}}>
+            <View style={styles.buttonWrapper}>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setPicking(false)}}>
+                  <Text>Back</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            </View>
+
+            
+            {Platform.OS === "ios" ? 
+            
+            <View style={styles.Register}>
+            <Button title="Register" 
+            color={"#fff"}
+            onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
+            />
+            </View>
+            :
+            
+            <Button title="Register" 
+            color={Colors[colorScheme].activeTint}
+            onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
+            />
+            }
+          </View>
+        </ScrollView>
+      );
+    }
+    
 }
 
 async function registerUser(event, name, email, password, forLang, homeLang){
@@ -102,6 +197,14 @@ async function registerUser(event, name, email, password, forLang, homeLang){
 
 
 const styles = StyleSheet.create({
+    textInput: {
+      height: 40, 
+      borderColor: 'gray', 
+      borderWidth: 1,
+      backgroundColor: "#fff",
+      padding: 10,
+      color: "#FF9E1C"
+    },
     container: {
       flex: 1,
       alignItems: 'center',
@@ -112,10 +215,14 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-    CMContainer: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+    Register: {
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 50,
+      justifyContent: "center",
+      alignItems: "center",
     },
     title: {
       fontSize: 20,
@@ -127,11 +234,43 @@ const styles = StyleSheet.create({
       width: '80%',
     },
     text: {
-      padding: 20,
+      padding: 5,
     },
     imageStyle:{
       width: 200, 
       height: 300, 
       resizeMode: 'center'
-     }
+     },
+     buttonContainer: {
+       flexDirection: 'row',
+       alignItems: "stretch"
+     },
+     buttonWrapper: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 10,
+     },
+     icon: {
+      width: 30, 
+      height: 30,
+    },
+     appButtonContainer: {
+      elevation: 8,
+      backgroundColor: "#FF9E1C",
+      borderRadius: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 25,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    appButtonContainer2: {
+      elevation: 8,
+      backgroundColor: "#FCEB97",
+      borderRadius: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 25,
+      justifyContent: "center",
+      alignItems: "center",
+    }
   });
