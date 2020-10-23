@@ -104,6 +104,10 @@ const showStats = (word, stats, visible) => {
  * 
  * Final scores and statistics update react state.
  * 
+ * NOTE: For MVP this is adequate, but to scale in future we should look towards what
+ *        statistics we want to store and track these as the user uses the app rather than
+ *        compute on the fly.
+ * 
  * @param {string} word The word that this screen is displaying data for.
  * @param {function} setStars Setter for stars state.
  * @param {function} setStats Setter for statistics for this word.
