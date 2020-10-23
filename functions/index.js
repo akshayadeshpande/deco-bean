@@ -53,23 +53,26 @@ exports.getUsers = functions.https.onRequest(async (req, res) => {
     }
 });
 
-
 exports.getWotd = functions.https.onCall(async (data, context) => {
-    // Check if the user is logged in or not. 
     if (!context.auth){
         throw new functions.https.HttpsError('failed-precondition', 'A word of the day can only be retrieved when logged in.');
     }
     try {
+        const user_id = context.auth.uid;
+
         const wordCount = (await admin.firestore().collection('WordData').doc('count').get()).data().count;
-        const randInt = Math.floor(Math.random() * wordCount + 1);
+        var randInt = new Date().getUTCDate() % wordCount;
 
         let word = (await admin.firestore().collection('WordData').doc('Word' + randInt.toString()).get()).data();
+        let user = (await admin.firestore().collection('users').doc(user_id).get()).data();
+        let mappings = (await admin.firestore().collection('mappings').doc('mappings').get()).data();
 
-        return {status: 'success', code: 200, word: word};
+        let homeLangWord = word[mappings.codes[user.homeLang]];
+        let forLangWord = word[mappings.codes[user.forLang]];
+
+        return {status: 'success', code: 200, homeLangWord: homeLangWord, forLangWord: forLangWord, word: word, userForLang: mappings.codes[user.forLang]};
     } catch (err) {
         console.log(err);
         throw new functions.https.HttpsError('internal', 'An internal error occured.');
     }
-})
-
-
+});

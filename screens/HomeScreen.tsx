@@ -1,25 +1,59 @@
 import * as React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, ActivityIndicator } from 'react-native';
 
 import { Text, View } from '../components/Themed';
-import { getDailyWord } from '../components/WOTD';
+// import { getDailyWord } from '../components/WOTD';
 import WordOfTheDay from '../components/WOTD';
 import NavTouchButton from '../components/NavTouchButton';
+import { useState, useEffect } from 'react';
 import * as firebase from 'firebase';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import useColorScheme from '../hooks/useColorScheme';
+import Colors from '../constants/Colors';
 
 
-export default function HomeScreen({navigation, props}) {
- 
+export default function HomeScreen({navigation}) {
+  const colorScheme = useColorScheme(); // App colors
+  const [dailyWord, setDailyWord] = useState({}); //Word of the Day
+  const [loading, setLoading] = useState(true);
+
+  //gets information about the current user that is logged in and changes the state
+  useEffect(() => {
+    var dailyWord = firebase.functions().httpsCallable('getWotd');
+    dailyWord({}).then(function(result){
+        setDailyWord(result.data);
+        setLoading(false);
+    }).catch(function(err){
+      console.log(err);
+      alert("An error occur, please try to login again. ")
+    })
+  },[]);
+
   return (
     <View style={{flex:1}}>
     
     <View style={styles.wrapper}>
       
       <View style={styles.container}>
-        <View style={styles.WOTDWrapper}>
-          <WordOfTheDay word={getDailyWord()} />
-        </View>
+
+        { loading ? 
+           <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
+          : 
+          <TouchableOpacity onPress={() => navigation.navigate('Words', 
+                {screen:'WordScreen', initial: false, params: {
+                    word: dailyWord.homeLangWord, 
+                    translation: dailyWord.forLangWord, 
+                    imgURL: dailyWord.word.URL, 
+                    soundURI: dailyWord.word.Audio[dailyWord.userForLang]
+                    },   
+                },
+            )}>
+            <View style={styles.WOTDWrapper}>
+                <WordOfTheDay word={dailyWord}/>
+            </View>
+          </TouchableOpacity>         
+        }
+        
       </View>
 
       <View style={styles.containerRow}>

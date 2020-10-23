@@ -97,6 +97,33 @@ exports.endChallenge = functions.https.onCall(async (data, context) => {
 });
 
 
+// exports.getChallenges = functions.https.onCall(async (data, context) => {
+//     if (!context.auth){
+//         throw new functions.https.HttpsError('failed-precondition', 'A challenge can only be started when logged in.');
+//     }
+//     try {
+//         const user_id = context.auth.uid;
+        
+//         let response = [];
+//         // const res = await admin.firestore().collection('users').doc(user_id).collection('mcq').doc('f1EVtfXQjpjYyo8tBaHi').get();
+//         // res.then(doc => response.push(doc.data()));
+//         // const res = (await admin.firestore().collection('users').doc(user_id).get()).collection('mcq').doc('f1EVtfXQjpjYyo8tBaHi').get();
+//         // response.push(res.data());
+//         // let res = (await admin.firestore().collection('users').doc(user_id).get()).data();
+//         let res = await admin.firestore().collection(`users/${user_id}/mcq`).get();
+        
+//         res.forEach(doc => {
+//             response.push(doc.data());
+//         });
+
+      
+//         return {status: 'success', code: 200, message: 'Successfully retrieved challenge scores', challenges: response};
+//     } catch (err) {
+//         console.log(err);
+//         throw new functions.https.HttpsError('internal', 'An internal error occured.');
+//     }
+// });
+
 exports.getChallenges = functions.https.onCall(async (data, context) => {
     if (!context.auth){
         throw new functions.https.HttpsError('failed-precondition', 'A challenge can only be started when logged in.');
@@ -105,21 +132,16 @@ exports.getChallenges = functions.https.onCall(async (data, context) => {
         const user_id = context.auth.uid;
         
         let response = [];
-        // const res = await admin.firestore().collection('users').doc(user_id).collection('mcq').doc('f1EVtfXQjpjYyo8tBaHi').get();
-        // res.then(doc => response.push(doc.data()));
-        // const res = (await admin.firestore().collection('users').doc(user_id).get()).collection('mcq').doc('f1EVtfXQjpjYyo8tBaHi').get();
-        // response.push(res.data());
-        // let res = (await admin.firestore().collection('users').doc(user_id).get()).data();
-        let res = await admin.firestore().collection(`users/${user_id}/mcq`).get().then(data => {
-            data.forEach(doc => {
-                response.push(doc.data());
-            })
-        });
-
+        let result = await admin.firestore().collection('users').doc(user_id).collection('mcq').get(); 
       
-        return {status: 'success', code: 200, message: 'Successfully retrieved challenge scores', challenges: response};
+        result.forEach(doc => {
+          response.push(doc.data());
+        });
+      
+        return {status: 'success', code: 200, message: 'Successfully retrieved challenge scores', challenges: result};
     } catch (err) {
         console.log(err);
         throw new functions.https.HttpsError('internal', 'An internal error occured.');
     }
 });
+

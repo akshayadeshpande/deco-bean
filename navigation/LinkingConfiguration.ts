@@ -36,7 +36,7 @@ export default {
           },
           Word: {
             screens: {
-              WordScren: 'wordDetails',
+              WordScreen: 'wordDetails',
             },
           },
         },
