@@ -38,7 +38,7 @@ export default function WordScreen(props) {
   }, []);
 
   console.log("Word Screen got word: " + params.word);
-  console.log(`Your score is: ${score} stars`);
+  console.log(`Your score is: ${stars} stars`);
   return (
     <ScrollView style={styles.container}>
       <View style={styles.containerWords}>

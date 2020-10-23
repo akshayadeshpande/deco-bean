@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { useIsFocused } from "@react-navigation/native";
 import SearchBar from 'react-native-searchbar';
 import * as firebase from 'firebase';
 
@@ -26,7 +25,6 @@ import 'firebase/functions';
  */
 export default function DictionaryScreen(props) {
   const colorScheme = useColorScheme();
-  const isFocused = useIsFocused();
   let searchBar;
   // States
   const [activeLanguage, setActiveLanguage] = useState("");
