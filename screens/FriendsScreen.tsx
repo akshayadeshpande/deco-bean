@@ -10,15 +10,13 @@ import Colors from '../constants/Colors';
 import { View, Text } from '../components/Themed';
 import { useEffect, useState } from 'react';
 
-const colorScheme = useColorScheme(); //App colors
-
 /**
  * Renders all the friends of the current user in a touchable list
  * 
  * @param navigation: The nav stack being passed around, allowing navigation between screens 
  */
 export default function FriendsScreen({navigation}) {
-   
+    const colorScheme = useColorScheme(); //App colors
     //States of the page
     const [loaded, setLoading] = useState(true);
     const [friendsList, setFriendsList] = useState([{title: "Loading...", 
@@ -39,10 +37,8 @@ export default function FriendsScreen({navigation}) {
     useEffect(() => {
         const incomingFriends = firebase.functions().httpsCallable('getUserFriends')
         incomingFriends({}).then((result) => {
-            console.log(result);
             assembleFriends(result.data['friends'], setFriendsList);
             setLoading(false);
-            console.log(friendsList)
         }).catch(function(err){
             console.log(err);
             alert('An internal error occured. Please try again later.')
@@ -59,8 +55,8 @@ export default function FriendsScreen({navigation}) {
          {
            friendsList[0].data.length == 0 ? 
             <View style={styles.imgGap}>
-              <Image source={require('../assets/images/Mema.png')} style={styles.mema}/>
-              <Text style={styles.addFriendsText}>Press + to add your friends!</Text>
+              <Image source={require('../assets/images/MEMA.png')} style={styles.mema}/>
+              <Text style={styles.addFriendsText}>Press + to start adding your friends!</Text>
             </View>
            :
            <View>
@@ -74,8 +70,9 @@ export default function FriendsScreen({navigation}) {
                       navigation.navigate("FriendsProfileScreen", {user: item})}>
             
                   <View style={styles.listItemContainer}>
-                    <View style={styles.listItem}>
-                      <Text style={styles.listText}>{item.userName}</Text>
+                    <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                        <Image source={require('../assets/images/profileMEMA.png')} style={{width:50, height:50, margin: 5}}/>
+                        <Text style={[styles.listText, {fontSize: 20}]}>{item.userName}</Text>
                     </View>
                     <View style={styles.listArrow}>
                       <FontAwesome name="chevron-right" size={16} color="black" />
@@ -87,8 +84,8 @@ export default function FriendsScreen({navigation}) {
               /> 
             </View>
           }     
-            <TouchableOpacity style={styles.fab} onPress={() => console.log("Add a friend")}>
-              <Text style={styles.fabText}>+</Text>
+            <TouchableOpacity style={[styles.fab, {backgroundColor: Colors[colorScheme].tint}]} onPress={() => navigation.navigate('FriendsSearchScreen')}>
+              <Text style={{color: Colors[colorScheme].background, fontSize: 30, marginBottom: 5}}>+</Text>
             </TouchableOpacity>       
        </View>
       ); 
@@ -193,7 +190,6 @@ const styles = StyleSheet.create({
       position: "absolute",
       bottom: 20,
       right: 20,
-      backgroundColor: Colors[colorScheme].tint,
       borderRadius: 30,
       shadowColor: "#000",
       shadowOffset: {width: 2, height: 2},
@@ -201,11 +197,6 @@ const styles = StyleSheet.create({
       shadowRadius: 5,
       alignItems: "center",
       justifyContent: "center",
-    },
-    fabText: {
-      fontSize: 30,
-      color: Colors[colorScheme].background,
-      marginBottom: 5
     },
     addFriendsText: {
       fontSize: 25,

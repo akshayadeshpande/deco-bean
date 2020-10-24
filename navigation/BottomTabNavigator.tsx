@@ -16,6 +16,7 @@ import MeMaScreen from '../screens/MeMaScreen';
 import WordScreen from '../screens/WordScreen';
 import FriendsScreen from '../screens/FriendsScreen';
 import FriendsProfileScreen from '../screens/FriendsProfileScreen';
+import FriendsSearchScreen from '../screens/FriendsSearchScreen';
 import * as firebase from 'firebase';
 
 import { BottomTabParamList, 
@@ -253,6 +254,13 @@ function ProfileNavigator({navigation}) {
         options={{ headerTitle: 'Friends Profile', 
         headerTintColor:"#fff", 
         headerTitleAlign: 'center', }}
+      />
+      <ProfileStack.Screen
+      name="FriendsSearchScreen"
+      component={FriendsSearchScreen}
+      options={{ headerTitle: 'Search Friends', 
+      headerTintColor:"#fff", 
+      headerTitleAlign: 'center', }}
       />
     </ProfileStack.Navigator>
   );

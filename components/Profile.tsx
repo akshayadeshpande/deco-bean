@@ -50,9 +50,9 @@ export default function Profile({navigation, user, touchFriends}) {
         setFriendCount(user.friendCount);
         setWordCount(user.wordCount);
         setSignedUp(user.signedUp.split(" ").slice(0, 5).join(" "));
-        setForLangCount(user.wordCount[user.forLang]);
+        setForLangCount(user.wordCount[user.forLang] || 0);
         setLoading(false);
-    },[]);
+    },[user]);
 
     //Renders profile information
     return (loaded ? 
@@ -63,7 +63,7 @@ export default function Profile({navigation, user, touchFriends}) {
     <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
 
-            <View style={{ alignSelf: "center" }}>
+            <View style={{ alignSelf: "center", marginTop: 10}}>
                 <View>
                     <Image source={require('../assets/images/profileMEMA.png')} style={{width:200, height:200}}/>
                 </View>
@@ -89,10 +89,12 @@ export default function Profile({navigation, user, touchFriends}) {
                 </View>
             </View>
             <View>
-                <View style={[styles.profileItem]}>
-                    <MaterialIcons name={"email"} size={iconSize} color={Colors[colorScheme].tint} />
-                    <Text style={[styles.text]}>{email}</Text>
-                </View>
+                { email &&
+                    <View style={[styles.profileItem]}>
+                        <MaterialIcons name={"email"} size={iconSize} color={Colors[colorScheme].tint} />
+                        <Text style={[styles.text]}>{email}</Text>
+                    </View>
+                }
                 <View style={[styles.profileItem]}>
                     <MaterialIcons name={"home"} size={iconSize} color={Colors[colorScheme].tint} />
                     <Text style={[styles.text]}>{homeLang}</Text>
@@ -101,10 +103,12 @@ export default function Profile({navigation, user, touchFriends}) {
                     <MaterialIcons name={"translate"} size={iconSize} color={Colors[colorScheme].tint} />
                     <Text style={[styles.text]}>{forLang}</Text>
                 </View>
+                { country && 
                 <View style={[styles.profileItem]}>
                     <MaterialIcons name={"room"} size={iconSize} color={Colors[colorScheme].tint} />
                     <Text style={[styles.text]}>{country}</Text>
                 </View>
+                }
                 <View style={[styles.profileItem]}>
                     <MaterialIcons name={"create"} size={iconSize} color={Colors[colorScheme].tint} />
                     <Text style={[styles.text]}>{signedUp}</Text>

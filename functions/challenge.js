@@ -105,15 +105,10 @@ exports.getChallenges = functions.https.onCall(async (data, context) => {
         const user_id = context.auth.uid;
         
         let response = [];
-        // const res = await admin.firestore().collection('users').doc(user_id).collection('mcq').doc('f1EVtfXQjpjYyo8tBaHi').get();
-        // res.then(doc => response.push(doc.data()));
-        // const res = (await admin.firestore().collection('users').doc(user_id).get()).collection('mcq').doc('f1EVtfXQjpjYyo8tBaHi').get();
-        // response.push(res.data());
-        // let res = (await admin.firestore().collection('users').doc(user_id).get()).data();
-        let res = await admin.firestore().collection(`users/${user_id}/mcq`).get().then(data => {
-            data.forEach(doc => {
-                response.push(doc.data());
-            })
+        let result = await admin.firestore().collection('users').doc(user_id).collection('mcq').get(); 
+      
+        result.forEach(doc => {
+          response.push(doc.data());
         });
 
       

@@ -86,6 +86,7 @@ exports.addUserFriends = functions.https.onCall(async (data, context) => {
     }
     try {       
         const user_id = context.auth.uid;
+        var currentFriends = (await admin.firestore().collection('users').doc(user_id).get()).get('friends');
         var friendsRef = [];
 
         for (let i = 0; i < data.friends.length; i++){
@@ -95,10 +96,10 @@ exports.addUserFriends = functions.https.onCall(async (data, context) => {
         friendsRef = await Promise.all(friendsRef);
         // Creates an array of friend's document references to set as the user's friends.
         friendsRef.forEach((friend, index, array) => {
-            array[index] = friend.ref;
+            currentFriends.push(friend.ref);
         })
 
-        await admin.firestore().collection('users').doc(user_id).update({friends: friendsRef});
+        await admin.firestore().collection('users').doc(user_id).update({friends: currentFriends});
         
         return {status: 'success', code: 200, message: 'Successfully added user\'s friend data.'};
     } catch (err) {
@@ -123,6 +124,7 @@ exports.searchUsers = functions.https.onCall(async (data, context) => {
             if (user.data().name.includes(data.name)) {
                 let userData = handleUserData(user.data());
                 delete userData['email'];
+                userData['id'] = user.id;
                 users.push(userData);
             }
         });
