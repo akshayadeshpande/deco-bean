@@ -21,18 +21,14 @@ export default function SigninScreen({navigation}) {
   
   return (
     <View style={styles.container}>
-      <View style={{flex:1, flexDirection: "row", padding:20}}>
-        <View style={{position:"relative"}}>
-          <Image source={require("../assets/images/MEMA3.png")}style={{right:30, width: 250, height:250, resizeMode:"stretch"}}/> 
-        </View>
-      <Text style={{right:10, top: 100, right:60}}>Welcome!</Text>
+      <View style={styles.containerGreeting}>
+        <Image source={require("../assets/images/MEMA3.png")} style={styles.imgLogo}/> 
+        <Text style={styles.text}>Welcome!</Text>
       </View>
       <Signin navigation={navigation}/>
       <Image source={require('../assets/images/MEMALOGO.png')} style={styles.imgLogo}/>
     </View>
-
   );
-  
 }
 
 
@@ -42,37 +38,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  container2: {
-    flex: 1,
+  containerGreeting: {
+    flexDirection: "row",
     alignItems: 'center',
     justifyContent: 'center',
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
   text: {
-    padding: 20,
-  },
-  appButtonContainer: {
-    elevation: 8,
-    backgroundColor: "#FF9E1C",
-    borderRadius: 10,
-    paddingVertical: 5,
-    paddingHorizontal: 5
-  },
-  headerBar: {
-    backgroundColor: "#FF9E1C",
-    padding: 10,
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 30,
   },
   imgLogo: {
-    height: 100,
     width: 200,
-    resizeMode: 'stretch',
+    resizeMode: 'contain',
   },
 });
