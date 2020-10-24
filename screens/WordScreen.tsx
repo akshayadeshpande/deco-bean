@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Alert, Image, ScrollView } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 import * as firebase from 'firebase';
 import 'firebase/functions';
@@ -10,7 +9,6 @@ import Colours from '../constants/Colors';
 import Layout from '../constants/Layout';
 import { Text, View } from '../components/Themed';
 import AudioPlayer from '../components/AudioPlayer';
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
 
 /*
@@ -113,20 +111,17 @@ const showStats = (word, stats, visible) => {
  * @param {function} setStats Setter for statistics for this word.
  */
 const getScore = async (word, setStars, setStats) => {
-  const userID = firebase.auth().currentUser.uid;
-  const db = firebase.firestore()
-
-  // Retrieve user's mcq sessions
-  const mcqRefs = db.collection(`users/${userID}/mcq`);
+  // Retrieve user's mcq sessions through api
+  const getChallenges = firebase.functions().httpsCallable('getChallenges')
   let mcqSessions = [];
-  await mcqRefs.get().then(data => {
-    data.forEach(doc => {
-        mcqSessions.push(doc.data());
-    })
+  await getChallenges({}).then(result => {
+    mcqSessions = result.data.challenges
   }).catch(error => {
-    console.log("Unable to retrieve user mcq sessions, WordScreen.");
     console.log(error);
-  });
+    console.log("WordScreen::getScore. Unable to retrieve user mcq sessions");
+    Alert.alert("An internal error occured", "Failed to retrieve word statistics. Please try again later.");
+    return;
+  })
 
   // Sessions that include this screen's word only
   const scoredSessions = mcqSessions.filter(doc => doc.score && (doc.correct.includes(word) || doc.incorrect.includes(word)));
@@ -240,11 +235,6 @@ const styles = StyleSheet.create({
   imageStyle:{
     width: Layout.window.width / 2,
     aspectRatio: 1
-  },
-  starImageStyle: {
-    width: 40,
-    height: 40,
-    resizeMode: 'cover',
   },
   flexBreak: {
     flexBasis: "100%",

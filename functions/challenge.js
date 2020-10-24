@@ -96,7 +96,14 @@ exports.endChallenge = functions.https.onCall(async (data, context) => {
     }
 });
 
-
+/**
+ * API Call to get all challenge sessions related to a user.
+ * 
+ * @param {Object} Optional data object container values to pass to request.
+ * @param {Object} Context object for firebase api, primarly for user auth at this stage.
+ * @returns Successful response code 200, with Object containing challenge sessions related to user.
+ * @throws functions.https.HttpsError internal error if https call failed.
+ */
 exports.getChallenges = functions.https.onCall(async (data, context) => {
     if (!context.auth){
         throw new functions.https.HttpsError('failed-precondition', 'A challenge can only be started when logged in.');
@@ -104,22 +111,17 @@ exports.getChallenges = functions.https.onCall(async (data, context) => {
     try {
         const user_id = context.auth.uid;
         
-        let response = [];
-        // const res = await admin.firestore().collection('users').doc(user_id).collection('mcq').doc('f1EVtfXQjpjYyo8tBaHi').get();
-        // res.then(doc => response.push(doc.data()));
-        // const res = (await admin.firestore().collection('users').doc(user_id).get()).collection('mcq').doc('f1EVtfXQjpjYyo8tBaHi').get();
-        // response.push(res.data());
-        // let res = (await admin.firestore().collection('users').doc(user_id).get()).data();
-        let res = await admin.firestore().collection(`users/${user_id}/mcq`).get().then(data => {
-            data.forEach(doc => {
-                response.push(doc.data());
-            })
-        });
-
+        const result = await admin.firestore().collection('users').doc(user_id).collection('mcq').get(); 
       
-        return {status: 'success', code: 200, message: 'Successfully retrieved challenge scores', challenges: response};
+        let sessions = [];
+        result.forEach(doc => {
+            sessions.push(doc.data());
+        });
+      
+        return {status: 'success', code: 200, message: 'Successfully retrieved challenge scores', challenges: sessions};
     } catch (err) {
         console.log(err);
         throw new functions.https.HttpsError('internal', 'An internal error occured.');
     }
 });
+

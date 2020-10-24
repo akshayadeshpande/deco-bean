@@ -75,7 +75,7 @@ export default function DictionaryScreen(props) {
         ref={(ref) => searchBar = ref}
         allDataOnEmptySearch={true}
         data={dictionaryData}
-        placeholder="Type to search for words"
+        placeholder="Type here to search..."
         handleResults={(results) => {
           // console.log("Search Results: ");
           // console.log(results);
@@ -83,10 +83,10 @@ export default function DictionaryScreen(props) {
         }}
         showOnLoad={true}
         hideBack={true}
-        backgroundColor={Colors[colorScheme].bottomTabBackground}
+        backgroundColor="#fff"
         iconColor={Colors[colorScheme].tabIconDefault}
-        textColor="#FF9E1C"
-        placeholderTextColor="#fff"
+        textColor={Colors[colorScheme].bottomTabBackground}
+        placeholderTextColor="#a9a9a9"
       />
 
       <View style={styles.listContainer}>
