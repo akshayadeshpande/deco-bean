@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useState, useEffect, Component } from 'react';
+import { useState, useEffect, Component, } from 'react';
 import { StyleSheet, Button, ActivityIndicator, SafeAreaView, ScrollView, Image} from 'react-native';
-import {FontAwesome, MaterialIcons} from '@expo/vector-icons';
+import { MaterialIcons} from '@expo/vector-icons';
 
 import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
@@ -41,9 +41,6 @@ export default function Profile({navigation, user, touchFriends}) {
 
     //Runs on the first launch to get all the needed information for the user
     useEffect(() => {
-        // let user = user;
-        console.log(user)
-        // console.log(props.user);
         setUserName(user.userName);
         setName(user.name);
         setCountry(user.country);
@@ -73,7 +70,7 @@ export default function Profile({navigation, user, touchFriends}) {
             </View>
 
             <View style={styles.infoContainer}>
-                <Text style={{ fontWeight: "bold", fontSize: 36, }}>{name}</Text>
+                <Text style={styles.title}>{name}</Text>
             </View>
 
             <View style={styles.statsContainer}>
@@ -149,33 +146,20 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-    ButtonView: {
-      padding: 5,
-    },
     CMContainer: {
       alignItems: 'center',
       justifyContent: 'center',
       padding: 5
     },
     title: {
-      fontSize: 20,
+      fontSize: 36,
       fontWeight: 'bold',
-    },
-    separator: {
-      marginVertical: 30,
-      height: 1,
-      width: '80%',
     },
     text: {
         paddingBottom: 20,
         paddingTop: 10,
         fontSize: 28
-    },
-    imageStyle:{
-      width: 200, 
-      height: 300,
-      resizeMode: 'stretch'
-     }, 
+    }, 
     titleBar: {
         flexDirection: "row",
         justifyContent: "space-between",

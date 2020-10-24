@@ -6,8 +6,6 @@ import Profile from "../components/Profile";
 import { Text, View } from "../components/Themed";
 import { db, auth } from "../App";
 import * as firebase from "firebase";
-import { useScreens } from "react-native-screens";
-import { Button } from "react-native";
 import 'firebase/firestore';
 import 'firebase/functions';
 import 'firebase/auth';
