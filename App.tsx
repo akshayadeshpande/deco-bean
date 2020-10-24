@@ -1,7 +1,6 @@
-import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import * as firebase from 'firebase';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import useCachedResources from "./hooks/useCachedResources";
@@ -25,6 +24,8 @@ export const auth = firebase.auth();
 export const db = firebase.firestore();
 
 export default function App() {
+  // Suppress yellow toast for warnings for demo, warnings will still show up on console.
+  console.disableYellowBox = true;
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
