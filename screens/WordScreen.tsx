@@ -241,11 +241,6 @@ const styles = StyleSheet.create({
     width: Layout.window.width / 2,
     aspectRatio: 1
   },
-  starImageStyle: {
-    width: 40,
-    height: 40,
-    resizeMode: 'cover',
-  },
   flexBreak: {
     flexBasis: "100%",
     height: 0,
