@@ -33,14 +33,14 @@ export default function Register({navigation}) {
             <Text style={styles.text}>Email</Text>
             <TextInput 
               placeholder="Enter email" 
-              onChangeText={(t) => setEmail(t)}
+              onChangeText={(t) => setEmail(t.trim())}
               value={email}
               style={styles.textInput}/>
             <Text style={styles.text}>Password</Text>
             <TextInput
               secureTextEntry={true}
               placeholder="Enter password"
-              onChangeText={(t) => setPassword(t)}
+              onChangeText={(t) => setPassword(t.trim())}
               value={password}
               style={styles.textInput}/>
             <View style={{padding:25}}/>
