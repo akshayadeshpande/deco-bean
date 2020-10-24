@@ -77,9 +77,8 @@ const styles = StyleSheet.create({
   },
    WOTDWrapper: {
     flex: 0.5, 
-    padding: 20, 
     paddingHorizontal: 40, 
-    paddingVertical:10, 
+    paddingVertical: 100, 
     alignItems: "center", 
     justifyContent: "center"
   },
@@ -111,8 +110,5 @@ const styles = StyleSheet.create({
     width: 30, 
     height: 30,
   },
-  seperator: {
-    
 
-  },
 });
