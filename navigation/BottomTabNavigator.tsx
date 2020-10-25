@@ -27,6 +27,7 @@ import { BottomTabParamList,
           ProfileParamList,
           } from '../types';
 import Navigation from '.';
+import { MemaBText } from '../components/StyledText';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -160,7 +161,7 @@ function ChallengeNavigator({navigation}) {
       <ChallengeStack.Screen
         name="ChallengeScreen"
         component={ChallengeScreen}
-        options={{ headerTitle: "Challenge Mode", 
+        options={{ headerTitle: () => <MemaBText style={{fontSize:20,}}>Challenge Mode</MemaBText>,
         headerTintColor:"#fff", 
         headerTitleAlign: 'center',
         headerLeft: null,
@@ -182,7 +183,7 @@ function DictionaryNavigator({navigation}) {
       <DictionaryStack.Screen
         name="DictionaryScreen"
         component={DictionaryScreen}
-        options={{ headerTitle: 'My Words', 
+        options={{ headerTitle: () => <MemaBText style={{fontSize:20,}}>My Words</MemaBText>,
         headerTintColor:"#fff", 
         headerTitleAlign: 'center',
         headerLeft: null,
@@ -191,9 +192,10 @@ function DictionaryNavigator({navigation}) {
       <DictionaryStack.Screen
         name="WordScreen"
         component={WordScreen}
-        options={{ headerTitle: 'Word Details', 
+        options={{ headerTitle: () => <MemaBText style={{fontSize:20,}}>Word Details</MemaBText>,
         headerTintColor:"#fff",  
         headerTitleAlign: 'center', 
+        headerBackTitle: null,
       }}
       />
     </DictionaryStack.Navigator>
@@ -235,32 +237,36 @@ function ProfileNavigator({navigation}) {
       <ProfileStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: 'Profile', 
+        options={{ headerTitle: () => <MemaBText style={{fontSize:20,}}>Profile</MemaBText>,
         headerTintColor:"#fff",   
         headerTitleAlign: 'center', 
         headerLeft: null,
+        headerBackTitle: null,
         }}
       />
       <ProfileStack.Screen
         name="FriendsScreen"
         component={FriendsScreen}
-        options={{ headerTitle: 'Friends', 
+        options={{  headerTitle: () => <MemaBText style={{fontSize:20,}}>Friends</MemaBText>,
         headerTintColor:"#fff", 
-        headerTitleAlign: 'center', }}
+        headerTitleAlign: 'center', 
+        headerBackTitle: null,}}
       />
       <ProfileStack.Screen
         name="FriendsProfileScreen"
         component={FriendsProfileScreen}
-        options={{ headerTitle: 'Friends Profile', 
+        options={{  headerTitle: () => <MemaBText style={{fontSize:20,}}>Friends Profile</MemaBText>,
         headerTintColor:"#fff", 
-        headerTitleAlign: 'center', }}
+        headerTitleAlign: 'center', 
+        headerBackTitle: null,}}
       />
       <ProfileStack.Screen
       name="FriendsSearchScreen"
       component={FriendsSearchScreen}
-      options={{ headerTitle: 'Search Friends', 
+      options={{ headerTitle: () => <MemaBText style={{fontSize:20,}}> Search Friends</MemaBText>,
       headerTintColor:"#fff", 
-      headerTitleAlign: 'center', }}
+      headerTitleAlign: 'center', 
+      headerBackTitle: null,}}
       />
     </ProfileStack.Navigator>
   );

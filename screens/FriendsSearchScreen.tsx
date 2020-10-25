@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   searchBar: {
-    flex : 1,
+    flex:1,
     fontSize: 24,
     margin: 10,
     height: 40,
