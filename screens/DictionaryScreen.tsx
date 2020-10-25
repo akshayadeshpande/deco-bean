@@ -9,6 +9,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import DictionaryList from '../components/DictionaryList';
 import 'firebase/functions';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 /*
@@ -75,17 +76,22 @@ export default function DictionaryScreen(props) {
         ref={(ref) => searchBar = ref}
         allDataOnEmptySearch={true}
         data={dictionaryData}
-        placeholder="Type here to search..."
+        placeholder="Start typing here to search..."
         handleResults={(results) => {
           // console.log("Search Results: ");
           // console.log(results);
           setFilteredDict(results);
         }}
+        focusOnLayout={false}
         showOnLoad={true}
-        hideBack={true}
+        // Rig up the back button as a search icon - demo fix.
+        backButton={<MaterialIcons name="search" size={30} color={Colors[colorScheme].bottomTabBackground} />}
+        backButtonAccessibilityLabel="Search Bar Icon"
+        // Disable default back behaviour which hides search bar
+        onBack={() => {}}
         backgroundColor="#fff"
-        iconColor={Colors[colorScheme].tabIconDefault}
-        textColor={Colors[colorScheme].bottomTabBackground}
+        iconColor={Colors[colorScheme].bottomTabBackground}
+        textColor={Colors[colorScheme].activeTint}
         placeholderTextColor="#a9a9a9"
       />
 
