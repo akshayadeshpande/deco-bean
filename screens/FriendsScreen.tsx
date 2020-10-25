@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, SectionList, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
+import { StyleSheet, SectionList, TouchableOpacity, ActivityIndicator, Image , Button} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import 'firebase/firestore';
 import 'firebase/functions';
@@ -9,6 +9,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 import { View, Text } from '../components/Themed';
 import { useEffect, useState } from 'react';
+import { FlatList } from 'react-native-gesture-handler';
 
 /**
  * Renders all the friends of the current user in a touchable list
@@ -19,25 +20,25 @@ export default function FriendsScreen({navigation}) {
     const colorScheme = useColorScheme(); //App colors
     //States of the page
     const [loaded, setLoading] = useState(true);
-    const [friendsList, setFriendsList] = useState([{title: "Loading...", 
-    data : [{
-        userName: 'Loading...',
-        country: "",
-        email: "",
-        forLang: "",
-        friendCount: 0,
-        homeLang: "",
-        name: "",
-        signedUp: "",
-        wordCount:{}
-    }
-    ]}]);
+    const [friendsList, setFriendsList] = useState([]); 
+    // data : [{
+    //     userName: 'Loading...',
+    //     country: "",
+    //     email: "",
+    //     forLang: "",
+    //     friendCount: 0,
+    //     homeLang: "",
+    //     name: "",
+    //     signedUp: "",
+    //     wordCount:{}
+    // }
+    // ]}]);
 
     //Loads only once, getting information about all the current users friends.
     useEffect(() => {
         const incomingFriends = firebase.functions().httpsCallable('getUserFriends')
         incomingFriends({}).then((result) => {
-            assembleFriends(result.data['friends'], setFriendsList);
+            setFriendsList(result.data.friends);
             setLoading(false);
         }).catch(function(err){
             console.log(err);
@@ -51,37 +52,38 @@ export default function FriendsScreen({navigation}) {
         <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
       </View>
        :  
-       <View style={styles.back}>
+       <View style={[styles.back]}>
          {
-           friendsList[0].data.length == 0 ? 
+           friendsList.length == 0 ? 
             <View style={styles.imgGap}>
               <Image source={require('../assets/images/MEMA.png')} style={styles.mema}/>
               <Text style={styles.addFriendsText}>Press + to start adding your friends!</Text>
             </View>
            :
-           <View>
-              <SectionList
-                sections={friendsList}
-                stickySectionHeadersEnabled={true}
-                renderItem={({item}) => (
-              
-                <TouchableOpacity
-                  onPress={() => 
-                      navigation.navigate("FriendsProfileScreen", {user: item})}>
-            
-                  <View style={styles.listItemContainer}>
-                    <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-                        <Image source={require('../assets/images/profileMEMA.png')} style={{width:50, height:50, margin: 5}}/>
-                        <Text style={[styles.listText, {fontSize: 20}]}>{item.userName}</Text>
-                    </View>
-                    <View style={styles.listArrow}>
-                      <FontAwesome name="chevron-right" size={16} color="black" />
-                    </View>
-                  </View>
-                </TouchableOpacity>
+           <View style={{flexDirection: "row"}}>
+              <View style={{flex: 1}}>
+                <FlatList
+                  data={friendsList}
+                  renderItem={({item}) => (
                 
-              )} keyExtractor={(item, index) => item.userName} //Unique words only     
-              /> 
+                  <TouchableOpacity>                
+                    <View style={styles.listItemContainer}>
+                        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                            <Image source={require('../assets/images/profileMEMA.png')} style={{width:50, height:50, margin: 5}}/>
+                            <Text style={[styles.listText, {fontSize: 20}]}>{item.userName}</Text>
+                        </View>
+                        <View style={styles.listArrow}>
+                            <Button color={Colors[colorScheme].activeTint} onPress={() => removeFriend(item.id, navigation, setLoading)} title={"Unfriend"}/>
+                            <View style={{width: 2}}></View>
+                            <Button color={Colors[colorScheme].activeTint} onPress={() => navigation.navigate("FriendsProfileScreen", {user: item})} title={"View"}/>
+                            <View style={{width: 2}}></View>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+                  
+                )} keyExtractor={(item, index) => item.id} //Unique words only     
+                /> 
+              </View>
             </View>
           }     
             <TouchableOpacity style={[styles.fab, {backgroundColor: Colors[colorScheme].tint}]} onPress={() => navigation.navigate('FriendsSearchScreen')}>
@@ -97,29 +99,41 @@ export default function FriendsScreen({navigation}) {
  * @param friendsData: Information about the the user's friend
  * @param setFriendsList: State change function that will hold the data about friends
  */
-function assembleFriends(friendsData, setFriendsList) {
-    let friendsList = [{title: friendsData['userName'], data: []}]
+// function assembleFriends(friendsData, setFriendsList) {
+//     let friendsList = [{title: friendsData['userName'], data: []}]
 
-    //Iterate through all user friends
-    friendsData.forEach((friendDoc) => {
-        switch(friendsData['userName']) {
-            default:
-                friendsList[0].data.push({
-                    "country": friendDoc['country'],
-                    "email": friendDoc['email'],
-                    "forLang": friendDoc['forLang'],
-                    "friendCount": friendDoc['friendCount'],
-                    "homeLang": friendDoc['homeLang'],
-                    "name": friendDoc['name'],
-                    "signedUp": friendDoc['signedUp'],
-                    "userName": friendDoc['userName'],
-                    "wordCount":{"Spanish": friendDoc['wordCount']['Spanish'], 
-                                "Chinese": friendDoc['wordCount']['Chinese']}
-                });
-        }
-    })
-    setFriendsList(friendsList); //Changes state of screen
+//     //Iterate through all user friends
+//     friendsData.forEach((friendDoc) => {
+//         switch(friendsData['userName']) {
+//             default:
+//                 friendsList[0].data.push({
+//                     "country": friendDoc['country'],
+//                     "email": friendDoc['email'],
+//                     "forLang": friendDoc['forLang'],
+//                     "friendCount": friendDoc['friendCount'],
+//                     "homeLang": friendDoc['homeLang'],
+//                     "name": friendDoc['name'],
+//                     "signedUp": friendDoc['signedUp'],
+//                     "userName": friendDoc['userName'],
+//                     "id": friendDoc['id'],
+//                     "wordCount":{"Spanish": friendDoc['wordCount']['Spanish'], 
+//                                 "Chinese": friendDoc['wordCount']['Chinese']}
+//                 });
+//         }
+//     })
+//     setFriendsList(friendsList); //Changes state of screen
+// }
+
+function removeFriend(uid, navigation, setLoading){
+  let removeFriend = firebase.functions().httpsCallable('removeUserFriends')
+  setLoading(true);
+  removeFriend({friends: [uid]}).then((res) => {
+      navigation.navigate('ProfileScreen', {initial: false});
+}).catch((err) => {
+    console.log(err);
+  })
 }
+
 
 
 const styles = StyleSheet.create({
@@ -168,6 +182,7 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.55,
       shadowRadius: 3.84,
       elevation: 2,
+      alignItems: "center"
     },
     listItem: {
       padding: 10,
@@ -181,7 +196,7 @@ const styles = StyleSheet.create({
       justifyContent: "center"
     },
     listArrow: {
-      padding: 10,
+      flexDirection: "row",
       justifyContent: "center",
     },
     fab: {

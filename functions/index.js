@@ -12,6 +12,7 @@ exports.getUser = user.getUser;
 exports.getUserFriends = user.getUserFriends;
 exports.addUserFriends = user.addUserFriends;
 exports.searchUsers = user.searchUsers;
+exports.removeUserFriends = user.removeUserFriends;
 
 
 // // Create and Deploy Your First Cloud Functions
