@@ -23,8 +23,7 @@ export default function SigninScreen({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.containerGreeting}>
-        <Image source={require("../assets/images/MEMA3.png")} style={styles.imgLogo}/> 
-        <MemaText style={styles.text}>Welcome!</MemaText>
+        <Image source={require("../assets/images/welcomeMEMA.png")} style={styles.imgLogo}/> 
       </View>
       <Signin navigation={navigation}/>
       <Image source={require('../assets/images/MEMALOGO.png')} style={styles.imgLogo}/>
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   imgLogo: {
-    width: 200,
+    width: 250,
     resizeMode: 'contain',
   },
 });
