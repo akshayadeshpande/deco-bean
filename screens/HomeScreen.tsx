@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40, 
     paddingVertical: 100, 
     alignItems: "center", 
-    justifyContent: "center"
+    justifyContent: "center",
+    
   },
   headerTitle: {
     width: 200, 
