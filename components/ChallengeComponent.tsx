@@ -402,8 +402,8 @@ const styles = StyleSheet.create({
     },
     imageStyle:{
       width: 200, 
-      height: 300,
-      resizeMode: 'contain'
+      height: 250,
+      resizeMode: 'stretch'
      },
      imgWord: {
       elevation: 8,
@@ -411,7 +411,6 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       paddingVertical: 10,
       paddingHorizontal: 100,
-      bottom: 40,
      },
      appButtonContainer2: {
       elevation: 8,
@@ -439,7 +438,7 @@ const styles = StyleSheet.create({
 
     },
     imgHolder: {
-      padding: 10,
+      padding: 40,
       position:"relative",
       justifyContent:"center",
       alignItems:"center",
