@@ -33,6 +33,8 @@ export default function useCachedResources() {
         const fontAssets = Font.loadAsync({
           ...Ionicons.font,
           'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+          'mema-font-bold': require('../assets/fonts/CREABBB_.ttf'),
+          'mema-font': require('../assets/fonts/CREABBRG.ttf')
         });
 
         await Promise.all([...imageAssets, fontAssets]);

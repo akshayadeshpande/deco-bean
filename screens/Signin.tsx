@@ -8,6 +8,7 @@ import Navigation from '../navigation'
 import * as firebase from 'firebase';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import { MemaText } from '../components/StyledText';
 
 var started = false;
 export default function SigninScreen({navigation}) {
@@ -23,7 +24,7 @@ export default function SigninScreen({navigation}) {
     <View style={styles.container}>
       <View style={styles.containerGreeting}>
         <Image source={require("../assets/images/MEMA3.png")} style={styles.imgLogo}/> 
-        <Text style={styles.text}>Welcome!</Text>
+        <MemaText style={styles.text}>Welcome!</MemaText>
       </View>
       <Signin navigation={navigation}/>
       <Image source={require('../assets/images/MEMALOGO.png')} style={styles.imgLogo}/>
