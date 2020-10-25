@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useState, useEffect, Component } from 'react';
+import { useState, useEffect, Component, } from 'react';
 import { StyleSheet, Button, ActivityIndicator, SafeAreaView, ScrollView, Image} from 'react-native';
-import {FontAwesome, MaterialIcons} from '@expo/vector-icons';
+import { MaterialIcons} from '@expo/vector-icons';
 
 import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
@@ -41,9 +41,6 @@ export default function Profile({navigation, user, touchFriends}) {
 
     //Runs on the first launch to get all the needed information for the user
     useEffect(() => {
-        // let user = user;
-        console.log(user)
-        // console.log(props.user);
         setUserName(user.userName);
         setName(user.name);
         setCountry(user.country);
@@ -53,9 +50,9 @@ export default function Profile({navigation, user, touchFriends}) {
         setFriendCount(user.friendCount);
         setWordCount(user.wordCount);
         setSignedUp(user.signedUp.split(" ").slice(0, 5).join(" "));
-        setForLangCount(user.wordCount[user.forLang]);
+        setForLangCount(user.wordCount[user.forLang] || 0);
         setLoading(false);
-    },[]);
+    },[user]);
 
     //Renders profile information
     return (loaded ? 
@@ -66,14 +63,14 @@ export default function Profile({navigation, user, touchFriends}) {
     <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
 
-            <View style={{ alignSelf: "center" }}>
+            <View style={{ alignSelf: "center", marginTop: 10}}>
                 <View>
                     <Image source={require('../assets/images/profileMEMA.png')} style={{width:200, height:200}}/>
                 </View>
             </View>
 
             <View style={styles.infoContainer}>
-                <Text style={{ fontWeight: "bold", fontSize: 36, }}>{name}</Text>
+                <Text style={styles.title}>{name}</Text>
             </View>
 
             <View style={styles.statsContainer}>
@@ -92,10 +89,12 @@ export default function Profile({navigation, user, touchFriends}) {
                 </View>
             </View>
             <View>
-                <View style={[styles.profileItem]}>
-                    <MaterialIcons name={"email"} size={iconSize} color={Colors[colorScheme].tint} />
-                    <Text style={[styles.text]}>{email}</Text>
-                </View>
+                { email &&
+                    <View style={[styles.profileItem]}>
+                        <MaterialIcons name={"email"} size={iconSize} color={Colors[colorScheme].tint} />
+                        <Text style={[styles.text]}>{email}</Text>
+                    </View>
+                }
                 <View style={[styles.profileItem]}>
                     <MaterialIcons name={"home"} size={iconSize} color={Colors[colorScheme].tint} />
                     <Text style={[styles.text]}>{homeLang}</Text>
@@ -104,10 +103,12 @@ export default function Profile({navigation, user, touchFriends}) {
                     <MaterialIcons name={"translate"} size={iconSize} color={Colors[colorScheme].tint} />
                     <Text style={[styles.text]}>{forLang}</Text>
                 </View>
+                { country && 
                 <View style={[styles.profileItem]}>
                     <MaterialIcons name={"room"} size={iconSize} color={Colors[colorScheme].tint} />
                     <Text style={[styles.text]}>{country}</Text>
                 </View>
+                }
                 <View style={[styles.profileItem]}>
                     <MaterialIcons name={"create"} size={iconSize} color={Colors[colorScheme].tint} />
                     <Text style={[styles.text]}>{signedUp}</Text>
@@ -116,6 +117,24 @@ export default function Profile({navigation, user, touchFriends}) {
 
         </ScrollView>
     </SafeAreaView>
+
+    //   <NavTouchButton screenName="ChangeEmail" text="Change Email" />
+
+    //   {Platform.OS === "ios" ? 
+    //   <View style={styles.appButtonContainer}>
+    //   <Button title="Friends" 
+    //   color={"#fff"}
+    //   onPress={() => {navigation.navigate("FriendsScreen")}}
+    //   />
+    //   </View>
+    // : 
+    //   <Button title="Friends" 
+    //   color={Colors[colorScheme].activeTint}
+    //   onPress={() => {navigation.navigate("FriendsScreen")}}
+    //   />
+    //   }
+    //   </View>
+    //   </View>
     );
 }
 
@@ -131,33 +150,20 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-    ButtonView: {
-      padding: 5,
-    },
     CMContainer: {
       alignItems: 'center',
       justifyContent: 'center',
       padding: 5
     },
     title: {
-      fontSize: 20,
+      fontSize: 36,
       fontWeight: 'bold',
-    },
-    separator: {
-      marginVertical: 30,
-      height: 1,
-      width: '80%',
     },
     text: {
         paddingBottom: 20,
         paddingTop: 10,
         fontSize: 28
-    },
-    imageStyle:{
-      width: 200, 
-      height: 300,
-      resizeMode: 'stretch'
-     }, 
+    }, 
     titleBar: {
         flexDirection: "row",
         justifyContent: "space-between",

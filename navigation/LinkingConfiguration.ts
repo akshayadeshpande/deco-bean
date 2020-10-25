@@ -32,6 +32,7 @@ export default {
               ProfileScreen: 'profile',
               FriendsScreen: 'friends',
               FriendsProfileScreen: 'friendsProfile',
+              FriendsSearchScreen: 'friendsSearch',
             },
           },
           Word: {
