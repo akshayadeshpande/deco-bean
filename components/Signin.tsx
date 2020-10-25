@@ -2,18 +2,17 @@ import * as React from 'react';
 import { StyleSheet, Button, ScrollView, Platform, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useState, useEffect, Component } from 'react';
 
-import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
 import * as firebase from 'firebase';
 import { TextInput } from 'react-native-gesture-handler';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
 
 
 
-export default function Register({navigation}) {
+export default function Signin({navigation}) {
     const colorScheme = useColorScheme();
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loaded, setLoading] = useState(false);
@@ -27,8 +26,7 @@ export default function Register({navigation}) {
     } else {
   
       return (
-        <View style={{flex:1}}>
-          
+        <View>
           <View>
             <Text style={styles.text}>Email</Text>
             <TextInput 
@@ -43,24 +41,25 @@ export default function Register({navigation}) {
               onChangeText={(t) => setPassword(t.trim())}
               value={password}
               style={styles.textInput}/>
-            <View style={{padding:25}}/>
+          <View style={{padding:25}}/>
             
-            
-            {Platform.OS === "ios" ? 
-            <View style={styles.appButtonContainer}>
-            <Button title="Login" 
+          { // Login Buttons
+          Platform.OS === "ios" ? 
+          <View style={styles.appButtonContainer}>
+          <Button 
+            title="Login" 
             color={"#fff"}
             onPress={event => loginUser(event, email, password)}
-            />
-            </View>
-            : 
-            <Button title="Login" 
+          />
+          </View>
+          : 
+          <Button 
+            title="Login" 
             color={Colors[colorScheme].activeTint}
             onPress={event => {
               setLoading(true);loginUser(event, email, password); setLoading(false);}}
             />
-            }
-
+          }
           </View>
         </View>
         );
@@ -81,15 +80,18 @@ export async function loginUser(event, email, password){
 
 const styles = StyleSheet.create({
     textInput: {
-    height: 40, 
-    borderColor: 'gray', 
-    borderWidth: 1,
-    backgroundColor: "#fff",
-    padding: 10,
-    color: "#FF9E1C"
+      height: 50, 
+      width: 200,
+      borderColor: 'gray', 
+      borderWidth: 1,
+      backgroundColor: "#fff",
+      padding: 10,
+      color: "#FF9E1C",
+      fontSize: 20,
     },
     text: {
       padding: 5,
+      fontSize: 30,
     },
     container: {
       flex: 1,

@@ -38,19 +38,17 @@ export default function WordScreen(props) {
   console.log("Word Screen got word: " + params.word);
   console.log(`Your score is: ${stars} stars`);
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} persistentScrollbar={true}>
       <View style={styles.containerWords}>
-        <Text style={styles.title}>{params.word}</Text>
-        <Text style={styles.title}>Translation: {params.translation}</Text>
+        <Text style={styles.nativeWord}>{params.translation}</Text>
+        <Text style={styles.targetWord}>{params.word}</Text>
       </View>
-      <View style={styles.separator} />
       <View style={styles.containerImage}>
         <Image source={{ uri: params.imgURL}} style={styles.imageStyle} />
       </View>
       <View style={styles.containerAudio}>
         <AudioPlayer soundURI={params.soundURI}/>
       </View>
-      <View style={styles.separator} />
       <View style={styles.containerWords}>
         <Text style={styles.title}>Skill Level</Text>
         <View style={styles.containerProgress}>
@@ -191,6 +189,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    margin: 20
   },
   containerImage: {
     flex: 1,
@@ -202,16 +201,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  containerInteract: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    margin: 5,
+    margin: 10,
+  },
+  targetWord: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    margin: 10,
+  },
+  nativeWord: {
+    elevation: 8,
+    backgroundColor: "#FF9E1C",
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginTop: 30
   },
   separator: {
     marginVertical: 1,
@@ -236,13 +244,4 @@ const styles = StyleSheet.create({
     width: Layout.window.width / 2,
     aspectRatio: 1
   },
-  starImageStyle: {
-    width: 40,
-    height: 40,
-    resizeMode: 'cover',
-  },
-  flexBreak: {
-    flexBasis: "100%",
-    height: 0,
-  }
 });

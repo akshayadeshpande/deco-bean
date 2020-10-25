@@ -63,7 +63,7 @@ export default function AudioPlayer(props) {
       style={styles.button}
       onPress={() => playAudio()}
     >
-      <FontAwesome name="play-circle" size={50} color={Colors[colorScheme].activeTint} />
+      <FontAwesome name="play-circle" size={100} color={Colors[colorScheme].activeTint} />
       <Text style={styles.text}>Play Audio</Text>
     </TouchableOpacity>
   );
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   text: {
-    fontSize: 25,
+    fontSize: 30,
     fontWeight: 'bold',
   }
 });
