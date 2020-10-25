@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
     imageStyle:{
       width: 200, 
       height: 250,
-      resizeMode: 'stretch'
+      resizeMode: 'contain'
      },
      imgWord: {
       elevation: 8,

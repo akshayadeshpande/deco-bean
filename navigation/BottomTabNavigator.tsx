@@ -238,6 +238,9 @@ function ProfileNavigator({navigation}) {
         headerTintColor:"#fff",   
         headerTitleAlign: 'center', 
         headerLeft: null,
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
         }}
       />
       <ProfileStack.Screen
