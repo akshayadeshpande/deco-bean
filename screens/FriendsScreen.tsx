@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, SectionList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { StyleSheet, SectionList, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import 'firebase/firestore';
 import 'firebase/functions';
@@ -17,7 +17,6 @@ import { useEffect, useState } from 'react';
  */
 export default function FriendsScreen({navigation}) {
     const colorScheme = useColorScheme(); //App colors
-
     //States of the page
     const [loaded, setLoading] = useState(true);
     const [friendsList, setFriendsList] = useState([{title: "Loading...", 
@@ -30,8 +29,7 @@ export default function FriendsScreen({navigation}) {
         homeLang: "",
         name: "",
         signedUp: "",
-        wordCount:{"Spanish": 0, 
-                    "Chinese": 0}
+        wordCount:{}
     }
     ]}]);
 
@@ -39,7 +37,6 @@ export default function FriendsScreen({navigation}) {
     useEffect(() => {
         const incomingFriends = firebase.functions().httpsCallable('getUserFriends')
         incomingFriends({}).then((result) => {
-            console.log(result);
             assembleFriends(result.data['friends'], setFriendsList);
             setLoading(false);
         }).catch(function(err){
@@ -55,29 +52,42 @@ export default function FriendsScreen({navigation}) {
       </View>
        :  
        <View style={styles.back}>
-        <SectionList
-      sections={friendsList}
-      stickySectionHeadersEnabled={true}
-      renderItem={({item}) => (
-        
-          <TouchableOpacity
-            onPress={() => 
-                navigation.navigate("FriendsProfileScreen", {user: item})}>
-      
-            <View style={styles.listItemContainer}>
-              <View style={styles.listItem}>
-                <Text style={styles.listText}>{item.userName}</Text>
-              </View>
-              <View style={styles.listArrow}>
-                <FontAwesome name="chevron-right" size={16} color="black" />
-              </View>
+         {
+           friendsList[0].data.length == 0 ? 
+            <View style={styles.imgGap}>
+              <Image source={require('../assets/images/MEMA.png')} style={styles.mema}/>
+              <Text style={styles.addFriendsText}>Press + to start adding your friends!</Text>
             </View>
-          </TouchableOpacity>
-          
-      )}
-      keyExtractor={(item, index) => item.userName} //Unique words only
-    />
-    </View>
+           :
+           <View>
+              <SectionList
+                sections={friendsList}
+                stickySectionHeadersEnabled={true}
+                renderItem={({item}) => (
+              
+                <TouchableOpacity
+                  onPress={() => 
+                      navigation.navigate("FriendsProfileScreen", {user: item})}>
+            
+                  <View style={styles.listItemContainer}>
+                    <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                        <Image source={require('../assets/images/profileMEMA.png')} style={{width:50, height:50, margin: 5}}/>
+                        <Text style={[styles.listText, {fontSize: 20}]}>{item.userName}</Text>
+                    </View>
+                    <View style={styles.listArrow}>
+                      <FontAwesome name="chevron-right" size={16} color="black" />
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                
+              )} keyExtractor={(item, index) => item.userName} //Unique words only     
+              /> 
+            </View>
+          }     
+            <TouchableOpacity style={[styles.fab, {backgroundColor: Colors[colorScheme].tint}]} onPress={() => navigation.navigate('FriendsSearchScreen')}>
+              <Text style={{color: Colors[colorScheme].background, fontSize: 30, marginBottom: 5}}>+</Text>
+            </TouchableOpacity>       
+       </View>
       ); 
 }
 
@@ -139,6 +149,10 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       fontSize: 30,
     },
+    mema: {
+      width: 200,
+      height: 200,
+    },
     listItemContainer: {
       flex: 1,
       flexDirection: "row",
@@ -161,8 +175,32 @@ const styles = StyleSheet.create({
     listText: {
       fontSize: 20,
     },
+    imgGap: {
+      padding: 50,
+      alignItems:"center",
+      justifyContent: "center"
+    },
     listArrow: {
       padding: 10,
       justifyContent: "center",
+    },
+    fab: {
+      width: 60,
+      height: 60,
+      position: "absolute",
+      bottom: 20,
+      right: 20,
+      borderRadius: 30,
+      shadowColor: "#000",
+      shadowOffset: {width: 2, height: 2},
+      shadowOpacity: 0.3,
+      shadowRadius: 5,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    addFriendsText: {
+      fontSize: 25,
+      fontWeight: 'bold',
+      textAlign: "center"
     }
   });

@@ -109,8 +109,7 @@ exports.getChallenges = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('failed-precondition', 'A challenge can only be started when logged in.');
     }
     try {
-        const user_id = context.auth.uid;
-        
+        const user_id = context.auth.uid;        
         const result = await admin.firestore().collection('users').doc(user_id).collection('mcq').get(); 
       
         let sessions = [];
