@@ -1,7 +1,7 @@
-import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Image, } from 'react-native';
 import { Text, View } from '../components/Themed';
-
+import { useFonts } from 'expo-font';
 import EditScreenInfo from './EditScreenInfo';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -10,6 +10,7 @@ import 'firebase/auth';
 /* Word of the Day Component. 
  * Allows us to plug this into a screen.
 */
+
 
 /* RENDERING */
 // This function needs to be upper case to be used as a component tag otherwise it thinks it's an html tag.
@@ -29,7 +30,7 @@ function WordOfTheday(props) {
         </View>
         <View style={{paddingVertical:40, backgroundColor: "#FF9E1C", position: "relative" , borderStartWidth: 1.5 ,borderColor:"#fff", borderWidth:1, alignItems: "center", justifyContent: "center"}}/>
         <View  style={{ flex: 1,  backgroundColor: "#FF9E1C", alignItems:"center",justifyContent:"center"}}>
-          <Text style={ styles.RightTranslation}> {props.word.forLangWord} </Text>
+          <Text style={styles.RightTranslation} > {props.word.forLangWord} </Text>
         </View>
       </View>
     </View>
