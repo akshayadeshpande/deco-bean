@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   targetWord: {
-    fontSize: 30,
+    fontSize: 50,
     fontWeight: 'bold',
     margin: 10,
   },
