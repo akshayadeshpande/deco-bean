@@ -5,6 +5,7 @@ import { Text, View } from '../components/Themed';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import useColorScheme from '../hooks/useColorScheme';
+import { MemaBText } from '../components/StyledText';
 
 export default function StartLearningScreen({navigation}) {
     const colorScheme = useColorScheme();
@@ -21,7 +22,7 @@ export default function StartLearningScreen({navigation}) {
             </View>
             
             <TouchableOpacity onPress={() => navigation.navigate("SignUp")} style={styles.appButtonContainer}>
-                <Text style={styles.textColor}>Start Learning</Text>
+                <MemaBText style={styles.textColor}>Start Learning</MemaBText>
             </TouchableOpacity>
             
 
@@ -34,7 +35,7 @@ export default function StartLearningScreen({navigation}) {
             <View>
             
                 <TouchableOpacity onPress={() => navigation.navigate("SignIn")} style={styles.appButtonContainer2}>
-                    <Text style={styles.textColor}>Sign In</Text>
+                    <MemaBText style={styles.textColor}>Sign In</MemaBText>
                 </TouchableOpacity>
             
             </View>

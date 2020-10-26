@@ -14,6 +14,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { MemaBText } from '../components/StyledText';
 
 var count = 0;
 
@@ -78,13 +79,13 @@ export default function ChallengeComponent(props) {
         
         <View style={styles.SmallSeperator}>
         <TouchableOpacity style={styles.appButtonContainer} onPress={() => setTut(true)}>
-          <Text>Tutorial</Text>
+          <MemaBText>Tutorial</MemaBText>
         </TouchableOpacity>
         </View>
 
         <View style={styles.SmallSeperator}>
         <TouchableOpacity style={styles.appButtonContainer} onPress={() => {IntroStateChange(newImg, startingGame)}}>
-          <Text>Start Game</Text>
+          <MemaBText>Start Game</MemaBText>
         </TouchableOpacity>
         </View>
 
@@ -255,7 +256,7 @@ function IntroStateChange(
 
 
 /*
-Checks to see if the correct word has been picked and if so
+Checks to see if the correct word has been picked and if s1o
 increases the counter
 
 @param potentialWord: The word the user thinks is the correct choice.

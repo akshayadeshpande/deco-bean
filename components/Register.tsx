@@ -11,6 +11,7 @@ import * as SigninFunctions from './Signin';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import Navigation from '../navigation';
+import { MemaBText } from '../components/StyledText';
 
 
 export default function Register({navigation}) {
@@ -121,7 +122,7 @@ export default function Register({navigation}) {
             <View style={styles.buttonWrapper}>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setPicking(false)}}>
-                  <Text>Back</Text>
+                  <MemaBText>Back</MemaBText>
                 </TouchableOpacity>
               </View>
             </View>
