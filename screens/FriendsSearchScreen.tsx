@@ -48,7 +48,7 @@ export default function FriendSearchScreen({navigation}) {
                                 <Text style={[styles.listText, {fontSize: 20}]}>{item.userName}</Text>
                             </View>
                             <View style={styles.listArrow}>
-                                <Button color={Colors[colorScheme].activeTint} onPress={() => addFriend(item.id, navigation)} title={"Add Friend"}/>
+                                <Button color={Colors[colorScheme].activeTint} onPress={() => addFriend(item.id, navigation, setIsFetching)} title={"Add Friend"}/>
                                 <View style={{width: 2}}></View>
                                 <Button color={Colors[colorScheme].activeTint} onPress={() => navigation.navigate("FriendsProfileScreen", {user: item})} title={"View"}/>
                                 <View style={{width: 2}}></View>
@@ -78,9 +78,11 @@ function searchFriends(query, setFriends, isFetching, friends) {
     })
 }
 
-function addFriend(uid, navigation){
+function addFriend(uid, navigation, isFetching){
+    isFetching(true);
     let addFriend = firebase.functions().httpsCallable('addUserFriends')
     addFriend({friends: [uid]}).then((res) => {
+        isFetching(false);
         navigation.navigate('ProfileScreen', {initial: false});
   }).catch((err) => {
       console.log(err);
