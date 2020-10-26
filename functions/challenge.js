@@ -2,7 +2,12 @@ const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 
 /**
- * Function call for API when a new MCQ challenge is started.
+ * API Call to start a mcq challenge for the user. 
+ * 
+ * @param {Object} Data data object container values to pass to request.
+ * @param {Object} Context object for firebase api, primarly for user auth at this stage.
+ * @returns Successful response code 200 with Object containing words for the challenge.
+ * @throws functions.https.HttpsError internal error if https call failed.
  */
 exports.startChallenge = functions.https.onCall(async (data, context) => {
     // Check if the user is logged in or not. 
@@ -13,7 +18,7 @@ exports.startChallenge = functions.https.onCall(async (data, context) => {
         const user_id = context.auth.uid; // remove the user id when deploying and set properly
     
         // Defines all the parameters required for the randomisation of the quiz
-        const max = 21; // TODO: remove hardcoding to dynamically retrieve the number of words
+        const max = (await admin.firestore().collection('WordData').doc('count').get()).data().count;
         const count = data.count;
         //words send to the client for the user's challenge randomly chosen
         var challengeWords = []; 
@@ -54,7 +59,7 @@ exports.startChallenge = functions.https.onCall(async (data, context) => {
             start : admin.firestore.FieldValue.serverTimestamp()
         }); 
 
-        // Updates the user's seen words to include those that are part of the challenge
+        // Updates the user's seen words to include those that are part of the challenge. 
         await admin.firestore().collection('users').doc(user_id).update({['seen.' + forLang]: Array.from(wordRefs)})
 
         return {status: 'success', code: 201, id: newChallenge.id, words: challengeWords, lang: forLang, message: 
@@ -67,7 +72,14 @@ exports.startChallenge = functions.https.onCall(async (data, context) => {
 });
 
 /**
- * Function call for API upon completion of the MCQ challenge.
+ * API Call to register that a challenge has been saved with its score. 
+ * 
+ * @param {Object} Data data object containing values such as number of correct, incorrect and
+ *                  the id of the challenge which is ended. 
+ * @param {Object} Context object for firebase api, primarly for user auth at this stage.
+ * @returns Successful response code 200. 
+ * @throws functions.https.HttpsError internal error if https call failed or incorrect params are passed
+ *          in the API call. 
  */
 exports.endChallenge = functions.https.onCall(async (data, context) => {
     // Check if the user is logged in or not. 
