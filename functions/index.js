@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-const challenge = require('./challenge')
+const challenge = require('./challenge');
 const user = require('./user');
 
 exports.startChallenge = challenge.startChallenge;
@@ -15,11 +15,14 @@ exports.searchUsers = user.searchUsers;
 exports.removeUserFriends = user.removeUserFriends;
 
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// Take the text parameter passed to this HTTP endpoint and insert it into 
-// Cloud Firestore under the path /messages/:documentId/original
+/**
+ * API Call to get all words stored in the system
+ * 
+ * @param {Object} Optional data object container values to pass to request.
+ * @param {Object} Context object for firebase api, primarly for user auth at this stage.
+ * @returns Successful response code 200, with Object containing all the word or 500 if an 
+ *          internal error orccrs
+ */
 exports.getWords = functions.https.onRequest(async (req, res) => {
     try{
 
@@ -37,6 +40,15 @@ exports.getWords = functions.https.onRequest(async (req, res) => {
     }
   });
 
+/**
+ * API Call to get all users.
+ * 
+ * @param {Object} Optional data object container values to pass to request.
+ * @param {Object} Context object for firebase api, primarly for user auth at this stage.
+ * @returns Successful response code 200, with Object containing all users or 500 if an internal
+ *          error occurs. 
+ * @throws functions.https.HttpsError internal error if https call failed.
+ */
 exports.getUsers = functions.https.onRequest(async (req, res) => {
     try{
 
@@ -54,6 +66,16 @@ exports.getUsers = functions.https.onRequest(async (req, res) => {
     }
 });
 
+/**
+ * API Call to get the word of the day and its associated information. The word of day
+ * is based on the date howwver a more complex mechanism will be required as the corpus
+ * of words in the system grows. 
+ * 
+ * @param {Object} Optional data object container values to pass to request.
+ * @param {Object} Context object for firebase api, primarly for user auth at this stage.
+ * @returns Successful response code 200, with Object containing word of the day.
+ * @throws functions.https.HttpsError internal error or if https call failed.
+ */
 exports.getWotd = functions.https.onCall(async (data, context) => {
     if (!context.auth){
         throw new functions.https.HttpsError('failed-precondition', 'A word of the day can only be retrieved when logged in.');

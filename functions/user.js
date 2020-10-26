@@ -52,17 +52,19 @@ exports.getUser = functions.https.onCall(async (data, context) => {
 });
 
 /**
- * API call used to retrieve the friends of a particular user.
+ * API Call to get all friends of a users. 
  * 
- * @data: The data which is passed when the function call is made, however no data is required for this API call.
- * @context: Data parsed and passed automatically by firebase such as user auth. 
+ * @param {Object} Optional data object container values to pass to request such as search query.
+ * @param {Object} Context object for firebase api, primarly for user auth at this stage.
+ * @returns Successful response code 200, with Object containing all users' friends.
+ * @throws functions.https.HttpsError internal error if https call failed.
  */
 exports.getUserFriends = functions.https.onCall(async (data, context) => {
     if (!context.auth){
         throw new functions.https.HttpsError('failed-precondition', 'A users friend can only be retrieved when logged in.');
     }
     try {
-        const user_id = context.auth.uid;
+        const user_id =  context.auth.uid;
 
         // Fetches friends' data from the user's profile
         let friends = (await admin.firestore().collection('users').doc(user_id).get()).get('friends');
@@ -85,13 +87,12 @@ exports.getUserFriends = functions.https.onCall(async (data, context) => {
 });
 
 /**
- * API call used to add friends for a user. The API call is made within the app from the display
- * which only allows adding of one valid user from the search results hence only valid userids of 
- * users are assumed to be in the input. 
+ * API Call to add a user as a friend.  
  * 
- * @data: The data which is passed when the function call is made. It must contain the parameter 'friends', 
- *        which is a list of user ids to add as friends. 
- * @context: Data parsed and passed automatically by firebase such as user auth. 
+ * @param {Object} Data data object container values to pass to request such as friend to add.
+ * @param {Object} Context object for firebase api, primarly for user auth at this stage.
+ * @returns Successful response code 200, on adding the user friend. 
+ * @throws functions.https.HttpsError internal error if https call failed.
  */
 exports.addUserFriends = functions.https.onCall(async (data, context) => {
     if (!context.auth){
@@ -167,13 +168,13 @@ exports.removeUserFriends = functions.https.onCall(async (data, context) => {
     }
 });
 
-/**
- * API call to search users by their first name in the database. This search is a handled not via the databse 
- * but via JavaScript due to the limitations posed by the database of conducting indexed text searches.  
+/**API Call to search all the users in the system. Uses JavaScript based text matching due
+ * to limitations of the Firebase. 
  * 
- * @data: The data which is passed when the function call is made. It must contain the parameter 'name', which
- *        which represents the name of the users to search.
- * @context: Data parsed and passed automatically by firebase such as user auth. 
+ * @param {Object} Data data object container values to pass to request such as search query.
+ * @param {Object} Context object for firebase api, primarly for user auth at this stage.
+ * @returns Successful response code 200, with Object containing all users whose name matches query string.
+ * @throws functions.https.HttpsError internal error if https call failed.
  */
 exports.searchUsers = functions.https.onCall(async (data, context) => {
     if (!context.auth){
@@ -184,12 +185,21 @@ exports.searchUsers = functions.https.onCall(async (data, context) => {
         Ensure a name of a user is included as part of the request payload.');
     }
     try {       
+        let user_id = context.auth.uid;
         let users = [];
         var snapshot = await admin.firestore().collection('users').get();
+        let friends = (await admin.firestore().collection('users').doc(user_id).get()).get('friends');
         
-        // Checks to see if the user's name matches the search query. Handled in JavaScript due to limtiations of Firestore
+        // A set of a user's friends used for checking later is a user is friend in better runtime
+        let friendSet = new Set();
+        friends.forEach(friend => {
+            friendSet.add(friend.id);
+        })
+        
+        // Does a check to see if a user is a current friend and also if it matches the query string. 
+        // Currently a javascript search is used as firebase does not allow wildcard searches. 
         snapshot.forEach((user) => {
-            if (user.data().name.includes(data.name)) {
+            if (!friendSet.has(user.id) && user.data().name.toLowerCase().includes(data.name.toLowerCase())) {
                 let userData = handleUserData(user.data());
                 delete userData['email'];
                 userData['id'] = user.id;

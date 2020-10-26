@@ -49,8 +49,8 @@ export default function Profile({navigation, user, touchFriends}) {
         setHomeLang(user.homeLang);
         setFriendCount(user.friendCount);
         setWordCount(user.wordCount);
-        setSignedUp(user.signedUp.split(" ").slice(0, 5).join(" "));
-        setForLangCount(user.wordCount[user.forLang] || 0);
+        setSignedUp(user.signedUp.split(" ").slice(1, 4).join(" "));
+        setForLangCount(user.wordCount[user.forLang]);
         setLoading(false);
     },[user]);
 
@@ -89,30 +89,47 @@ export default function Profile({navigation, user, touchFriends}) {
                 </View>
             </View>
             <View>
-                { email &&
-                    <View style={[styles.profileItem]}>
+                { email && 
+                <View style={[styles.profileItem]}>
+                    <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}> 
                         <MaterialIcons name={"email"} size={iconSize} color={Colors[colorScheme].tint} />
-                        <Text style={[styles.text]}>{email}</Text>
+                        <Text style={{fontSize: 28, fontWeight: "bold", color: Colors[colorScheme].tint}}> Email ... </Text>
                     </View>
+                    <Text style={[styles.text]}>{email}</Text>
+                </View>
                 }
                 <View style={[styles.profileItem]}>
-                    <MaterialIcons name={"home"} size={iconSize} color={Colors[colorScheme].tint} />
+                    <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}> 
+                        <MaterialIcons name={"home"} size={iconSize} color={Colors[colorScheme].tint} />
+                        <Text style={{fontSize: 28, fontWeight: "bold", color: Colors[colorScheme].tint}}> Knows ... </Text>
+                    </View>
                     <Text style={[styles.text]}>{homeLang}</Text>
                 </View>
                 <View style={[styles.profileItem]}>
-                    <MaterialIcons name={"translate"} size={iconSize} color={Colors[colorScheme].tint} />
+                    <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}> 
+                        <MaterialIcons name={"translate"} size={iconSize} color={Colors[colorScheme].tint} />
+                        <Text style={{fontSize: 28, fontWeight: "bold", color: Colors[colorScheme].tint}}> Is learning ... </Text>
+                    </View>
                     <Text style={[styles.text]}>{forLang}</Text>
                 </View>
                 { country && 
                 <View style={[styles.profileItem]}>
-                    <MaterialIcons name={"room"} size={iconSize} color={Colors[colorScheme].tint} />
+                    <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}> 
+                        <MaterialIcons name={"room"} size={iconSize} color={Colors[colorScheme].tint} />
+                        <Text style={{fontSize: 28, fontWeight: "bold", color: Colors[colorScheme].tint}}> Is from ... </Text>
+                    </View>
                     <Text style={[styles.text]}>{country}</Text>
                 </View>
                 }
+                { signedUp && 
                 <View style={[styles.profileItem]}>
-                    <MaterialIcons name={"create"} size={iconSize} color={Colors[colorScheme].tint} />
+                    <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}> 
+                        <MaterialIcons name={"create"} size={iconSize} color={Colors[colorScheme].tint} />
+                        <Text style={{fontSize: 28, fontWeight: "bold", color: Colors[colorScheme].tint}}> User since ... </Text>
+                    </View>
                     <Text style={[styles.text]}>{signedUp}</Text>
                 </View>
+                }
             </View>
 
         </ScrollView>
