@@ -3,6 +3,7 @@ import { Button, StyleSheet, Image, Platform } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Text, View } from '../components/Themed';
 import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
 import useColorScheme from '../hooks/useColorScheme';
 
 export default function StartLearningScreen({navigation}) {
@@ -50,9 +51,11 @@ const styles = StyleSheet.create({
         alignItems:"center",
     },
     imageView: {
-        resizeMode: 'stretch',
-        width: 400, 
-        height: 150,
+        // resizeMode: 'stretch',
+        // width: 400, 
+        // height: 150,
+        width: Layout.window.width * 0.9,
+        resizeMode: 'contain',
     },
     viewStyle: {
         flex: 1,

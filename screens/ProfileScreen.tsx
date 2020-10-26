@@ -6,13 +6,13 @@ import Profile from "../components/Profile";
 import { Text, View } from "../components/Themed";
 import { db, auth } from "../App";
 import * as firebase from "firebase";
-import { useScreens } from "react-native-screens";
-import { Button } from "react-native";
 import 'firebase/firestore';
 import 'firebase/functions';
 import 'firebase/auth';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
+import { useIsFocused, useFocusEffect } from '@react-navigation/native';
+
 
 
 /**
@@ -27,21 +27,23 @@ export default function ProfileScreen({navigation}) {
   const colorScheme = useColorScheme(); //Colors of the app
 
   //gets information about the current user that is logged in and changes the state
-  useEffect(() => {
-        const getUser = firebase.functions().httpsCallable('getUser')
-        getUser({}).then((result) => {
-            setUser(result.data.user);
-            setLoading(false); //finished loading
-        }).catch(function(err){
-            console.log(err);
-            alert('An internal error occured. Please try again later.')
-        })
-    },[]);
+  useFocusEffect(
+    React.useCallback(() => {
+      const getUser = firebase.functions().httpsCallable('getUser')
+      getUser({}).then((result) => {
+          setUser(result.data.user);
+          setLoading(false); //finished loading
+      }).catch(function(err){
+          console.log(err);
+          alert('An internal error occured. Please try again later.')
+      })
+     },[])
+  );
     
     //Render screen
     return (loaded ? 
       <View style={styles.container}>
-      <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
+        <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
       </View>
     :   
         <View style={styles.container}>

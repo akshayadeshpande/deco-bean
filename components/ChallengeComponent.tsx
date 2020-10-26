@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Button, Image, Platform, ProgressBarAndroid, ActivityIndicator} from 'react-native';
 import { useState, useEffect, Component } from 'react';
+import Toast from 'react-native-simple-toast';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -75,13 +76,13 @@ export default function ChallengeComponent(props) {
 
         <View style={styles.CMContainer}> 
         
-        <View style={styles.BigSeperator}>
+        <View style={styles.SmallSeperator}>
         <TouchableOpacity style={styles.appButtonContainer} onPress={() => setTut(true)}>
           <Text>Tutorial</Text>
         </TouchableOpacity>
         </View>
 
-        <View style={styles.BigSeperator}>
+        <View style={styles.SmallSeperator}>
         <TouchableOpacity style={styles.appButtonContainer} onPress={() => {IntroStateChange(newImg, startingGame)}}>
           <Text>Start Game</Text>
         </TouchableOpacity>
@@ -97,35 +98,38 @@ export default function ChallengeComponent(props) {
           
           <View style={styles.imgHolder}>
             <Image 
-                  source = {{ uri: img}}
-      
-                  style = {styles.imageStyle} />
-              <TouchableOpacity style={styles.imgWord}>
-                <Text style={{ justifyContent:"center", alignItems:"center", padding:5}}>Apple</Text>
-              </TouchableOpacity>
-            </View>
+              source = {{ uri: img}}
+              style = {styles.imageStyle} />
+            <TouchableOpacity style={styles.imgWord}>
+              <Text style={{ justifyContent:"center", alignItems:"center", padding:5}}>Apple</Text>
+            </TouchableOpacity>
+          </View>
           
-          
-          <View style={styles.SmallSeperator}>
+          <View>
             <TouchableOpacity style={styles.appButtonContainer2} onPress={() => setTut(false)}>
-              <Text style={styles.text}>Tutorial Button 1</Text>
+              <Text style={styles.text}>Go Back</Text>
             </TouchableOpacity>
           </View>
 
-
-          <ScrollView>
-            <Text>
-            Challenge mode works by displaying and image at the top of the screen, depicting
-            a word you have seen before through some other form of learning on MeMa. Underneath 
-            gives you 4 clickable buttons with words on them from the language(s) you
-            are learning. Your task will be to select the correct word that represents the picture,
-            10 times, then your score will be recorded on your profile so it can be viewed later. 
-            
-            Press any button to be taken back to the game menu.
+          <ScrollView style={styles.SmallSeperator}>
+            <Text style={styles.tutorialText}>
+              (Scroll to read text, Press the 'Go Back' button to be taken back to the game menu)
+            </Text>
+            <Text style={styles.tutorialText}>
+              Challenge mode displays an image at the top of the screen, 
+              depicting a word from the language you hae chosen. 
+            </Text>
+            <Text style={styles.tutorialText}>
+              You will 4 clickable buttons with words on them from the language you
+              are learning. 
+            </Text>
+            <Text style={styles.tutorialText}>
+              Your task will be to select the correct word that represents the picture,
+              then your score will be recorded on your profile so it can be viewed later. 
             </Text>
           </ScrollView>
           
-          </View>
+        </View>
       );
     } else {
       // Final view for how many correct answes
@@ -157,10 +161,10 @@ export default function ChallengeComponent(props) {
             
             
             <View style={styles.imgHolder}>
-            <Image 
-                  source = {{ uri: img}}
-      
-                  style = {styles.imageStyle} />
+              <Image 
+                source = {{ uri: img}}
+                style = {styles.imageStyle} 
+              />
               <TouchableOpacity style={styles.imgWord}>
                 <Text style={{ justifyContent:"center", alignItems:"center", padding:5}}>{currentWord}</Text>
               </TouchableOpacity>
@@ -260,8 +264,10 @@ function checkWord(potentialWord : string) {
   console.log("Potential Word: " + potentialWord + " Current Word: " + currentWord);
   if (potentialWord == wordInfo[currentWord][LangIndex()]) {
     correctAnswers.push(potentialWord);
+    Toast.showWithGravity("You're Correct!!", Toast.SHORT, Toast.TOP);
   } else {
     incorrectAnswers.push(potentialWord);
+    Toast.showWithGravity("That wasn't the correct word.", Toast.SHORT, Toast.TOP);
   }
 }
 
@@ -399,8 +405,8 @@ const styles = StyleSheet.create({
     },
     imageStyle:{
       width: 200, 
-      height: 300,
-      resizeMode: 'stretch'
+      height: 250,
+      resizeMode: 'contain'
      },
      imgWord: {
       elevation: 8,
@@ -408,7 +414,6 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       paddingVertical: 10,
       paddingHorizontal: 100,
-      bottom: 40,
      },
      appButtonContainer2: {
       elevation: 8,
@@ -436,9 +441,13 @@ const styles = StyleSheet.create({
 
     },
     imgHolder: {
-      padding: 10,
+      padding: 40,
       position:"relative",
       justifyContent:"center",
       alignItems:"center",
     },
+    tutorialText: {
+      padding: 10,
+      fontSize: 20,
+    }
   });

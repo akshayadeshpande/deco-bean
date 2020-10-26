@@ -8,7 +8,7 @@ import SignUp from '../screens/Register'
 import MainApp from './BottomTabNavigator'
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-
+import { MemaBText } from '../components/StyledText';
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 
@@ -24,14 +24,18 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
         backgroundColor: Colors[colorSch].bottomTabBackground,
       }}}>
         <Stack.Screen name="StartLearning" options={{headerShown: false}} component={StartLearning}/>
-        <Stack.Screen name="SignIn" options={{headerTitle: "SIGN IN",
+        <Stack.Screen name="SignIn" options={{
+          headerTitle: () => <MemaBText style={{fontSize:20,}}>SIGN IN</MemaBText>,
+          headerBackTitle: null,
         headerStyle: {
           backgroundColor:Colors[colorSch].activeTint
         },
         headerTintColor: "#fff",
         headerTitleAlign:"center"}} component={SignIn}/>
-        <Stack.Screen name="SignUp" options={{headerTitle: "CREATE ACCOUNT",
-        headerStyle: {
+        <Stack.Screen name="SignUp" options={{
+          headerTitle: () =>  <MemaBText style={{fontSize:20,}}>CREATE ACCOUNT</MemaBText>,
+          headerBackTitle: null,
+          headerStyle: {
           backgroundColor:Colors[colorSch].activeTint
         },
         headerTintColor: "#fff",
