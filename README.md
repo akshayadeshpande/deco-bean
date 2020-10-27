@@ -58,7 +58,7 @@ The main folders React Native app is contained in the following:
 ```
 assets
     fonts
-    -- Holds our custom fonts, with the exception of SpaceMono
+    -- Holds fonts used in app.
     images
     -- Holds images and graphics used throughout the app
 components
