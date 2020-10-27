@@ -39,8 +39,7 @@ MeMa is a language learning platform which aims to tackle cognitive decline amon
 
 6. Select Scan QR Code and scan the QR Code from your browser. The app will now start transferring to your phone!
 
-<img src="./assets/images/readme/expo-app.jpg" alt="Expo Mobile Phone App" width="200"/>
-<img src="./assets/images/readme/expo-loading.jpg" alt="Expo Mobile Phone App Loading" width="200"/>
+<img src="./assets/images/readme/expo-app.jpg" alt="Expo Mobile Phone App" width="200"/> <img src="./assets/images/readme/expo-loading.jpg" alt="Expo Mobile Phone App Loading" width="200"/>
 
 
 7. Once the app has completed transfer you should see MeMa's sign on screen!
