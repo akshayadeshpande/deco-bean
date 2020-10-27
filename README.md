@@ -10,7 +10,7 @@ This is a DECO3801 Studio Project created by:
 * David Riddell
 * Jameson Nguyen
 
-... **in Semester 2, 2020**
+... **in Semester 2, 2020** @ **The University of Queensland**
 
 <img src="./assets/images/MEMALOGO.png" alt="MeMa Logo" width="300"/>
 
