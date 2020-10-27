@@ -1,6 +1,6 @@
 # Team Accordion - MeMa
 
-![MeMa Welcome](./assets/images/welcomeMEMA.png =300x)
+![MeMa Welcome](./assets/images/welcomeMEMA.png | width=300)
 
 This is a DECO3801 Studio Project created by:
 * Akshay Deshpande
