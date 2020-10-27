@@ -26,7 +26,7 @@ MeMa is a language learning platform which aims to tackle cognitive decline amon
 
 ## Installing MeMa
 1. Clone this repo
-2. In the root with a command line tool, type `expo install` to install all required packages
+2. In the root folder of the repo, using a command line tool, type `expo install` to install all required packages
 3. Once installed, type `expo start` to start the expo browser client (see image below - note your console logs might be different.)
 
 <img src="./assets/images/readme/expo-browser.PNG" alt="Expo Browser Screenshot" width="25%"/>
