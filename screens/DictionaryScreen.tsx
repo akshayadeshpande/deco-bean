@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, ActivityIndicator } from 'react-native';
 import SearchBar from 'react-native-searchbar';
 import * as firebase from 'firebase';
+import 'firebase/functions';
 
-import { Text, View } from '../components/Themed';
+import { View } from '../components/Themed';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import DictionaryList from '../components/DictionaryList';
-import 'firebase/functions';
 import { MaterialIcons } from '@expo/vector-icons';
 
 
@@ -47,7 +47,7 @@ export default function DictionaryScreen(props) {
    * 
    * Currently dictionary does not receive real time updates.
    * 
-   * Will run a db call on first mount.
+   * Calls for words from the db on screen load/component mount.
    */
   useEffect(() => {
     async function loadData() {
@@ -112,21 +112,17 @@ export default function DictionaryScreen(props) {
  */
 
 /*
- * Retrieve words from firestore.
+ * Retrieve words from firestore and sets DictionaryData with words.
  * @param setWordData {function} Sets the wordData state.
  */
 async function getWords(setDictionaryData, setFilteredDict) {
   const db = firebase.firestore()
   const wordsRef = db.collection('WordData');
-  // Create word collection with title categories
-  // Right now this sorts the words into language, pending a better way to do the dictionary.
-  console.log("Dictionary data is loading...");
-  // myWords is a dummy collection for user words.
+  // console.log("Dictionary data is loading...");
   let dictionary = [];
 
+  // Retrieve words from db
   await wordsRef.get().then(data => {
-    // TODO: Figure out in doc.data push: Argument of type 'any' is not assignable to parameter of type 'never'
-    // It doesn't stop anythin from working...
     data.forEach(doc => {
         dictionary.push(doc.data());
     })
@@ -134,7 +130,7 @@ async function getWords(setDictionaryData, setFilteredDict) {
     console.log("Error in getWords(), DictionaryScreen.");
     console.log(error);
   });
-  console.log("Dictionary data retrieved.");
+  // console.log("Dictionary data retrieved.");
   // console.log(dictionary);
   setDictionaryData(dictionary);
   setFilteredDict(dictionary);
@@ -142,13 +138,16 @@ async function getWords(setDictionaryData, setFilteredDict) {
 
 /*
  * Retrieve user's learner/target language.
+ * Sets user's language state.
+ * @param {function} languageSetter Setter function that will set language state on screen.
  */
 async function getLearnerLanguage(languageSetter) {
   let userData = firebase.functions().httpsCallable('getUser')
+  // Retrieve value for user's language.
   await userData({}).then((res) => {
     const language = res.data.user.forLang.slice(0, 2).toUpperCase();
     languageSetter(language);
-    console.log(`Active language set to: ${language}`);
+    // console.log(`Active language set to: ${language}`);
   }).catch(err => console.log(err));
 }
 

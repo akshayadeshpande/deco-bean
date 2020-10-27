@@ -30,13 +30,6 @@ export default function DictionaryList(props) {
    * Note that there is a second argument which is an array after the arrow function:
    *  useEffect( () => {..}, []);
    * 
-   * This array tells react when to use the effect. When the array is empty it will 
-   * only run once on first render. So this is a good hook to use for one time db reads.
-   * 
-   * If the state is updated again later it should re-render based on how React Native works.
-   * 
-   * For instance if you want a trigger to make the effect happen again, you could set a state
-   * that is a bool that when true will run the update (say with a refresh button).
    */
   useEffect(() => {
     // Construct a word list if wordData, userWords, or selected language has changed.
@@ -72,11 +65,16 @@ export default function DictionaryList(props) {
   );
 }
 
+/*
+ * Construct the word list that will be showing for browsing and selection.
+ * @param {string} language User's learning language.
+ * @param {Object} wordData Object containing docs pulled from word DB collection
+ * @param {function}  setWordList Setter function for word list state.
+ */
 function constructWordList(language, wordData, setWordList) {
   if (wordData.length === 0) {
     return;
   }
-  // My Words is just dummy data for now
   let wordList = [{title: "Dictionary", data: []}]
   // Construct active word list, default translation is English
   wordData.forEach(wordDoc => {
@@ -99,6 +97,7 @@ function constructWordList(language, wordData, setWordList) {
   setWordList(wordList);
 
 }
+
 
 const styles = StyleSheet.create({
     sectionHeader: {

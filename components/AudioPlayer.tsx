@@ -9,6 +9,12 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 
 
+/*
+ * Audio/Sound player component.
+ * 
+ * @param {react.Props} props Properties passed to this screen.
+ * @return Audio player render for user to interact with.
+ */
 export default function AudioPlayer(props) {
   const colorScheme = useColorScheme();
   const soundURI = props.soundURI;
@@ -47,6 +53,9 @@ export default function AudioPlayer(props) {
     
   }
 
+  /*
+   * React hook to run on component mount.
+   */
   useEffect(() => {
     // Load Audio
     loadAudio();
@@ -68,6 +77,7 @@ export default function AudioPlayer(props) {
     </TouchableOpacity>
   );
 }
+
 
 const styles = StyleSheet.create({
   button: {

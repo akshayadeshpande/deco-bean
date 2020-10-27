@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, ActivityIndicator } from 'react-native';
 
-import { Text, View } from '../components/Themed';
-// import { getDailyWord } from '../components/WOTD';
+import { View } from '../components/Themed';
 import WordOfTheDay from '../components/WOTD';
 import NavTouchButton from '../components/NavTouchButton';
 import { useState, useEffect } from 'react';
@@ -12,6 +11,14 @@ import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 
 
+/*
+ * Home Screen is the heart of MeMa, the navigation hub that greets users upon logging in.
+ *
+ * The word of the day is also loaded for the user's viewing pleasure.
+ *
+ * @param {react.Props} props Props object, contains navigation object.
+ * @return Renders for the home page.
+ */
 export default function HomeScreen({navigation}) {
   const colorScheme = useColorScheme(); // App colors
   const [dailyWord, setDailyWord] = useState({}); //Word of the Day

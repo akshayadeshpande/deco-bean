@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react';
+import React, from 'react';
 import { StyleSheet, Image, } from 'react-native';
 import { Text, View } from '../components/Themed';
-import { useFonts } from 'expo-font';
-import EditScreenInfo from './EditScreenInfo';
-import * as firebase from 'firebase';
 import 'firebase/firestore';
 import 'firebase/functions';
 import 'firebase/auth';
+
 /* Word of the Day Component. 
- * Allows us to plug this into a screen.
-*/
-
-
-/* RENDERING */
-// This function needs to be upper case to be used as a component tag otherwise it thinks it's an html tag.
+ *
+ * Component shows the current word of the data, this component lives on the Home Screen.
+ * 
+ * @returns Render for the Word of the Day Component.
+ */
 function WordOfTheday(props) {
   return (
     <View style={{flex:1, alignItems:"center", justifyContent:"center"}}>
@@ -38,17 +35,6 @@ function WordOfTheday(props) {
   )
 }
 
-// /* Functionality */
-// function getDailyWord() {
-//     var dailyWord = firebase.functions().httpsCallable('getWotd');
-//     dailyWord({}).then(function(result){
-//       console.log(result);
-//       return result
-//   }).catch(function(err){
-//     console.log(err);
-//     return {}
-//   })
-// }
 
 /* STYLES */
 const styles = StyleSheet.create({
