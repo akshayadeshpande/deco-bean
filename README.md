@@ -37,7 +37,7 @@ MeMa is a language learning platform which aims to tackle cognitive decline amon
 
 5. A QR Code will generate. Now open up the Expo app on your phone or tablet.
 
-6. Select Scan QR Code and scan the QR Code from your browser. The app will now start transferring to your phone!
+6. Select Scan QR Code and scan the QR Code from your browser. The app will now start transferring to your phone! Note that on iOS the Scan QR Code option is no longer available, but you will be able to scan with your camera as an alternative.
 
 <img src="./assets/images/readme/expo-app.jpg" alt="Expo Mobile Phone App" width="200"/> <img src="./assets/images/readme/expo-loading.jpg" alt="Expo Mobile Phone App Loading" width="200"/>
 
@@ -82,8 +82,8 @@ App.tsx
 The main idea behind React Native apps is that there should be an abstraction between what is rendered, and functionality for 
 components that exist on a screen. Hence typically, our key functionality are indeed components - such as custom navigation buttons. 
 
-The screens themselves should handle states shared by children, as the a screen acts as a parent in the React state hierarchy, as well as
-finally rendering of the screen and all components within the screen. Any internal rendering of components is pulled from the component itself and rendered by the parent screen in the order they are called by the parent.
+The screens themselves should handle states shared by children, as the screen acts as a parent in the React state hierarchy, as well as
+final rendering of the screen and all components within the screen. Any internal rendering of components is pulled from the component itself and rendered by the parent screen in the order they are called by the parent.
 
 
 ## Database
