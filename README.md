@@ -47,7 +47,7 @@ MeMa is a language learning platform which aims to tackle cognitive decline amon
 <img src="./assets/images/readme/mema-start.jpg" alt="MeMa Start Screen" width="200"/>
 
 ### Additional Help
-For additional help please see the quick start user manual: [MeMa User Manual](./assets/doc/mema_quick_user_manual.pdf)
+For additional help please see the quick start user manual: [MeMa User Manual](./assets/docs/mema_quick_user_manual.pdf)
 
 # Code and Backend
 
