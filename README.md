@@ -90,7 +90,12 @@ finally rendering of the screen and all components within the screen. Any intern
 
 We utilise Cloud Firestore (NoSQL) and Firebase Storage for cloud services, reliability, and scalability on demand.
 
-Database diagram and some database discussion here.
+Below is the the general schema for how the database is layed out:
+![](SchemaMema.png)
+
+
+
+
 
 ## Backend
 
