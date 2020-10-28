@@ -1,4 +1,4 @@
-import React, from 'react';
+import * as React from 'react';
 import { StyleSheet, Image, } from 'react-native';
 import { Text, View } from '../components/Themed';
 import 'firebase/firestore';

@@ -13,12 +13,6 @@ import { MemaText } from '../components/StyledText';
 var started = false;
 export default function SigninScreen({navigation}) {
   const colorScheme = useColorScheme();
-
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      navigation.navigate('MainApp')
-    }
-  });
   
   return (
     <View style={styles.container}>

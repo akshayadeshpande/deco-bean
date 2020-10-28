@@ -183,9 +183,7 @@ async function registerUser(event, name, email, password, forLang, homeLang){
     } else {
       alert("Internal error please try again later");
     }
-    SigninFunctions.loginUser(event, email, password).then(() => {
-      alert("Account created successfully, enjoy MeMa");
-    });
+    alert("Account created successfully, enjoy MeMa"); 
   }).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;

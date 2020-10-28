@@ -7,13 +7,6 @@ import Register from '../components/Register';
 import * as firebase from 'firebase';
 
 export default function RegisterScreen({navigation}) {
-
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      navigation.navigate("SignIn")
-      navigation.navigate("MainApp")
-    } 
-  });
   
   return (
     <View style={styles.container}>

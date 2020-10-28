@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Button, Image, Platform, ProgressBarAndroid, ActivityIndicator} from 'react-native';
 import { useState, useEffect, Component } from 'react';
-import Toast from 'react-native-simple-toast';
+import Toast from 'react-native-tiny-toast'
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -265,10 +265,14 @@ function checkWord(potentialWord : string) {
   console.log("Potential Word: " + potentialWord + " Current Word: " + currentWord);
   if (potentialWord == wordInfo[currentWord][LangIndex()]) {
     correctAnswers.push(potentialWord);
-    Toast.showWithGravity("You're Correct!!", Toast.SHORT, Toast.TOP);
+    Toast.show("You're Correct!!",  {
+      position: Toast.position.TOP
+    });
   } else {
     incorrectAnswers.push(potentialWord);
-    Toast.showWithGravity("That wasn't the correct word.", Toast.SHORT, Toast.TOP);
+    Toast.show("That wasn't the correct word.", {
+      position: Toast.position.TOP
+    });
   }
 }
 
