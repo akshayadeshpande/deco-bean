@@ -37,7 +37,7 @@ MeMa is a language learning platform which aims to tackle cognitive decline amon
 
 5. A QR Code will generate. Now open up the Expo app on your phone or tablet.
 
-6. Select Scan QR Code and scan the QR Code from your browser. The app will now start transferring to your phone!
+6. Select Scan QR Code and scan the QR Code from your browser. The app will now start transferring to your phone! Note that on iOS the Scan QR Code option is no longer available, but you will be able to scan with your camera as an alternative.
 
 <img src="./assets/images/readme/expo-app.jpg" alt="Expo Mobile Phone App" width="200"/> <img src="./assets/images/readme/expo-loading.jpg" alt="Expo Mobile Phone App Loading" width="200"/>
 
