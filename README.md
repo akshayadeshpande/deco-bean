@@ -82,8 +82,8 @@ App.tsx
 The main idea behind React Native apps is that there should be an abstraction between what is rendered, and functionality for 
 components that exist on a screen. Hence typically, our key functionality are indeed components - such as custom navigation buttons. 
 
-The screens themselves should handle states shared by children, as the a screen acts as a parent in the React state hierarchy, as well as
-finally rendering of the screen and all components within the screen. Any internal rendering of components is pulled from the component itself and rendered by the parent screen in the order they are called by the parent.
+The screens themselves should handle states shared by children, as the screen acts as a parent in the React state hierarchy, as well as
+final rendering of the screen and all components within the screen. Any internal rendering of components is pulled from the component itself and rendered by the parent screen in the order they are called by the parent.
 
 
 ## Database
