@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import { StyleSheet, ActivityIndicator, Alert } from 'react-native';
 
 import { View } from '../components/Themed';
 import WordOfTheDay from '../components/WOTD';
@@ -26,56 +26,69 @@ export default function HomeScreen({navigation}) {
 
   //gets information about the current user that is logged in and changes the state
   useEffect(() => {
-    var dailyWord = firebase.functions().httpsCallable('getWotd');
-    dailyWord({}).then(function(result){
+    setTimeout(() => {
+      var dailyWord = firebase.functions().httpsCallable('getWotd');
+      dailyWord({}).then(function(result){
         setDailyWord(result.data);
         setLoading(false);
-    }).catch(function(err){
-      console.log(err);
-      alert("An error occur, please try to login again. ")
-    })
+      }).catch(function(err){
+        console.log(err);
+        Alert.alert("An error ocurred, please log in again")
+      })
+    }, 5000)
   },[]);
 
-  return (
-    <View style={{flex:1}}>
-    
-    <View style={styles.wrapper}>
+  if (loading) {
+    return(
+      <View style={styles.titleContainer}>
+        <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
+      </View>
+    )
+  } else {
+    return (
+     
+      <View style={{flex:1}}>
       
-      <View style={styles.container}>
-
-        { loading ? 
-           <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
-          : 
-          <TouchableOpacity onPress={() => navigation.navigate('Words', 
-                {screen:'WordScreen', initial: false, params: {
-                    word: dailyWord.homeLangWord, 
-                    translation: dailyWord.forLangWord, 
-                    imgURL: dailyWord.word.URL, 
-                    soundURI: dailyWord.word.Audio[dailyWord.userForLang]
-                    },   
-                },
-            )}>
-            <View style={styles.WOTDWrapper}>
-                <WordOfTheDay word={dailyWord}/>
-            </View>
-          </TouchableOpacity>         
-        }
+      <View style={styles.wrapper}>
         
+        <View style={styles.container}>
+  
+          { loading ? 
+             <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
+            : 
+            <TouchableOpacity onPress={() => navigation.navigate('Words', 
+                  {screen:'WordScreen', initial: false, params: {
+                      word: dailyWord.homeLangWord, 
+                      translation: dailyWord.forLangWord, 
+                      imgURL: dailyWord.word.URL, 
+                      soundURI: dailyWord.word.Audio[dailyWord.userForLang]
+                      },   
+                  },
+              )}>
+              <View style={styles.WOTDWrapper}>
+                  <WordOfTheDay word={dailyWord}/>
+              </View>
+            </TouchableOpacity>         
+          }
+          
+        </View>
+  
+        <View style={styles.containerRow}>
+            <NavTouchButton screenName="Challenge" text="Challenge Mode" iconName={require("../assets/images/Challenge.png")}/>
+            <NavTouchButton screenName="Words" text="My Words" iconName={require("../assets/images/Dictionary.png")}/>
+        </View>
+  
+        <View style={styles.containerRow}>
+            <NavTouchButton screenName="Profile" text="My Profile" iconName={require("../assets/images/Profile.png")}/>
+            <NavTouchButton screenName="MeMa" text="Talk to MeMa" iconName={require("../assets/images/TalktoMema.png")}/>
+        </View>
+  
       </View>
-
-      <View style={styles.containerRow}>
-          <NavTouchButton screenName="Challenge" text="Challenge Mode" iconName={require("../assets/images/Challenge.png")}/>
-          <NavTouchButton screenName="Words" text="My Words" iconName={require("../assets/images/Dictionary.png")}/>
       </View>
+    );
 
-      <View style={styles.containerRow}>
-          <NavTouchButton screenName="Profile" text="My Profile" iconName={require("../assets/images/Profile.png")}/>
-          <NavTouchButton screenName="MeMa" text="Talk to MeMa" iconName={require("../assets/images/TalktoMema.png")}/>
-      </View>
+  }
 
-    </View>
-    </View>
-  );
 }
 
 const styles = StyleSheet.create({
@@ -117,6 +130,11 @@ const styles = StyleSheet.create({
   icon: {
     width: 30, 
     height: 30,
+  },
+  titleContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
 });

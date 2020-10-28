@@ -17,11 +17,6 @@ export default function Signin({navigation}) {
     const [password, setPassword] = useState('');
     const [loaded, setLoading] = useState(false);
 
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        navigation.navigate('MainApp')
-      }
-    });
 
     if (loaded) {
       return(
