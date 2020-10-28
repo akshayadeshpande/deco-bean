@@ -39,7 +39,7 @@ const gameLength = 20
 var id : String;
 
 
-
+//Render function for the challenge game
 export default function ChallengeComponent(props) {
   const colorScheme = useColorScheme();
   const [loaded, setLoading] = useState(true);
@@ -64,14 +64,14 @@ export default function ChallengeComponent(props) {
          
     },[]);
     
-    if (loaded) {
+    if (loaded) { //Gives loading animation while game words are being gathered
       return(
         <View style={styles.titleContainer}>
         <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
         </View>
       );
     } else {
-      // Original Language Pick
+      // Gives main challenge screen allowing for the game to start or the tutorial to be picked
     if (start == false && tutorial == false) {
       return (
 
@@ -93,7 +93,7 @@ export default function ChallengeComponent(props) {
 
       );
     } else if (tutorial == true) {
-
+      //Rendering the tutorial explanation if the tutorial button was clicked
       return (
         <View style={styles.CMContainer}>
           
@@ -133,9 +133,9 @@ export default function ChallengeComponent(props) {
         </View>
       );
     } else {
-      // Final view for how many correct answes
+      //Final View of the screen depicting how many answers were correct and options if to play the game again
       if (answ == gameLength) {
-        var endGameCall = firebase.functions().httpsCallable('endChallenge')
+        var endGameCall = firebase.functions().httpsCallable('endChallenge') //API call to firebase
         endGameCall({correct: correctAnswers, incorrect: incorrectAnswers, id: id, 
           score: correctAnswers.length+ "/" + gameLength})
         return (
@@ -374,7 +374,7 @@ async function makeWordURLDict(randomWords: any[]) {
   }
 
 
-
+//Styling for all the views
 const styles = StyleSheet.create({
     container: {
       flex: 1,
