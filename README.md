@@ -56,7 +56,7 @@ For additional help please see the quick start user manual: [MeMa User Manual](.
 
 Built with React Native.
 
-The main folders React Native app is contained in the following:
+The main folders that make up MeMa is summarised below:
 
 ```
 assets
@@ -83,7 +83,7 @@ App.tsx
 ```
 
 The main idea behind React Native apps is that there should be an abstraction between what is rendered, and functionality for 
-components that exist on a screen. Hence typically, our key functionality are indeed components - such as custom navigation buttons. 
+components that exist on a screen. Hence typically, our key functionality are components - such as custom navigation buttons. 
 
 The screens themselves should handle states shared by children, as the screen acts as a parent in the React state hierarchy, as well as
 final rendering of the screen and all components within the screen. Any internal rendering of components is pulled from the component itself and rendered by the parent screen in the order they are called by the parent.
@@ -99,8 +99,6 @@ Below is the the general schema for how the database is layed out:
 The Database is broken into 3 collections, WordData, mappings and users. The word data collection contains the translations to the English words along with links
 to an image of that word and an audio file url. This layout allows for instant access to anything about a particular word within the app, without having to constantly
 make separate calls to the database. The links connect to firebases mass storage service called firestore, meaning there are no external service calls needed to make the application work. The mappings collection just contains information for transforming the codes of the language names into the string names and visa-versa allowing for the server to do these changes without relying on the client side application. Finally the users collection holds the information about the user, including the games played and words learnt, allowing one object to be passed around instead of multiple queries being made to get information about the user.
-
-
 
 
 ## Backend
