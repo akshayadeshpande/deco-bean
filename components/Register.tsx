@@ -1,27 +1,26 @@
 import * as React from 'react';
-import {Picker} from '@react-native-community/picker';
 import { StyleSheet, Button, ScrollView, Platform, Image } from 'react-native';
 import { useState, useEffect, Component } from 'react';
-
-import EditScreenInfo from './EditScreenInfo';
 import { Text, View } from './Themed';
 import * as firebase from 'firebase';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import * as SigninFunctions from './Signin';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import Navigation from '../navigation';
 import { MemaBText } from '../components/StyledText';
 
-
+/**
+ * Default render function that will display this screen in the app
+ * 
+ * @param {navigation}: The navigation object that allows for screen changing
+ */
 export default function Register({navigation}) {
-    const colorScheme = useColorScheme();
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [homeLang, setHomeLang] = useState('English');
-    const [forLang, setForLang] = useState('');
-    const [pickingLang, setPicking] = useState(false);
+    const colorScheme = useColorScheme(); //Gets the app color scheme
+    const [name, setName] = useState(''); //User's name
+    const [email, setEmail] = useState(''); //User's email
+    const [password, setPassword] = useState(''); //User's password
+    const [homeLang, setHomeLang] = useState('English'); //Default language that the app will be in
+    const [forLang, setForLang] = useState(''); //Language that user wants to learn
+    const [pickingLang, setPicking] = useState(false); //Determines if the language picking screen needs to be picked
 
     if (!pickingLang) {
       return (
@@ -194,7 +193,7 @@ async function registerUser(event, name, email, password, forLang, homeLang){
   });
 } 
 
-
+//S
 const styles = StyleSheet.create({
     textInput: {
       height: 40, 

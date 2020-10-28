@@ -23,6 +23,7 @@ export default function FriendSearchScreen({navigation}) {
   const [query, setQuery] = useState(''); //Query Data
   const [searchResults, setSearchResults] = useState([]); //Search Result state
 
+  //Renders the screen
   return (
     <View style={[styles.container, {flexDirection: "column"}]}>
         <View style={{flexDirection: "row"}}>

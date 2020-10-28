@@ -22,9 +22,9 @@ import Colors from '../constants/Colors';
 export default function HomeScreen({navigation}) {
   const colorScheme = useColorScheme(); // App colors
   const [dailyWord, setDailyWord] = useState({}); //Word of the Day
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); //Determines if the information is being gathered or not
 
-  //gets information about the current user that is logged in and changes the state
+  //Loads when the screen is called, this will get data about the users current WOTD
   useEffect(() => {
     setTimeout(() => {
       var dailyWord = firebase.functions().httpsCallable('getWotd');
@@ -38,13 +38,13 @@ export default function HomeScreen({navigation}) {
     }, 5000)
   },[]);
 
-  if (loading) {
+  if (loading) { //Gives loading prompt will information is being gathered.
     return(
       <View style={styles.titleContainer}>
         <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />
       </View>
     )
-  } else {
+  } else { //Renders the home screen to the user with all the option of the app along with WOTD.
     return (
      
       <View style={{flex:1}}>
@@ -91,6 +91,7 @@ export default function HomeScreen({navigation}) {
 
 }
 
+//Styling of the screen
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
