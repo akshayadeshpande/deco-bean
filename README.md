@@ -93,6 +93,9 @@ We utilise Cloud Firestore (NoSQL) and Firebase Storage for cloud services, reli
 Below is the the general schema for how the database is layed out:
 ![](SchemaMema.png)
 
+The Database is broken into 3 collections, WordData, mappings and users. The word data collection contains the translations to the English words along with links
+to an image of that word and an audio file url. This layout allows for instant access to anything about a particular word within the app, without having to constantly
+make separate calls to the database. The links connect to firebases mass storage service called firestore, meaning there are no external service calls needed to make the application work. The mappings collection just contains information for transforming the codes of the language names into the string names and visa-versa allowing for the server to do these changes without relying on the client side application. Finally the users collection holds the information about the user, including the games played and words learnt, allowing one object to be passed around instead of multiple queries being made to get information about the user.
 
 
 
