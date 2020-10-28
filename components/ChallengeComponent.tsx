@@ -9,8 +9,6 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 import 'firebase/functions';
 import 'firebase/auth';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -77,7 +75,7 @@ export default function ChallengeComponent(props) {
 
         <View style={styles.CMContainer}> 
         
-        <View style={styles.SmallSeperator}>
+        <View style={styles.BigSeperator}>
         <TouchableOpacity style={styles.appButtonContainer} onPress={() => setTut(true)}>
           <MemaBText>Tutorial</MemaBText>
         </TouchableOpacity>
@@ -425,28 +423,28 @@ const styles = StyleSheet.create({
       backgroundColor: "#fff",
       borderWidth: 1,
       borderColor: "#FF9E1C",
-      paddingVertical: 10,
-      paddingHorizontal: 40,
+      paddingVertical: 15,
+      paddingHorizontal: 60,
     },
     appButtonContainer: {
       elevation: 8,
       backgroundColor: "#FF9E1C",
       borderRadius: 20,
-      paddingVertical: 10,
-      paddingHorizontal: 40,
+      paddingVertical: 20,
+      paddingHorizontal: 60,
     },
     BigSeperator: {
       padding: 100,
     },
     SmallSeperator: {
-      padding: 10
+      padding: 5
     },
     gameHolding: {
       top:250
 
     },
     imgHolder: {
-      padding: 40,
+      padding: 30,
       position:"relative",
       justifyContent:"center",
       alignItems:"center",

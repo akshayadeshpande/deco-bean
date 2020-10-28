@@ -138,7 +138,7 @@ function HomeNavigator({navigation}) {
         headerLeft: null,
         headerRight: () => (
           <TouchableOpacity onPress={() => {firebase.auth().signOut();navigation.navigate("StartLearning");}}>
-          <Image source={require('../assets/images/SignOut.png')} style={styles.icon}/>
+          <Image source={require('../assets/images/SignOut.png')} style={{width:50, height:50}}/>
           </TouchableOpacity>
         )
         }}

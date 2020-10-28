@@ -16,7 +16,7 @@ export default function StartLearningScreen({navigation}) {
             <Image source={require("../assets/images/MEMALOGO.png")} style={styles.imageView}/>
             
             <View style={{padding: 10}}>
-                <Text>
+                <Text style={{fontSize:20}}>
                     New User?
                 </Text>
             </View>
@@ -27,7 +27,7 @@ export default function StartLearningScreen({navigation}) {
             
 
             <View style={{padding:10}}>
-                <Text>
+                <Text style={{fontSize:20}}>
                    or 
                 </Text>
             </View>
@@ -67,14 +67,14 @@ const styles = StyleSheet.create({
         elevation: 8,
         backgroundColor: "#FF9E1C",
         borderRadius: 30,
-        paddingVertical: 10,
-        paddingHorizontal: 40
+        paddingVertical: 25,
+        paddingHorizontal: 60
       },
     appButtonContainer: {
         elevation: 8,
         backgroundColor: "#FF9E1C",
         borderRadius: 30,
-        paddingVertical: 10,
-        paddingHorizontal: 40
+        paddingVertical: 20,
+        paddingHorizontal: 55
       }
 });

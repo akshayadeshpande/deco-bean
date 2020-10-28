@@ -24,8 +24,8 @@ export default function Register({navigation}) {
 
     if (!pickingLang) {
       return (
-        <ScrollView>
-          <View>
+        <ScrollView style={{flex:1, alignContent:"center"}}>
+          
             <Text style={styles.text}>Name</Text>
             <TextInput 
               placeholder="Your Name" 
@@ -61,14 +61,14 @@ export default function Register({navigation}) {
             onPress={() => setPicking(true)}
             />
             }
-        </View>
+        
       </ScrollView>
       );
 
     } else {
       return (
-        <ScrollView>
-          <View>
+        <ScrollView style={{flex:1}}>
+          
             <View style={styles.buttonWrapper}>
               <Text>I want to learn...</Text>
             </View>
@@ -143,7 +143,7 @@ export default function Register({navigation}) {
             onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
             />
             }
-          </View>
+          
         </ScrollView>
       );
     }
@@ -201,7 +201,8 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       backgroundColor: "#fff",
       padding: 10,
-      color: "#FF9E1C"
+      paddingHorizontal: 50,
+      color: "#177AC1"
     },
     container: {
       flex: 1,
@@ -240,6 +241,7 @@ const styles = StyleSheet.create({
       resizeMode: 'center'
      },
      buttonContainer: {
+       flex:1, 
        flexDirection: 'row',
        alignItems: "stretch"
      },
@@ -247,27 +249,27 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      padding: 10,
+      padding: 25,
      },
      icon: {
-      width: 30, 
-      height: 30,
+      width: 60, 
+      height: 60,
     },
      appButtonContainer: {
       elevation: 8,
       backgroundColor: "#FF9E1C",
-      borderRadius: 10,
-      paddingVertical: 5,
-      paddingHorizontal: 25,
+      borderRadius: 40,
+      paddingVertical: 20,
+      paddingHorizontal: 80,
       justifyContent: "center",
       alignItems: "center",
     },
     appButtonContainer2: {
       elevation: 8,
       backgroundColor: "#FCEB97",
-      borderRadius: 10,
-      paddingVertical: 5,
-      paddingHorizontal: 25,
+      borderRadius: 40,
+      paddingVertical: 20,
+      paddingHorizontal: 80,
       justifyContent: "center",
       alignItems: "center",
     }
