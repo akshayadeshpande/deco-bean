@@ -1,23 +1,27 @@
 import * as React from 'react';
-import { StyleSheet, Button, ScrollView, Platform, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { useState, useEffect, Component } from 'react';
+import { StyleSheet, Button,  Platform,  ActivityIndicator } from 'react-native';
+import { useState,} from 'react';
 
 import { Text, View } from './Themed';
 import * as firebase from 'firebase';
 import { TextInput } from 'react-native-gesture-handler';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
-import Layout from '../constants/Layout';
 
 
 
+/**
+ * Default render function that will display this screen in the app
+ * 
+ * @param {navigation}: The navigation object that allows for screen changing
+ */
 export default function Signin({navigation}) {
     const colorScheme = useColorScheme();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [loaded, setLoading] = useState(false);
+    const [email, setEmail] = useState(''); //Current screen email
+    const [password, setPassword] = useState(''); //Current screen password
+    const [loaded, setLoading] = useState(false); //Current screen loading status
 
-
+    //Renders loader while information is being gathered
     if (loaded) {
       return(
         <View style={styles.titleContainer}>
@@ -25,7 +29,7 @@ export default function Signin({navigation}) {
         </View>
       )
     } else {
-  
+      //Renders signIn screen when information is gathered
       return (
         <View>
           <View>
@@ -67,10 +71,19 @@ export default function Signin({navigation}) {
     }
 }
 
+/**
+ * Checks to see if the login attempt is from a valid user and will change the
+ * authorization state if they are. This will allow the user to get to the
+ * main app.
+ * 
+ * @param event react native event trigger
+ * @param email email of a potential user
+ * @param password password of a potential account
+ */
 export async function loginUser(event, email, password){
   const auth = firebase.auth();
   event.preventDefault();
-  auth.signInWithEmailAndPassword(email, password).then((output) => {
+  auth.signInWithEmailAndPassword(email, password).then((output) => { //Checks to see if user
     console.log(output)
   }).catch((err) => {
     var issue = err['code']
@@ -79,6 +92,7 @@ export async function loginUser(event, email, password){
   })
 } 
 
+//Styling of the screen
 const styles = StyleSheet.create({
     textInput: {
       height: 50, 

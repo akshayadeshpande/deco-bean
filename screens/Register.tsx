@@ -1,13 +1,17 @@
 import * as React from 'react';
 import { Image, StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import { View } from '../components/Themed';
 import Register from '../components/Register';
-import * as firebase from 'firebase';
 
+
+/**
+ * Default render function that will display this screen in the app
+ * 
+ * @param {navigation}: The navigation object that allows for screen changing
+ */
 export default function RegisterScreen({navigation}) {
   
+  //Renders screen to app
   return (
     <View style={styles.container}>
       <View style={{padding:10}}/>

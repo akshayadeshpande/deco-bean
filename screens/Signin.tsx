@@ -10,16 +10,21 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { MemaText } from '../components/StyledText';
 
-var started = false;
+/**
+ * Default render function that will display this screen in the app
+ * 
+ * @param {navigation}: The navigation object that allows for screen changing
+ */
 export default function SigninScreen({navigation}) {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme(); //Allowing set app colors
 
+  //Firebase auth api allowing the user to get to the app on successful login
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       navigation.navigate('MainApp')
     }
   });
-  
+  //Renders the screen components
   return (
     <View style={styles.container}>
       <View style={styles.containerGreeting}>
@@ -31,7 +36,7 @@ export default function SigninScreen({navigation}) {
   );
 }
 
-
+//Screen styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,

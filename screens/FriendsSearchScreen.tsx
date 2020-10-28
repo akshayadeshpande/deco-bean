@@ -12,12 +12,16 @@ import 'firebase/functions';
 import 'firebase/auth';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 
-
+/**
+ * Default render function that will display this screen in the app
+ * 
+ * @param {navigation}: The navigation object that allows for screen changing
+ */
 export default function FriendSearchScreen({navigation}) {
-  const colorScheme = useColorScheme();
-  const [isFetching, setIsFetching] = useState(false);
-  const [query, setQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const colorScheme = useColorScheme(); //Allows app color scheme
+  const [isFetching, setIsFetching] = useState(false); //Monitors the loading of friends
+  const [query, setQuery] = useState(''); //Query Data
+  const [searchResults, setSearchResults] = useState([]); //Search Result state
 
   return (
     <View style={[styles.container, {flexDirection: "column"}]}>
