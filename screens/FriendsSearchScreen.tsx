@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Image, TextInput, ActivityIndicator, SectionList, Button } from 'react-native';
+import { StyleSheet, Image, TextInput, ActivityIndicator, SectionList, Button, Platform } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Text, View } from '../components/Themed';
@@ -40,21 +40,19 @@ export default function FriendSearchScreen({navigation}) {
                     <FlatList
                     data={searchResults}
                     renderItem={({item}) => (
-                    
-                    <TouchableOpacity>                
+                              
                         <View style={styles.listItemContainer}>
                             <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
                                 <Image source={require('../assets/images/profileMEMA.png')} style={{width:50, height:50, margin: 5}}/>
                                 <Text style={[styles.listText, {fontSize: 20}]}>{item.userName}</Text>
                             </View>
                             <View style={styles.listArrow}>
-                                <Button color={Colors[colorScheme].activeTint} onPress={() => addFriend(item.id, navigation, setIsFetching)} title={"Add Friend"}/>
-                                <View style={{width: 2}}></View>
-                                <Button color={Colors[colorScheme].activeTint} onPress={() => navigation.navigate("FriendsProfileScreen", {user: item})} title={"View"}/>
-                                <View style={{width: 2}}></View>
+                              <Button color={Colors[colorScheme].activeTint} onPress={() => addFriend(item.id, navigation, setIsFetching)} title={"Add Friend"}/>
+                              <View style={{width: 2}}></View>
+                              <Button color={Colors[colorScheme].activeTint} onPress={() => navigation.navigate("FriendsProfileScreen", {user: item})} title={"View"}/>
+                              <View style={{width: 2}}></View>
                             </View>
                         </View>
-                    </TouchableOpacity>
                     
                     )} keyExtractor={(item, index) => item.id} //Unique words only     
                     /> 
