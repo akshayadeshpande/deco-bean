@@ -1,5 +1,6 @@
 import * as Linking from 'expo-linking';
 
+// Outlines the screen links and handles the hierarchy of pages for navigation purposes. 
 export default {
   prefixes: [Linking.makeUrl('/')],
   config: {
