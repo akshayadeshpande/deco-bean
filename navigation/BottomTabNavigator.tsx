@@ -1,11 +1,9 @@
-import { FontAwesome, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { View, Text } from '../components/Themed';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
-
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import HomeScreen from '../screens/HomeScreen';
@@ -26,7 +24,6 @@ import { BottomTabParamList,
           MeMaParamList,
           ProfileParamList,
           } from '../types';
-import Navigation from '.';
 import { MemaBText } from '../components/StyledText';
 
 const BottomTab = createBottomTabNavigator();
@@ -35,9 +32,10 @@ const BottomTab = createBottomTabNavigator();
 Handles the Tabbar at the bottom of the app screen and what screens can be rended to the app from the Nav.
 */
 export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme(); //Gets the color scheme for the app
 
 
+  //Sets up the bottom tab and renders it to screens
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
@@ -118,8 +116,13 @@ function TabBarIcon(props: { name: string; color: string; iconSize: number }) {
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 
+//Home Screen
 const HomeStack = createStackNavigator<HomeParamList>();
-//Handles navigation to the Home screen and adjusts the header for the page
+/**
+ * Handles navigation to the Home screens and adjusts the header for the page
+ * 
+ * @param {navigation}: The navigation object that allows for screen changing
+ */ 
 function HomeNavigator({navigation}) {
   const colorScheme = useColorScheme();
   return (
@@ -147,9 +150,13 @@ function HomeNavigator({navigation}) {
   );
 }
 
-
+//Challenge screen
 const ChallengeStack = createStackNavigator<ChallengeParamList>();
-//Handles navigation to the Challenge screen and adjusts the header for the page
+/**
+ * Handles navigation to the Challenge screen and adjusts the header for the page
+ * 
+ * @param {navigation}: The navigation object that allows for screen changing
+ */ 
 function ChallengeNavigator({navigation}) {
   const colorScheme = useColorScheme();
   
@@ -171,8 +178,13 @@ function ChallengeNavigator({navigation}) {
   );
 }
 
+//Dictionary screen
 const DictionaryStack = createStackNavigator<DictionaryParamList>();
-//Handles navigation to the Dictionary screen and adjusts the header for the page
+/**
+ * Handles navigation to the Dictionary screens and adjusts the header for the page
+ * 
+ * @param {navigation}: The navigation object that allows for screen changing
+ */ 
 function DictionaryNavigator({navigation}) {
   const colorScheme = useColorScheme();
   return (
@@ -202,8 +214,13 @@ function DictionaryNavigator({navigation}) {
   );
 }
 
+//Mema Screen
 const MeMaStack = createStackNavigator<MeMaParamList>();
-//Handles navigation to the Mema screen and adjusts the header for the page
+/**
+ * Handles navigation to the Mema screen and adjusts the header for the page
+ * 
+ * @param {navigation}: The navigation object that allows for screen changing
+ */ 
 function MeMaNavigator({navigation}) {
   const colorScheme = useColorScheme();
   return (
@@ -224,9 +241,13 @@ function MeMaNavigator({navigation}) {
 }
 
 
-
+//Profile screen
 const ProfileStack = createStackNavigator<ProfileParamList>();
-//Handles navigation to the profile screen and adjusts the header for the page
+/**
+ * Handles navigation to the Profile screens and adjusts the header for the page
+ * 
+ * @param {navigation}: The navigation object that allows for screen changing
+ */ 
 function ProfileNavigator({navigation}) {
   const colorScheme = useColorScheme();
   return (
@@ -272,6 +293,7 @@ function ProfileNavigator({navigation}) {
   );
 }
 
+//Styling for the bottom nav bar
 const styles = StyleSheet.create({
   icon: {
     width: 32, 
