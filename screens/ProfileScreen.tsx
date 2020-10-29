@@ -29,7 +29,7 @@ export default function ProfileScreen({navigation}) {
   //gets information about the current user that is logged in and changes the state
   useFocusEffect(
     React.useCallback(() => {
-      const getUser = firebase.functions().httpsCallable('getUser')
+      const getUser = firebase.functions().httpsCallable('getUser') //firebase call
       getUser({}).then((result) => {
           setUser(result.data.user);
           setLoading(false); //finished loading
@@ -52,6 +52,7 @@ export default function ProfileScreen({navigation}) {
       );
 };
 
+//Styling for screen
 const styles = StyleSheet.create({
     container: {
       flex: 1,

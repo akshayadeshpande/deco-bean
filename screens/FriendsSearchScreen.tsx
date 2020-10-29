@@ -14,6 +14,7 @@ import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 
 /**
  * Default render function that will display this screen in the app
+ * Allows for the user to see current friends and add new ones.
  * 
  * @param {navigation}: The navigation object that allows for screen changing
  */
@@ -70,6 +71,14 @@ export default function FriendSearchScreen({navigation}) {
   );
 }
 
+/**
+ * Searches for a user that the current user is friends with.
+ * 
+ * @param query Who is being fount
+ * @param setFriends state function for the screen
+ * @param isFetching state function for the screen
+ * @param friends Friends on the account
+ */
 function searchFriends(query, setFriends, isFetching, friends) {
     isFetching(true);
     let searchUsers = firebase.functions().httpsCallable('searchUsers')
@@ -81,6 +90,13 @@ function searchFriends(query, setFriends, isFetching, friends) {
     })
 }
 
+/**
+ * Friends a new friend for the current user
+ * 
+ * @param uid the id of the friend that the current user wants to add
+ * @param navigation screens navigation object
+ * @param isFetching screen state function
+ */
 function addFriend(uid, navigation, isFetching){
     isFetching(true);
     let addFriend = firebase.functions().httpsCallable('addUserFriends')
@@ -92,6 +108,7 @@ function addFriend(uid, navigation, isFetching){
     })
 }
 
+//Styling for the screen
 const styles = StyleSheet.create({
   imgWrap: {
     width:150,

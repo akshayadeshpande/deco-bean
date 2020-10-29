@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 
 /**
- * Renders all the friends of the current user in a touchable list
+ * Renders all the friends of the current user.
  * 
  * @param navigation: The nav stack being passed around, allowing navigation between screens 
  */
@@ -21,18 +21,7 @@ export default function FriendsScreen({navigation}) {
     //States of the page
     const [loaded, setLoading] = useState(true);
     const [friendsList, setFriendsList] = useState([]); 
-    // data : [{
-    //     userName: 'Loading...',
-    //     country: "",
-    //     email: "",
-    //     forLang: "",
-    //     friendCount: 0,
-    //     homeLang: "",
-    //     name: "",
-    //     signedUp: "",
-    //     wordCount:{}
-    // }
-    // ]}]);
+    
 
     //Loads only once, getting information about all the current users friends.
     useEffect(() => {
@@ -94,36 +83,12 @@ export default function FriendsScreen({navigation}) {
 }
 
 /**
- * Assembles the information about a user's friend in a way that can be rendered
+ * Removes a friend from the current user's friends list.
  * 
- * @param friendsData: Information about the the user's friend
- * @param setFriendsList: State change function that will hold the data about friends
+ * @param uid id of the friend that the user wants to remove
+ * @param navigation the navigation object for the screen
+ * @param setLoading screen state function for if the screen should be loading
  */
-// function assembleFriends(friendsData, setFriendsList) {
-//     let friendsList = [{title: friendsData['userName'], data: []}]
-
-//     //Iterate through all user friends
-//     friendsData.forEach((friendDoc) => {
-//         switch(friendsData['userName']) {
-//             default:
-//                 friendsList[0].data.push({
-//                     "country": friendDoc['country'],
-//                     "email": friendDoc['email'],
-//                     "forLang": friendDoc['forLang'],
-//                     "friendCount": friendDoc['friendCount'],
-//                     "homeLang": friendDoc['homeLang'],
-//                     "name": friendDoc['name'],
-//                     "signedUp": friendDoc['signedUp'],
-//                     "userName": friendDoc['userName'],
-//                     "id": friendDoc['id'],
-//                     "wordCount":{"Spanish": friendDoc['wordCount']['Spanish'], 
-//                                 "Chinese": friendDoc['wordCount']['Chinese']}
-//                 });
-//         }
-//     })
-//     setFriendsList(friendsList); //Changes state of screen
-// }
-
 function removeFriend(uid, navigation, setLoading){
   let removeFriend = firebase.functions().httpsCallable('removeUserFriends')
   setLoading(true);
@@ -135,7 +100,7 @@ function removeFriend(uid, navigation, setLoading){
 }
 
 
-
+//Styling for the page
 const styles = StyleSheet.create({
     sectionHeader: {
       padding: 10,

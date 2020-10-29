@@ -81,6 +81,7 @@ export default function MeMaScreen() {
         playThroughEarpieceAndroid: true,
     });
 
+    //Makes a new audio recording
     const recording = new Audio.Recording();
   
     try {
@@ -120,11 +121,13 @@ export default function MeMaScreen() {
       }
   }
 
+  //Restarts the recording on the screen
   const resetRecording = () => {
       deleteRecordingFile();
       setRecording(null);
   };
 
+  //Handles if the button is on
   const handleOnPressIn = () => {
       startRecording();
   };
@@ -160,16 +163,17 @@ export default function MeMaScreen() {
     setIsFetching(false);
 }
 
+  //Determines if the button is off
   const handleOnPressOut = () => {
       stopRecording();
-      // getTranscription();
   };
 
+  //Executed on first render
   useEffect(() => {
     Permissions.askAsync(Permissions.AUDIO_RECORDING);
   }, []);
 
-
+  //What is being rendered to page
   return (
     <View style={styles.container}>
       <View style={styles.imgGap}>
@@ -185,6 +189,7 @@ export default function MeMaScreen() {
   );
 }
 
+//Style for the screen
 const styles = StyleSheet.create({
   imgWrap: {
     width:150,

@@ -1,14 +1,10 @@
 import * as React from 'react';
-import { Button, StyleSheet, Platform, Image } from 'react-native';
-import { useState, useEffect, Component } from 'react';
-
+import {  StyleSheet, Image } from 'react-native';
 import { Text, View } from '../components/Themed';
 import Signin from '../components/Signin';
-import Navigation from '../navigation'
 import * as firebase from 'firebase';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import { MemaText } from '../components/StyledText';
 
 /**
  * Default render function that will display this screen in the app

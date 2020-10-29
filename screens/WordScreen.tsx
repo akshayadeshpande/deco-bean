@@ -174,7 +174,7 @@ const getScore = async (word, setStars, setStats) => {
   setStats({score: rawScore, correct: score.correct, incorrect: score.incorrect})
 }
 
-
+//Style for the screen
 const styles = StyleSheet.create({
   container: {
     flex: 1,

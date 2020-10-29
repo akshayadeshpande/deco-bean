@@ -151,7 +151,7 @@ async function getLearnerLanguage(languageSetter) {
   }).catch(err => console.log(err));
 }
 
-
+//Styling for the screen
 const styles = StyleSheet.create({
   container: {
     flex: 1,

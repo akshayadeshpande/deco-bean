@@ -2,14 +2,20 @@ import * as React from 'react';
 import { Button, StyleSheet, Image, Platform } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Text, View } from '../components/Themed';
-import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import useColorScheme from '../hooks/useColorScheme';
 import { MemaBText } from '../components/StyledText';
 
-export default function StartLearningScreen({navigation}) {
-    const colorScheme = useColorScheme();
 
+/**
+ * Handles the rendering of the start page of the app.
+ * 
+ * @param {navigation}: The navigation object that allows for screen changing.
+ */ 
+export default function StartLearningScreen({navigation}) {
+    const colorScheme = useColorScheme(); //get the app color scheme
+
+    //Renders the screen 
     return (
         <View style={styles.viewStyle}>
             
@@ -43,6 +49,7 @@ export default function StartLearningScreen({navigation}) {
     );
 }
 
+//styling for the screen
 const styles = StyleSheet.create({
     imageWrap: {
         padding: 20,
@@ -52,9 +59,6 @@ const styles = StyleSheet.create({
         alignItems:"center",
     },
     imageView: {
-        // resizeMode: 'stretch',
-        // width: 400, 
-        // height: 150,
         width: Layout.window.width * 0.9,
         resizeMode: 'contain',
     },

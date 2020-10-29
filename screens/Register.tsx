@@ -5,7 +5,7 @@ import Register from '../components/Register';
 
 
 /**
- * Default render function that will display this screen in the app
+ * Default render function that will reader all the register screen components to the app
  * 
  * @param {navigation}: The navigation object that allows for screen changing
  */
@@ -21,6 +21,7 @@ export default function RegisterScreen({navigation}) {
   );
 }
 
+//Screen styling
 const styles = StyleSheet.create({
   container: {
     flex: 1,
