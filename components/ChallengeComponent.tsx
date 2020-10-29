@@ -104,7 +104,7 @@ export default function ChallengeComponent(props) {
           
           <View style={styles.imgHolder}>
             <Image 
-              source = {{ uri: img}}
+              source = {{ uri: 'https://firebasestorage.googleapis.com/v0/b/bean-f1602.appspot.com/o/Images%2FApple.jpg?alt=media&token=9405ab95-7b0a-496a-9aa3-e20bff7d7bc4&fbclid=IwAR3Nv9bvimEEo4_nyN_IZpNO05bcMtC0Mhim50DEmqsg5JWkkJy7eYHCFX0'}}
               style = {styles.imageStyle} />
             <TouchableOpacity style={styles.imgWord}>
               <Text style={{ justifyContent:"center", alignItems:"center", padding:5}}>Apple</Text>
