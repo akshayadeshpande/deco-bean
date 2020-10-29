@@ -8,6 +8,8 @@ import useColorScheme from '../hooks/useColorScheme';
 
 /**
  * Default render function that will display this screen in the app
+ * Text input and sign in functionality will be handled by the Sign in
+ * component and is rendered by this screen.
  * 
  * @param {navigation}: The navigation object that allows for screen changing
  */

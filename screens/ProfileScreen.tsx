@@ -14,9 +14,10 @@ import { useFocusEffect } from '@react-navigation/native';
 
 
 /**
- * Renders the screen that holds all the user information for the logged in account
+ * Renders the screen that holds all the user information for the logged in account.
+ * The Profile component handles most of the rending/styling for this screen.
  * 
- * @param navigation: Takes a navigation object of what screens have occured beforehand
+ * @param navigation: Takes a navigation object of what screens have occurred beforehand
  *                  and allows future navigation from this screen 
  */
 export default function ProfileScreen({navigation}) {

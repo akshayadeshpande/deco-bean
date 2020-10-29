@@ -64,7 +64,7 @@ export default function ChallengeComponent(props) {
           setLoading(false); //Stops loading
         }).catch(function(err){
           console.log(err);
-          alert('An internal error occured. Please try again later.')
+          alert('An internal error occurred. Please try again later.')
         })
          
     },[]);
@@ -138,7 +138,7 @@ export default function ChallengeComponent(props) {
         </View>
       );
     } else {
-      //Final View of the screen depicting how many answers were correct and options if to play the game again
+      //Final View of the screen depicting how many answers were correct and the option to play again
       if (answ == gameLength) {
         var endGameCall = firebase.functions().httpsCallable('endChallenge') //API call to firebase
         endGameCall({correct: correctAnswers, incorrect: incorrectAnswers, id: id, 
@@ -227,7 +227,7 @@ function playAgain(
 
 /**
  * Used to play through the game causing state changes and therefor the scree to
- * rerender with new images for the game.
+ * re-render with new images for the game.
  *
  * @answ: How many turns has the user had.
  * @setCount: Changes the state so the amount of turns played is updated.
@@ -261,8 +261,7 @@ function IntroStateChange(
 
 
 /**
-* Checks to see if the correct word has been picked and if so
-* increases the counter
+* Checks to see if the correct word has been picked
 *
 * @param potentialWord: The word the user thinks is the correct choice.
 */
@@ -282,9 +281,9 @@ function checkWord(potentialWord : string) {
 }
 
 /**
-  * Makes a dictionary out of all the words in the DB.
+  * Makes a dictionary out of all the words given.
   *
-  * @param: dbh - Reference the the firestor DB.
+  * @param: dbh - Reference the the firestore DB.
   */
 async function makeWordURLDict(randomWords: any[]) {
   
@@ -343,7 +342,7 @@ async function makeWordURLDict(randomWords: any[]) {
     
   }
 
-  //Function that will handle word language is being rendered to screen
+  //Handles what language the word is being rendered to the screen in
   function LangIndex() {
     var index = 0;
     switch(challengeLanguage){
@@ -370,7 +369,12 @@ async function makeWordURLDict(randomWords: any[]) {
     return newPic;
   }
 
-  //Generates a random number that includes the given numbers
+  /**
+   * Gets a random number from [min, max]
+   * 
+   * @param min minimum number to be included
+   * @param max maximum number to be included
+   */
   function getRandomIntInclusive(min : number, max : number) {
     min = Math.ceil(min);
     max = Math.floor(max);

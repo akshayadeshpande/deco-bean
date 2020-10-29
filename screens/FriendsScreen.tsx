@@ -39,7 +39,7 @@ export default function FriendsScreen({navigation}) {
         });
       }, []);
       
-    //Renders the touchable list of all the users friends
+    //Renders the list of all the users friends
     return (loaded ? 
       <View style={styles.titleContainer}>
         <ActivityIndicator size="large" color={Colors[colorScheme].activeTint} />

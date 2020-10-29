@@ -5,7 +5,9 @@ import Register from '../components/Register';
 
 
 /**
- * Default render function that will reader all the register screen components to the app
+ * Default render function that will reader all the register screen components to the app.
+ * Text input fields and choosing a language to learn will be handled by the Register
+ * component and rendered to this screen.
  * 
  * @param {navigation}: The navigation object that allows for screen changing
  */

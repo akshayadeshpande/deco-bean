@@ -9,7 +9,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import { MemaBText } from '../components/StyledText';
 
 /**
- * Default render function that will display this screen in the app
+ * Renders this component for the register screen.
  * Gives the user the ability to register for a Mema account.
  * 
  * Allows for:

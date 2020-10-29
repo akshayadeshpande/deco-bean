@@ -11,7 +11,7 @@ import Colors from '../constants/Colors';
 
 
 /**
- * Default render function that will display this screen in the app
+ * Renders this component for the SignIn Screen
  * Allows for the user to sign into Mema with an account previously created.
  * Login requires a valid email and password.
  * 
