@@ -199,7 +199,7 @@ exports.searchUsers = functions.https.onCall(async (data, context) => {
         // Does a check to see if a user is a current friend and also if it matches the query string. 
         // Currently a javascript search is used as firebase does not allow wildcard searches. 
         snapshot.forEach((user) => {
-            if (!friendSet.has(user.id) && user.data().name.toLowerCase().includes(data.name.toLowerCase())) {
+            if (!friendSet.has(user.id) && user.id !== user_id && user.data().name.toLowerCase().includes(data.name.toLowerCase()) ) {
                 let userData = handleUserData(user.data());
                 delete userData['email'];
                 userData['id'] = user.id;
