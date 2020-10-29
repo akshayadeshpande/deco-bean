@@ -9,6 +9,7 @@ import 'firebase/auth';
  *
  * Component shows the current word of the data, this component lives on the Home Screen.
  * 
+ * @props Information from the screen that is rending the component.
  * @returns Render for the Word of the Day Component.
  */
 function WordOfTheday(props) {

@@ -12,7 +12,11 @@ import { useEffect, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 
 /**
- * Renders all the friends of the current user.
+ * Renders all the friends of the current user in a list format.
+ * 
+ * Allows:
+ * - Viewing of other friends profiles
+ * - Removing of friends
  * 
  * @param navigation: The nav stack being passed around, allowing navigation between screens 
  */

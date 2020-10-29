@@ -7,6 +7,7 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 
+//Information about firebase that will allow usage throughout Mema.
 const firebaseConfig = {
   apiKey: "AIzaSyC-K9bYAv1RIsbE29iE9xRHiT_3XyWzwZ0",
   authDomain: "bean-f1602.firebaseapp.com",
@@ -18,17 +19,24 @@ const firebaseConfig = {
   measurementId: "G-HC338643HJ",
 };
 
-
+//Starts up the firebase session
 firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const db = firebase.firestore();
 
+
+/**
+ * The Main function that will allow react-native a starting point to display the
+ * application on either android or ios. 
+ */
 export default function App() {
   // Suppress yellow toast for warnings for demo, warnings will still show up on console.
   console.disableYellowBox = true;
+  //Gets application ready with custom color style and loading the resources
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
+  //Start rending of application
   if (!isLoadingComplete) {
     return null;
   } else {

@@ -10,6 +10,13 @@ import { MemaBText } from '../components/StyledText';
 
 /**
  * Default render function that will display this screen in the app
+ * Gives the user the ability to register for a Mema account.
+ * 
+ * Allows for:
+ * - Adding of an email
+ * - Adding of the user's name
+ * - Adding what language they want to learn
+ * - Adding of a user's password for their new account
  * 
  * @param {navigation}: The navigation object that allows for screen changing
  */
@@ -45,15 +52,14 @@ export default function Register({navigation}) {
               onChangeText={(t) => setPassword(t.trim())}
               value={password}
               style={styles.textInput}/>
-            <View style={{padding:40}}>
-            </View>
+            <View style={{padding:40}}/>
             
             {Platform.OS === "ios" ? 
             <View style={styles.Register}>
-            <Button title="Next" 
-            color={"#fff"}
-            onPress={() => setPicking(true)}
-            />
+              <Button title="Next" 
+              color={"#fff"}
+              onPress={() => setPicking(true)}
+              />
             </View>
             :
             <Button title="Next" 
@@ -118,23 +124,23 @@ export default function Register({navigation}) {
             </View>
             
             <View style={{padding:30}}>
-            <View style={styles.buttonWrapper}>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setPicking(false)}}>
-                  <MemaBText>Back</MemaBText>
-                </TouchableOpacity>
+              <View style={styles.buttonWrapper}>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity style={styles.appButtonContainer} onPress={() => {setPicking(false)}}>
+                    <MemaBText>Back</MemaBText>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
             </View>
 
             
             {Platform.OS === "ios" ? 
             
             <View style={styles.Register}>
-            <Button title="Register" 
-            color={"#fff"}
-            onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
-            />
+              <Button title="Register" 
+              color={"#fff"}
+              onPress={event => registerUser(event, name, email, password, forLang, homeLang)}
+              />
             </View>
             :
             
@@ -151,9 +157,9 @@ export default function Register({navigation}) {
 }
 
 /**
- * Gives information about the user from the client side to the firebase api
+ * Gives information about the user from the client side to firebase
  * 
- * @param event Event from the screen changing
+ * @param event react native event trigger
  * @param name new user's sign up name
  * @param email new user's sign up email
  * @param password new user's sign up password

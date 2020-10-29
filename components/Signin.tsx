@@ -12,6 +12,8 @@ import Colors from '../constants/Colors';
 
 /**
  * Default render function that will display this screen in the app
+ * Allows for the user to sign into Mema with an account previously created.
+ * Login requires a valid email and password.
  * 
  * @param {navigation}: The navigation object that allows for screen changing
  */

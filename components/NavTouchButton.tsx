@@ -6,7 +6,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import { Text, View } from '../components/Themed';
 
 /**
- * Renders a component that can use the nav on a screen
+ * Renders a component that can use the nav on a given screen
  * 
  * @param props Information from the screen that is rending component
  */

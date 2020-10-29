@@ -14,9 +14,13 @@ import { MemaBText } from '../components/StyledText';
 
 const Stack = createStackNavigator();
 
-//Root stack object that allows Sign in and sign up.
+/**
+ * Root Nav stack that will control what is being rendered at any given moment.
+ * 
+ * @param colorScheme Allows for the app to pass around the custom color scheme
+ */
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
-  const colorSch = useColorScheme();
+  const colorSch = useColorScheme(); //Allows app color scheme usage on the stack
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{
@@ -50,6 +54,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
   );
 }
 
+//styling
 const styles = StyleSheet.create({
   icon: {
     width: 25, 
