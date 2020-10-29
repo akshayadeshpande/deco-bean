@@ -22,7 +22,7 @@ export default function Register({navigation}) {
     const [forLang, setForLang] = useState(''); //Language that user wants to learn
     const [pickingLang, setPicking] = useState(false); //Determines if the language picking screen needs to be picked
 
-    if (!pickingLang) {
+    if (!pickingLang) { //Renders the text input to sign up for an account
       return (
         <ScrollView style={{flex:1, alignContent:"center"}}>
           
@@ -65,7 +65,7 @@ export default function Register({navigation}) {
       </ScrollView>
       );
 
-    } else {
+    } else { //Gives the buttons for what language is wanted to be learnt
       return (
         <ScrollView style={{flex:1}}>
           
@@ -150,15 +150,23 @@ export default function Register({navigation}) {
     
 }
 
+/**
+ * Gives information about the user from the client side to the firebase api
+ * 
+ * @param event Event from the screen changing
+ * @param name new user's sign up name
+ * @param email new user's sign up email
+ * @param password new user's sign up password
+ * @param forLang new user's sign up language they want to learn
+ * @param homeLang native language of the new user
+ */
 async function registerUser(event, name, email, password, forLang, homeLang){
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-  const usersCollection = "users";
-  event.preventDefault();
-  // console.log('form submitted');
-  // console.log(name);
-  // console.log(password);
+  const auth = firebase.auth(); //creates firebase user session
+  const db = firebase.firestore(); //connects to firebase firestore
+  const usersCollection = "users"; //sets the string for the user collection
+  event.preventDefault(); //stops default event
 
+  //User sign up from firebase api
   auth.createUserWithEmailAndPassword(email, password).then(function(data){
     var user = auth.currentUser;
     if (user != null){
@@ -168,7 +176,7 @@ async function registerUser(event, name, email, password, forLang, homeLang){
           // console.log(user);
       });  
       const userData = {
-        country: 'Australia', //TODO: integrate with a dropdown in the registration.
+        country: 'Australia',
         email: user.email,
         forLang: forLang,
         homeLang: homeLang, 
@@ -189,11 +197,10 @@ async function registerUser(event, name, email, password, forLang, homeLang){
     var errorMessage = error.message;
     console.log(errorMessage, errorCode);
     alert(errorMessage);
-    // TODO: send an alert if there is an error
   });
 } 
 
-//S
+//Styling for the component
 const styles = StyleSheet.create({
     textInput: {
       height: 40, 
