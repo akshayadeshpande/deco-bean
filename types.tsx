@@ -4,19 +4,36 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
-  WOTD: undefined;
+  Home: undefined;
+  Challenge: undefined;
+  Words: undefined;
+  MeMa: undefined;
+  Profile: undefined;
+  ChallengeTut: undefined;
 };
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
+export type HomeParamList = {
+  HomeScreen: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+export type ChallengeParamList = {
+  ChallengeScreen: undefined;
 };
 
-export type WOTDParamList = {
-  WOTDScreen: undefined;
+export type DictionaryParamList = {
+  DictionaryScreen: undefined;
+  WordScreen: undefined;
 };
+
+export type MeMaParamList = {
+  MeMaScreen: undefined;
+};
+
+export type ProfileParamList = {
+  ProfileScreen: undefined;
+  FriendsScreen: undefined;
+  FriendsProfileScreen: undefined;
+  FriendsSearchScreen: undefined;
+};
+
+

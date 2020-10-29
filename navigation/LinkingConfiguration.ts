@@ -6,14 +6,38 @@ export default {
     screens: {
       Root: {
         screens: {
-          TabOne: {
+          Home: {
             screens: {
-              TabOneScreen: 'one',
+              HomeScreen: 'home',
             },
           },
-          TabTwo: {
+          Challenge: {
             screens: {
-              TabTwoScreen: 'two',
+              ChallengeScreen: 'challenge',
+            },
+          },
+          Dictionary: {
+            screens: {
+              DictionaryScreen: 'myWords',
+              WordScreen: 'wordDetails',
+            },
+          },
+          MeMa: {
+            screens: {
+              MeMaScreen: 'mema',
+            },
+          },
+          Profile: {
+            screens: {
+              ProfileScreen: 'profile',
+              FriendsScreen: 'friends',
+              FriendsProfileScreen: 'friendsProfile',
+              FriendsSearchScreen: 'friendsSearch',
+            },
+          },
+          Word: {
+            screens: {
+              WordScreen: 'wordDetails',
             },
           },
         },

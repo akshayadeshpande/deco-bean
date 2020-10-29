@@ -57,3 +57,10 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# Expo
+.expo/
+.expo/*
+
+# Log Files
+*.log
