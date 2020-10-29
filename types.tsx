@@ -1,3 +1,4 @@
+// Used to define the different component as object types. 
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
