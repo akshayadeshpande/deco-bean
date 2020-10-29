@@ -1,3 +1,5 @@
+<img src="./assets/images/accordionlogo.PNG" alt="MeMa Welcome Image" width="200"/>
+
 # Team Accordion - MeMa
 
 <img src="./assets/images/welcomeMEMA.png" alt="MeMa Welcome Image" width="200"/>
