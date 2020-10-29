@@ -9,6 +9,8 @@ import ChallengeComponent from '../components/ChallengeComponent';
 /**
  * Renders the components for the challenge mode screen
  * 
+ * Allows for the game to be played by rendering the main component of the screen <ChallengeComponent>
+ * 
  * @param {navigation}: The navigation object that allows for screen changing
  */ 
 export default function ChallengeScreen(props) {

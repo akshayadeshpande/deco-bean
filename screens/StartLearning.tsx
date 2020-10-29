@@ -10,6 +10,8 @@ import { MemaBText } from '../components/StyledText';
 /**
  * Handles the rendering of the start page of the app.
  * 
+ * Allows for the user to either sign in or sign up
+ * 
  * @param {navigation}: The navigation object that allows for screen changing.
  */ 
 export default function StartLearningScreen({navigation}) {

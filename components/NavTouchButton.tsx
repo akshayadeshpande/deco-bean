@@ -5,10 +5,16 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import { Text, View } from '../components/Themed';
 
+/**
+ * Renders a component that can use the nav on a screen
+ * 
+ * @param props Information from the screen that is rending component
+ */
 export default function NavTouchButton(props) {
   const navigation = useNavigation();
   const colorScheme = useColorScheme();
 
+  //Renders the component
   return (
     <TouchableOpacity style={styles.button}
       onPress={() => navigation.navigate(props.screenName)}>
@@ -23,6 +29,7 @@ export default function NavTouchButton(props) {
   );
 }
 
+//Component styling
 const styles = StyleSheet.create({
   button: {
     flex:1, 

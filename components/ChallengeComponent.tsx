@@ -2,8 +2,6 @@ import * as React from 'react';
 import { StyleSheet, Button, Image, Platform, ProgressBarAndroid, ActivityIndicator} from 'react-native';
 import { useState, useEffect, Component } from 'react';
 import Toast from 'react-native-tiny-toast'
-
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
@@ -37,24 +35,33 @@ const gameLength = 20
 var id : String;
 
 
-//Render function for the challenge game
+/**
+ * Component that allows for the playing of the challenge mode game.
+ * 
+ * Main forms of the component:
+ * - Starting render, allowing the choice between starting a new game session or seeing the tutorial instructions.
+ * - Game render, A picture, 4 buttons and text are rendered allowing the game to be played by the user.
+ * - End render, displaying the users score from the game played with the choice of playing again or going back to the start render.
+ * 
+ * @param props Information being passed from the screen is is being rendered on
+ */
 export default function ChallengeComponent(props) {
-  const colorScheme = useColorScheme();
-  const [loaded, setLoading] = useState(true);
+  const colorScheme = useColorScheme(); //App color scheme
+  const [loaded, setLoading] = useState(true); //If data for the screen is being loaded or not
   const [img, newImg] = useState('https://firebasestorage.googleapis.com/v0/b/bean-f1602.appspot.com/o/Images%2FApple.jpg?alt=media&token=9405ab95-7b0a-496a-9aa3-e20bff7d7bc4&fbclid=IwAR3Nv9bvimEEo4_nyN_IZpNO05bcMtC0Mhim50DEmqsg5JWkkJy7eYHCFX0');
-  const [start, startingGame] = useState(false)
-  const [answ, setCount] = useState(0)
-  const [tutorial, setTut] = useState(false)
+  const [start, startingGame] = useState(false) //Starting a new game session or not
+  const [answ, setCount] = useState(0) //how far into the game the user is
+  const [tutorial, setTut] = useState(false) //Should the tutorial render occur
 
   //Runs on the first launch to get all the needed information for the game
     useEffect(() => {
-        dbh = firebase.firestore();
-        var incomingWords = firebase.functions().httpsCallable('startChallenge')
+        dbh = firebase.firestore(); //Gets firebase storage access
+        var incomingWords = firebase.functions().httpsCallable('startChallenge') //Firebase call to get words
           incomingWords({count: gameLength}).then(function(result){
-          makeWordURLDict(result.data['words']);
-          challengeLanguage = result.data["lang"];
+          makeWordURLDict(result.data['words']); //Constructs useable information about words
+          challengeLanguage = result.data["lang"]; //Changes what lang the game is happening in
           id = result.data["id"]
-          setLoading(false);
+          setLoading(false); //Stops loading
         }).catch(function(err){
           console.log(err);
           alert('An internal error occured. Please try again later.')
@@ -202,12 +209,12 @@ export default function ChallengeComponent(props) {
     }
     
 
-/*
-Restarts the the game allowing the user to try again.
-
-@setCount: Function to change the state of the screen.
-@startingGame: State function that will set it the game is at the start or not.
-*/
+/**
+ * Restarts the the game allowing the user to try again.
+ *
+ * @setCount: Function to change the state of the screen.
+ * @startingGame: State function that will set it the game is at the start or not.
+ */
 function playAgain(
   setCount: React.Dispatch<React.SetStateAction<number>>,
   startingGame: React.Dispatch<React.SetStateAction<boolean>>
@@ -218,15 +225,15 @@ function playAgain(
   startingGame(true)
 }
 
-/*
-Used to play through the game causing state changes and therefor the scree to
-rerender with new images for the game.
-
-@answ: How many turns has the user had.
-@setCount: Changes the state so the amount of turns played is updated.
-@newImg: Function that will change the image that is being rendered.
-@potentialWord: The users guess for the current round of the game.
-*/
+/**
+ * Used to play through the game causing state changes and therefor the scree to
+ * rerender with new images for the game.
+ *
+ * @answ: How many turns has the user had.
+ * @setCount: Changes the state so the amount of turns played is updated.
+ * @newImg: Function that will change the image that is being rendered.
+ * @potentialWord: The users guess for the current round of the game.
+ */
 function finalStateChange(
   answ: number,
   setCount: React.Dispatch<React.SetStateAction<number>>,
@@ -237,11 +244,11 @@ function finalStateChange(
     setCount(answ + 1);
 }
 
-/*
-Wrapper function allowing 2 state changes to occure on one button click.
-
-@newImg: Function that changes the img state.
-@startingGame: State function that changes if the game is being played or not.
+/**
+* Wrapper function allowing 2 state changes to occur on one button click.
+* 
+* @newImg: Function that changes the img state.
+* @startingGame: State function that changes if the game is being played or not.
 */
 function IntroStateChange(
   newImg: React.Dispatch<React.SetStateAction<string>>,
@@ -253,11 +260,11 @@ function IntroStateChange(
 
 
 
-/*
-Checks to see if the correct word has been picked and if s1o
-increases the counter
-
-@param potentialWord: The word the user thinks is the correct choice.
+/**
+* Checks to see if the correct word has been picked and if so
+* increases the counter
+*
+* @param potentialWord: The word the user thinks is the correct choice.
 */
 function checkWord(potentialWord : string) {
   console.log("Potential Word: " + potentialWord + " Current Word: " + currentWord);
@@ -274,11 +281,11 @@ function checkWord(potentialWord : string) {
   }
 }
 
-/*
-Makes a dictionary out of all the words in the DB.
-
-@param: dbh - Reference the the firestor DB.
-*/
+/**
+  * Makes a dictionary out of all the words in the DB.
+  *
+  * @param: dbh - Reference the the firestor DB.
+  */
 async function makeWordURLDict(randomWords: any[]) {
   
   randomWords.forEach((word) => {
@@ -295,17 +302,16 @@ async function makeWordURLDict(randomWords: any[]) {
    function changeImg() {
       currentButtons = ["", "", "", ""];
       currentWord = getRandomWord();
-      langButtons(challengeLanguage);
+      langButtons();
       var pic = wordInfo[currentWord][0];
       console.log(currentWord + " " + " URL: " + pic);
       return pic;
   }
 
-  /*
-  Pick a language and then will randomly pick 3 other words to be used 
-  as non-correct answers for the game
-  */
-  function langButtons(language : string) {
+  /**
+   * Randomly picks words to be used as the wrong words in the game
+   */
+  function langButtons() {
     //Gets 4 random indexes
     var randomOrder : number[] = [];
     while(randomOrder.length != 4){

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, Image, TextInput, ActivityIndicator, SectionList, Button, Platform } from 'react-native';
 import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-
 import { Text, View } from '../components/Themed';
 import { useEffect, useState } from 'react';
 import useColorScheme from '../hooks/useColorScheme';

@@ -19,8 +19,8 @@ import { FlatList } from 'react-native-gesture-handler';
 export default function FriendsScreen({navigation}) {
     const colorScheme = useColorScheme(); //App colors
     //States of the page
-    const [loaded, setLoading] = useState(true);
-    const [friendsList, setFriendsList] = useState([]); 
+    const [loaded, setLoading] = useState(true); //If the screen if loading information
+    const [friendsList, setFriendsList] = useState([]);  //Friends of the user
     
 
     //Loads only once, getting information about all the current users friends.

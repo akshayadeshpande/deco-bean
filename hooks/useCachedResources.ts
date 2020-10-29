@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
 import { Image } from 'react-native';
 
+//Preload used assets
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
 

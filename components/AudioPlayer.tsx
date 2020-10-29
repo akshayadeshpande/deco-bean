@@ -66,7 +66,7 @@ export default function AudioPlayer(props) {
     }
   })
 
-
+  //Renders component
   return (
     <TouchableOpacity
       style={styles.button}
@@ -78,7 +78,7 @@ export default function AudioPlayer(props) {
   );
 }
 
-
+//Component styling
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',

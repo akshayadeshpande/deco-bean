@@ -134,28 +134,10 @@ export default function Profile({navigation, user, touchFriends}) {
 
         </ScrollView>
     </SafeAreaView>
-
-    //   <NavTouchButton screenName="ChangeEmail" text="Change Email" />
-
-    //   {Platform.OS === "ios" ? 
-    //   <View style={styles.appButtonContainer}>
-    //   <Button title="Friends" 
-    //   color={"#fff"}
-    //   onPress={() => {navigation.navigate("FriendsScreen")}}
-    //   />
-    //   </View>
-    // : 
-    //   <Button title="Friends" 
-    //   color={Colors[colorScheme].activeTint}
-    //   onPress={() => {navigation.navigate("FriendsScreen")}}
-    //   />
-    //   }
-    //   </View>
-    //   </View>
     );
 }
 
-
+//Component styling
 const styles = StyleSheet.create({
     container: {
       flex: 1,

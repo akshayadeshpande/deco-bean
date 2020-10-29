@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {  StyleSheet, Image } from 'react-native';
-import { Text, View } from '../components/Themed';
+import { View } from '../components/Themed';
 import Signin from '../components/Signin';
 import * as firebase from 'firebase';
 import Colors from '../constants/Colors';

@@ -1,3 +1,5 @@
+//Allows for custom font to be used throughout the app when the react-native text isn't enough
+
 import * as React from 'react';
 
 import { Text, TextProps } from './Themed';

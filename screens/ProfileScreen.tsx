@@ -1,17 +1,15 @@
 import * as React from "react";
 import { useState, useEffect } from 'react';
 import { StyleSheet, ActivityIndicator } from "react-native";
-
 import Profile from "../components/Profile";
-import { Text, View } from "../components/Themed";
-import { db, auth } from "../App";
+import { View } from "../components/Themed";
 import * as firebase from "firebase";
 import 'firebase/firestore';
 import 'firebase/functions';
 import 'firebase/auth';
 import useColorScheme from '../hooks/useColorScheme';
 import Colors from '../constants/Colors';
-import { useIsFocused, useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 
